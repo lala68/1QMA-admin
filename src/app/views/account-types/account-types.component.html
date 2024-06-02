@@ -1,0 +1,58 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Account Types</strong>
+      </c-card-header>
+      <c-card-body>
+        @if (loading){
+        <c-spinner></c-spinner>
+        }
+        @if (!loading && !displayForm){
+        <button (click)="displayAddAccount()" class="mb-2" cButton color="primary" variant="outline">Add New Account Type
+        </button>
+        }
+        @if (displayForm){
+        <form cForm [formGroup]="accountTypeForm" (ngSubmit)="submitNewAccountType()">
+          <div class="mb-3">
+            <label cLabel for="name">Name Of accountType</label>
+            <input cFormControl formControlName="name" id="name" type="text">
+          </div>
+          <input cButton color="primary" [disabled]="loadingSubmit || accountTypeForm.invalid" type="submit">
+          <button (click)="displayAddAccount()" cButton color="secondary" variant="outline">Back
+        </button>
+        </form>
+        }
+
+        @for (item of accountTypes; track item.name;let i = $index){
+        @if (item.name && !displayForm){
+        <ul cListGroup>
+          <li cListGroupItem>
+            <div style="width: 20%; display: inline-block">{{item?.name}}</div>
+            <button cButton color="light" (click)="displayAddAccount(item.name, item._id)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+            <button cButton color="light" (click)="toggleModal()">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+              <c-modal-header>
+                <h5 cModalTitle>Delete Account Type</h5>
+                <button (click)="toggleModal()" cButtonClose></button>
+              </c-modal-header>
+              <c-modal-body>Do you want to delete this account type?</c-modal-body>
+              <c-modal-footer>
+                <button (click)="deleteAccountType(item._id)" cButton color="secondary">
+                  Yes
+                </button>
+                <button (click)="toggleModal()" cButton color="primary">No</button>
+              </c-modal-footer>
+            </c-modal>
+          </li>
+        </ul>
+        }
+        }
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

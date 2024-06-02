@@ -1,0 +1,53 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Game Settings</strong>
+      </c-card-header>
+      <c-card-body>
+        @if (loading){
+        <c-spinner></c-spinner>
+        }
+        @if (!loading && !displayForm){
+        <button (click)="displayAddSetting()" class="mb-2" cButton color="primary" variant="outline">Add New Setting
+        </button>
+        }
+        @if (displayForm){
+        <form cForm [formGroup]="settingsForm" (ngSubmit)="submitNewSetting()">
+          <div class="mb-3">
+            <label cLabel for="name">Name Of Setting</label>
+            <input cFormControl formControlName="name" id="name" type="text">
+          </div>
+          @if (!id){
+        <div class="mb-3">
+          <label cLabel for="name">Key Of Setting</label>
+          <input cFormControl formControlName="key" id="key" type="text">
+        </div>
+        }
+        <div class="mb-3">
+          <label cLabel for="name">Value Of Setting</label>
+          <input cFormControl formControlName="value" id="value" type="text">
+        </div>
+
+        <input cButton color="primary" [disabled]="loadingSubmit || settingsForm.invalid" type="submit">
+         <button (click)="displayAddSetting()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
+        }
+
+        @for (item of settings; track item.name;let i = $index){
+        @if (item.name && !displayForm){
+        <ul cListGroup>
+          <li cListGroupItem>
+            <div style="width: 40%; display: inline-block">{{item?.name}} : {{item?.value}}</div>
+            <button cButton color="light" (click)="displayAddSetting(item.name, item.value, item._id, item.key)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+          </li>
+        </ul>
+        }
+        }
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
