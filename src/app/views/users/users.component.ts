@@ -127,7 +127,12 @@ export class UsersComponent implements OnInit {
         }
       })
     } else if ($event == 2) {
-
+      this.users.filter((item: any) => {
+        if (item.inWaitList) {
+          this.usersArray.push(item);
+          this.goToPage(1);
+        }
+      })
     }
     console.log('onTabChange', $event);
   }
