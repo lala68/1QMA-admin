@@ -10,6 +10,7 @@ module.exports = {
       "post-deploy":
         "npm install; pm2 startOrRestart ~/projects/config/1qma.admin.json --update-env --env production; pm2 save;",
     },
+
     staging: {
       user: "root",
       host: "64.226.74.250",
