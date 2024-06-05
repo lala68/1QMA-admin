@@ -1,10 +1,11 @@
 import {Routes} from '@angular/router';
 import {DefaultLayoutComponent} from './layout';
+import {authGuard} from "./auth.guard";
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -16,23 +17,28 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes),
+       canActivate: [authGuard]
       },
       {
         path: 'categories',
-        loadChildren: () => import('./views/categories/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/categories/routes').then((m) => m.routes),
+        canActivate: [authGuard]
       },
       {
         path: 'account-types',
-        loadChildren: () => import('./views/account-types/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/account-types/routes').then((m) => m.routes),
+        canActivate: [authGuard]
       },
       {
         path: 'setting',
-        loadChildren: () => import('./views/setting/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/setting/routes').then((m) => m.routes),
+        canActivate: [authGuard]
       },
       {
         path: 'users',
-        loadChildren: () => import('./views/users/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/users/routes').then((m) => m.routes),
+        canActivate: [authGuard]
       },
       {
         path: 'theme',
@@ -88,10 +94,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent),
-    data: {
-      title: 'Login Page'
-    }
+    loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'register',
@@ -100,5 +103,5 @@ export const routes: Routes = [
       title: 'Register Page'
     }
   },
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '**', redirectTo: 'login'}
 ];

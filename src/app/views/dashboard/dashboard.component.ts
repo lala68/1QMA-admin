@@ -23,6 +23,7 @@ import {IconDirective} from '@coreui/icons-angular';
 
 import {WidgetsBrandComponent} from '../widgets/widgets-brand/widgets-brand.component';
 import {WidgetsDropdownComponent} from '../widgets/widgets-dropdown/widgets-dropdown.component';
+import {GameService} from "../../services/game.service";
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -30,10 +31,22 @@ import {WidgetsDropdownComponent} from '../widgets/widgets-dropdown/widgets-drop
   standalone: true,
   imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective, AvatarComponent]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
+  dashboard: any;
 
-  constructor() {
+  constructor(private gameService: GameService) {
   }
 
+  ngOnInit(): void {
+    this.getDashboard();
+  }
+
+  async getDashboard() {
+    this.gameService.getDashboard().subscribe(data => {
+      if (data.status == 1) {
+        this.dashboard = data.data;
+      }
+    })
+  }
 
 }

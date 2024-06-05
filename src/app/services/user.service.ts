@@ -28,4 +28,25 @@ export class UserService {
     return this.http.get<any>(this.config.url('admin/users'), {headers: headers})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
+
+  async loginUser(data: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<any>(this.config.url('admin/login'), {
+      email: data.email,
+      password: data.password
+    }, {headers: headers})
+      .toPromise();
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    const user = await Preferences.get({key: 'account'});
+    console.log(user)
+    if (user.value != null) {
+      this.generalService.userId = (user.value);
+      this.isLoggedIn = true;
+    }
+    return !!user.value;
+  }
 }

@@ -1,3 +1,4 @@
 export const environment = {
-  baseUrl : 'http://staging.1qma.games/api/'
+  baseUrl : 'http://staging.api.1qma.games/'
+
 };

@@ -102,4 +102,12 @@ export class GameService {
     return this.http.post<any>(this.config.url('admin/accountTypes/delete'), {id: id}, {headers: headers})
       .toPromise();
   }
+
+  getDashboard(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.get<any>(this.config.url('admin/dashboard'), {headers: headers})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
 }
