@@ -9,7 +9,7 @@ import {
   CardComponent,
   CardFooterComponent,
   CardHeaderComponent,
-  ColComponent,
+  ColComponent, FormCheckComponent,
   FormCheckLabelDirective, FormModule,
   GutterDirective,
   NavComponent,
@@ -29,6 +29,7 @@ import {ChartjsComponent} from "@coreui/angular-chartjs";
 import {CommonModule, NgFor, NgStyle} from "@angular/common";
 import {WidgetsBrandComponent} from "../widgets/widgets-brand/widgets-brand.component";
 import {RouterLink} from "@angular/router";
+import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.component";
 
 @Component({
   selector: 'app-users',
@@ -38,7 +39,8 @@ import {RouterLink} from "@angular/router";
     FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, RouterLink,
     ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective,
     AvatarComponent, TabContentComponent, TabContentRefDirective, TabPaneComponent, NavComponent, NavItemComponent,
-    NavLinkDirective, NgFor, PaginationComponent, PageItemDirective, PageLinkDirective, FormsModule],
+    NavLinkDirective, NgFor, PaginationComponent, PageItemDirective, PageLinkDirective, FormsModule,
+    ChecksRadiosComponent, FormCheckComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
@@ -135,6 +137,16 @@ export class UsersComponent implements OnInit {
       })
     }
     console.log('onTabChange', $event);
+  }
+
+  onCheckedChange(id: any, event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+
+    this.userService.toggleUserActivation(id, inputElement.checked).then(data => {
+
+    })
+    console.log('Checkbox checked state:', inputElement.checked);
+    // Additional logic when the checked state changes
   }
 
   searchUsers() {

@@ -30,6 +30,7 @@
         <th class="bg-body-secondary">User</th>
         <th class="bg-body-secondary">Email</th>
         <th class="bg-body-secondary">Created</th>
+        <th class="bg-body-secondary">Status</th>
       </tr>
       </thead>
       <tbody>
@@ -49,6 +50,11 @@
                 </td>
                 <td>
                   <div class="fw-semibold text-nowrap">{{ user.created_at }}</div>
+                </td>
+                  <td>
+<c-form-check [switch]="true">
+  <input [checked]="user.isActive"  cFormCheckInput type="checkbox" (change)="onCheckedChange(user._id, $event)" />
+</c-form-check>
                 </td>
               </tr>
       }

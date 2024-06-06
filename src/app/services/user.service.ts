@@ -40,6 +40,17 @@ export class UserService {
       .toPromise();
   }
 
+  async toggleUserActivation(id: any, active: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<any>(this.config.url('admin/users/toggleActive'), {
+      id: id,
+      active: active
+    }, {headers: headers})
+      .toPromise();
+  }
+
   async isAuthenticated(): Promise<boolean> {
     const user = await Preferences.get({key: 'account'});
     console.log(user)
