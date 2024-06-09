@@ -9,11 +9,11 @@ import {
   CardComponent,
   CardFooterComponent,
   CardHeaderComponent,
-  ColComponent, FormCheckComponent,
+  ColComponent, FormCheckComponent, FormCheckInputDirective,
   FormCheckLabelDirective, FormModule,
   GutterDirective,
   NavComponent,
-  NavItemComponent, NavLinkDirective, PageItemDirective, PageLinkDirective, PaginationComponent,
+  NavItemComponent, NavLinkDirective, PageItemDirective, PageLinkDirective, PaginationComponent, ProgressBarComponent,
   ProgressBarDirective,
   ProgressComponent,
   RowComponent,
@@ -21,15 +21,16 @@ import {
   TabContentRefDirective,
   TableDirective,
   TabPaneComponent,
-  TextColorDirective
+  TextColorDirective, ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent
 } from "@coreui/angular";
 import {IconDirective} from "@coreui/icons-angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ChartjsComponent} from "@coreui/angular-chartjs";
 import {CommonModule, NgFor, NgStyle} from "@angular/common";
 import {WidgetsBrandComponent} from "../widgets/widgets-brand/widgets-brand.component";
-import {RouterLink} from "@angular/router";
+import {Route, Router, RouterLink} from "@angular/router";
 import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.component";
+import {DocsExampleComponent} from "@docs-components/public-api";
 
 @Component({
   selector: 'app-users',
@@ -40,7 +41,8 @@ import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.compon
     ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective,
     AvatarComponent, TabContentComponent, TabContentRefDirective, TabPaneComponent, NavComponent, NavItemComponent,
     NavLinkDirective, NgFor, PaginationComponent, PageItemDirective, PageLinkDirective, FormsModule,
-    ChecksRadiosComponent, FormCheckComponent],
+    ChecksRadiosComponent, FormCheckComponent, DocsExampleComponent, FormCheckInputDirective, FormCheckInputDirective,
+    ToasterComponent, ToastComponent, ToastHeaderComponent, ToastBodyComponent, ProgressBarDirective, ProgressComponent, ProgressBarComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
@@ -50,8 +52,8 @@ export class UsersComponent implements OnInit {
   filteredUsers: any[] = [];
   paginatedUsers: any[] = [];
   public panes = [
-    {name: 'complete register', content: 'One'},
-    {name: 'incoming register', content: 'Two'},
+    {name: 'Registered', content: 'One'},
+    {name: 'incomplete registered', content: 'Two'},
     {name: 'wait list', content: 'Three'},
   ];
   currentPage: number = 1;
@@ -60,8 +62,9 @@ export class UsersComponent implements OnInit {
   pages: number[] = [];
   activePane = 0;
   searchQuery: string = '';
+  message: any;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router,) {
   }
 
   ngOnInit(): void {
@@ -73,14 +76,13 @@ export class UsersComponent implements OnInit {
       if (data.status == 1) {
         this.users = data.data;
         this.totalItems = data.data.length;
-        this.calculatePages();
-        this.paginateUsers();
+        this.onTabChange(0)
       }
     })
   }
 
   calculatePages() {
-    const totalPages = Math.ceil(this.totalItems / this.pageSize);
+    const totalPages = Math.ceil(this.usersArray.length / this.pageSize);
     this.pages = Array.from({length: totalPages}, (_, i) => i + 1);
   }
 
@@ -121,6 +123,8 @@ export class UsersComponent implements OnInit {
           this.goToPage(1);
         }
       })
+      this.calculatePages();
+      this.paginateUsers();
     } else if ($event == 1) {
       this.users.filter((item: any) => {
         if (!item.hasCompletedSignup) {
@@ -128,6 +132,8 @@ export class UsersComponent implements OnInit {
           this.goToPage(1);
         }
       })
+      this.calculatePages();
+      this.paginateUsers();
     } else if ($event == 2) {
       this.users.filter((item: any) => {
         if (item.inWaitList) {
@@ -135,6 +141,8 @@ export class UsersComponent implements OnInit {
           this.goToPage(1);
         }
       })
+      this.calculatePages();
+      this.paginateUsers();
     }
     console.log('onTabChange', $event);
   }
@@ -143,7 +151,12 @@ export class UsersComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
 
     this.userService.toggleUserActivation(id, inputElement.checked).then(data => {
-
+      if (data?.status == 1) {
+        this.message = data?.message;
+      } else {
+        this.message = data?.message;
+      }
+      this.toggleToast();
     })
     console.log('Checkbox checked state:', inputElement.checked);
     // Additional logic when the checked state changes
@@ -158,12 +171,35 @@ export class UsersComponent implements OnInit {
         (user.email && user.email.toLowerCase().includes(query))
       );
     } else {
-      this.usersArray = this.users;
+      // this.usersArray = this.users;
+      this.onTabChange(this.activePane)
     }
     this.totalItems = this.usersArray.length;
     this.currentPage = 1;
     this.calculatePages();
     this.paginateUsers();
   }
+
+  position = 'top-end';
+  visible = false;
+  percentage = 0;
+
+  toggleToast() {
+    this.visible = !this.visible;
+  }
+
+  onVisibleChange($event: boolean) {
+    this.visible = $event;
+    this.percentage = !this.visible ? 0 : this.percentage;
+  }
+
+  onTimerChange($event: number) {
+    this.percentage = $event * 25;
+  }
+
+  async gotoDetail(user: any) {
+    await this.router.navigate(['/user-detail'], {state: {user: user}});
+  }
+
 
 }

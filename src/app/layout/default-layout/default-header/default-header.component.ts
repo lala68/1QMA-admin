@@ -74,10 +74,12 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   async logout() {
-    await Preferences.clear();
-    this.generalService.userId = '';
-    this.userService.isLoggedIn = false;
-    await this.router.navigate(['/login']);
+    this.userService.logout().then(async data => {
+      await Preferences.clear();
+      this.generalService.userId = '';
+      this.userService.isLoggedIn = false;
+      await this.router.navigate(['/login']);
+    })
   }
 
   @Input() sidebarId: string = 'sidebar1';

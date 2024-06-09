@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     this.iconSetService.icons = {...iconSubset};
     this.starter().then((data) => {
       if (this.generalService.userId) {
-        // this.router.navigate(['dashboard'])
+        this.router.navigate(['dashboard'])
       } else {
         this.router.navigate(['login'])
       }

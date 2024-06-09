@@ -1,3 +1,11 @@
+<input
+  type="text"
+  [(ngModel)]="searchQuery"
+  (input)="searchUsers()"
+  placeholder="Search users"
+  class="form-control mb-3"
+  style="width: 30%"
+>
 <c-nav variant="tabs">
   <c-nav-item *ngFor="let nav of panes; index as i">
     <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="i" cNavLink>
@@ -9,14 +17,6 @@
                (activeTabPaneIdxChange)="onTabChange($event)"
                [activeTabPaneIdx]="activePane">
   <c-tab-pane *ngFor="let pane of panes; index as i;" class="p-3">
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      (input)="searchUsers()"
-      placeholder="Search users"
-      class="form-control mb-3"
-      style="width: 30%"
-    >
     <table
       [hover]="true"
       [responsive]="true"
@@ -27,17 +27,18 @@
     >
       <thead class="text-nowrap text-truncate">
       <tr>
-        <th class="bg-body-secondary">User</th>
+        <th class="bg-body-secondary">Name</th>
         <th class="bg-body-secondary">Email</th>
         <th class="bg-body-secondary">Created</th>
-        <th class="bg-body-secondary">Status</th>
+        <th class="bg-body-secondary">Referer</th>
+        <th class="bg-body-secondary">Active</th>
       </tr>
       </thead>
       <tbody>
       @for (user of paginatedUsers; track user.firstName;let i = $index) {
       <tr>
         <td>
-          <div class="fw-semibold">{{ user.firstName }} {{user.lastName}}</div>
+          <div class="fw-semibold" (click)="gotoDetail(user)">{{ user.firstName }} {{user.lastName}}</div>
                   <div class="small text-body-secondary text-nowrap">
                   </div>
                 </td>
@@ -52,6 +53,9 @@
                   <div class="fw-semibold text-nowrap">{{ user.created_at }}</div>
                 </td>
                   <td>
+                  <div class="fw-semibold text-nowrap">{{ user.referer?.firstName }} {{user.referer?.lastName}}</div>
+                </td>
+                  <td>
 <c-form-check [switch]="true">
   <input [checked]="user.isActive"  cFormCheckInput type="checkbox" (change)="onCheckedChange(user._id, $event)" />
 </c-form-check>
@@ -60,6 +64,22 @@
       }
       </tbody>
     </table>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+      <c-toast
+        (timer)="onTimerChange($event)"
+        (visibleChange)="onVisibleChange($event)"
+        [visible]="visible">
+        <c-toast-header>
+          Message
+        </c-toast-header>
+        <c-toast-body>
+          <p>{{message}}</p>
+<!--          <c-progress thin>-->
+<!--            <c-progress-bar [value]="percentage"></c-progress-bar>-->
+<!--          </c-progress>-->
+        </c-toast-body>
+      </c-toast>
+    </c-toaster>
     <br>
     <c-pagination aria-label="Page navigation example">
       <li cPageItem>

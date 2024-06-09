@@ -51,6 +51,16 @@ export class UserService {
       .toPromise();
   }
 
+  async logout(): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<any>(this.config.url('admin/logout'), {
+      id: this.generalService.userId,
+    }, {headers: headers})
+      .toPromise();
+  }
+
   async isAuthenticated(): Promise<boolean> {
     const user = await Preferences.get({key: 'account'});
     console.log(user)

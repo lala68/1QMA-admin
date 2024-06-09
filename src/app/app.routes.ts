@@ -41,6 +41,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
+        path: 'user-detail',
+        loadChildren: () => import('./views/user-detail/routes').then((m) => m.routes),
+        canActivate: [authGuard]
+      },
+      {
         path: 'theme',
         loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
       },
@@ -94,7 +99,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent)
+    loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent),
   },
   {
     path: 'register',
