@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {DefaultLayoutComponent} from './layout';
 import {authGuard} from "./auth.guard";
+import {AuthRedirectGuard} from "./auth-redirect.guard";
 
 export const routes: Routes = [
   {
@@ -100,6 +101,8 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./views/pages/login/login.component').then(m => m.LoginComponent),
+    canActivate: [AuthRedirectGuard] // Apply the new guard here
+
   },
   {
     path: 'register',
@@ -108,5 +111,7 @@ export const routes: Routes = [
       title: 'Register Page'
     }
   },
-  {path: '**', redirectTo: 'login'}
+  // {path: '**', redirectTo: 'login'}
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+
 ];

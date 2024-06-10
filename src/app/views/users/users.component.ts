@@ -16,7 +16,7 @@ import {
   NavItemComponent, NavLinkDirective, PageItemDirective, PageLinkDirective, PaginationComponent, ProgressBarComponent,
   ProgressBarDirective,
   ProgressComponent,
-  RowComponent,
+  RowComponent, SpinnerComponent,
   TabContentComponent,
   TabContentRefDirective,
   TableDirective,
@@ -36,7 +36,7 @@ import {DocsExampleComponent} from "@docs-components/public-api";
   selector: 'app-users',
   standalone: true,
   imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent,
-    ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent,
+    ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, SpinnerComponent,
     FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, RouterLink,
     ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective,
     AvatarComponent, TabContentComponent, TabContentRefDirective, TabPaneComponent, NavComponent, NavItemComponent,
@@ -51,6 +51,7 @@ export class UsersComponent implements OnInit {
   public usersArray: any = [];
   filteredUsers: any[] = [];
   paginatedUsers: any[] = [];
+  loading: boolean = true;
   public panes = [
     {name: 'Registered', content: 'One'},
     {name: 'incomplete registered', content: 'Two'},
@@ -90,6 +91,7 @@ export class UsersComponent implements OnInit {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedUsers = this.usersArray.slice(startIndex, endIndex);
+    this.loading = false;
   }
 
   goToPage(page: number) {
@@ -113,6 +115,7 @@ export class UsersComponent implements OnInit {
   }
 
   onTabChange($event: number) {
+    this.loading  = true;
     this.activePane = $event;
     this.usersArray = [];
     this.paginatedUsers = [];

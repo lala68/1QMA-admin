@@ -2,7 +2,7 @@
   type="text"
   [(ngModel)]="searchQuery"
   (input)="searchUsers()"
-  placeholder="Search users"
+  placeholder="Searching base on Name/Email"
   class="form-control mb-3"
   style="width: 30%"
 >
@@ -32,20 +32,21 @@
         <th class="bg-body-secondary">Created</th>
         <th class="bg-body-secondary">Referer</th>
         <th class="bg-body-secondary">Active</th>
+        <th class="bg-body-secondary">action</th>
       </tr>
       </thead>
       <tbody>
       @for (user of paginatedUsers; track user.firstName;let i = $index) {
       <tr>
         <td>
-          <div class="fw-semibold" (click)="gotoDetail(user)">{{ user.firstName }} {{user.lastName}}</div>
+          <div class="fw-semibold">{{ user.firstName }} {{user.lastName}}</div>
                   <div class="small text-body-secondary text-nowrap">
                   </div>
                 </td>
                 <td>
                   <div class="d-flex justify-content-between">
-                    <div class="float-start">
-                      <strong>{{ user.email }}</strong>
+                    <div class="float-start fw-semibold">
+                      {{ user.email }}
                     </div>
                   </div>
                 </td>
@@ -57,8 +58,11 @@
                 </td>
                   <td>
 <c-form-check [switch]="true">
-  <input [checked]="user.isActive"  cFormCheckInput type="checkbox" (change)="onCheckedChange(user._id, $event)" />
+  <input [checked]="user.isActive" style="cursor: pointer;"  cFormCheckInput type="checkbox" (change)="onCheckedChange(user._id, $event)" />
 </c-form-check>
+                </td>
+                 <td>
+                  <div class="fw-semibold text-nowrap" style="cursor: pointer;" (click)="gotoDetail(user)"><svg cIcon name="cilArrowRight" size="lg"></svg></div>
                 </td>
               </tr>
       }

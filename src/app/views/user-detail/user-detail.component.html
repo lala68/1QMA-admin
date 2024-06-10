@@ -1,5 +1,9 @@
 <c-row ngPreserveWhitespaces>
   <c-col xs="12">
+    <button class="float-end" [routerLink]="['/users']" cButton color="secondary" variant="outline">Back
+    </button>
+    <br>
+    <br>
     <c-card class="mb-4">
       <c-card-header>
         <strong>{{user?.firstName}} {{user?.lastName}}</strong>
