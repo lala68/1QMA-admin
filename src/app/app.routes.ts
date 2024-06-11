@@ -70,14 +70,17 @@ export const routes: Routes = [
         path: 'notifications',
         loadChildren: () => import('./views/notifications/routes').then((m) => m.routes)
       },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/routes').then((m) => m.routes)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/charts/routes').then((m) => m.routes)
-      },
+
+
+
+      // {
+      //   path: 'widgets',
+      //   loadChildren: () => import('./views/widgets/routes').then((m) => m.routes)
+      // },
+      // {
+      //   path: 'charts',
+      //   loadChildren: () => import('./views/charts/routes').then((m) => m.routes)
+      // },
       {
         path: 'pages',
         loadChildren: () => import('./views/pages/routes').then((m) => m.routes)

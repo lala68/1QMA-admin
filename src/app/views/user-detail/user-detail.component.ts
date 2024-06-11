@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {WidgetsDropdownComponent} from "../widgets/widgets-dropdown/widgets-dropdown.component";
 import {
   ButtonCloseDirective, ButtonDirective,
   CardBodyComponent,
@@ -14,7 +13,7 @@ import {Router, RouterModule} from "@angular/router";
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent,
+  imports: [TextColorDirective, CardComponent, CardBodyComponent, RowComponent,
     ColComponent, CardHeaderComponent, RouterModule, ButtonCloseDirective, ButtonDirective],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'

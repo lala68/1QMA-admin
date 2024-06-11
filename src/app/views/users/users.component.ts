@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {WidgetsDropdownComponent} from "../widgets/widgets-dropdown/widgets-dropdown.component";
 import {
   AvatarComponent,
   ButtonDirective,
@@ -25,9 +24,7 @@ import {
 } from "@coreui/angular";
 import {IconDirective} from "@coreui/icons-angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ChartjsComponent} from "@coreui/angular-chartjs";
 import {CommonModule, NgFor, NgStyle} from "@angular/common";
-import {WidgetsBrandComponent} from "../widgets/widgets-brand/widgets-brand.component";
 import {Route, Router, RouterLink} from "@angular/router";
 import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.component";
 import {DocsExampleComponent} from "@docs-components/public-api";
@@ -35,10 +32,10 @@ import {DocsExampleComponent} from "@docs-components/public-api";
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent,
+  imports: [TextColorDirective, CardComponent, CardBodyComponent, RowComponent,
     ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, SpinnerComponent,
-    FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, RouterLink,
-    ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective,
+    FormCheckLabelDirective, NgStyle, CardFooterComponent, GutterDirective, RouterLink,
+    ProgressBarDirective, ProgressComponent, CardHeaderComponent, TableDirective,
     AvatarComponent, TabContentComponent, TabContentRefDirective, TabPaneComponent, NavComponent, NavItemComponent,
     NavLinkDirective, NgFor, PaginationComponent, PageItemDirective, PageLinkDirective, FormsModule,
     ChecksRadiosComponent, FormCheckComponent, DocsExampleComponent, FormCheckInputDirective, FormCheckInputDirective,
