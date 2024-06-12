@@ -17,9 +17,14 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'profile',
+        loadChildren: () => import('./views/edit-profile/routes').then((m) => m.routes),
+        canActivate: [authGuard]
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes),
-       canActivate: [authGuard]
+        canActivate: [authGuard]
       },
       {
         path: 'categories',
@@ -70,7 +75,6 @@ export const routes: Routes = [
         path: 'notifications',
         loadChildren: () => import('./views/notifications/routes').then((m) => m.routes)
       },
-
 
 
       // {

@@ -48,7 +48,7 @@ export class LoginComponent {
     this.userService.loginUser(this.loginForm.value).then(data => {
       this.loadingSubmit = false;
       if (data.status == 1) {
-        this.generalService.saveToStorage('account', data?.data?._id);
+        this.generalService.saveToStorage('account', JSON.stringify(data?.data));
         this.generalService.userId = data?.data?._id;
         this.router.navigate(['dashboard']);
       } else {

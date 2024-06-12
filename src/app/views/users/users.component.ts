@@ -28,6 +28,8 @@ import {CommonModule, NgFor, NgStyle} from "@angular/common";
 import {Route, Router, RouterLink} from "@angular/router";
 import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.component";
 import {DocsExampleComponent} from "@docs-components/public-api";
+import {Preferences} from "@capacitor/preferences";
+import {GeneralService} from "../../services/general.service";
 
 @Component({
   selector: 'app-users',
@@ -62,7 +64,7 @@ export class UsersComponent implements OnInit {
   searchQuery: string = '';
   message: any;
 
-  constructor(private userService: UserService, private router: Router,) {
+  constructor(private userService: UserService, private router: Router, private generalService: GeneralService) {
   }
 
   ngOnInit(): void {
@@ -112,7 +114,7 @@ export class UsersComponent implements OnInit {
   }
 
   onTabChange($event: number) {
-    this.loading  = true;
+    this.loading = true;
     this.activePane = $event;
     this.usersArray = [];
     this.paginatedUsers = [];

@@ -40,6 +40,21 @@ export class UserService {
       .toPromise();
   }
 
+  async changePassword(data: any): Promise<any> {
+    console.log(this.generalService.user)
+    console.log(this.generalService.userId)
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<any>(this.config.url('admin/updatePassword'), {
+      id: this.generalService.user._id,
+      currentPassword: data.currentPassword,
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation
+    }, {headers: headers})
+      .toPromise();
+  }
+
   async toggleUserActivation(id: any, active: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -65,7 +80,8 @@ export class UserService {
     const user = await Preferences.get({key: 'account'});
     console.log(user)
     if (user.value != null) {
-      this.generalService.userId = (user.value);
+      this.generalService.user = JSON.parse(user.value);
+      this.generalService.userId = (this.generalService.user._id);
       this.isLoggedIn = true;
     }
     return !!user.value;
