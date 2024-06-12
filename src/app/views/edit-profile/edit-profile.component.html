@@ -1,0 +1,52 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Edit Profile</strong>
+      </c-card-header>
+      <c-card-body>
+        <strong>{{generalService?.user?.email}}</strong><br>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Change Password</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm [formGroup]="changePasswordForm" (ngSubmit)="submitNewPass()">
+          <div class="mb-2">
+            <label cLabel for="current_password">Current Password</label>
+            <input cFormControl formControlName="currentPassword" id="current_password" type="text">
+          </div>
+          <div class="mb-2">
+            <label cLabel for="new_password">New Password</label>
+            <input cFormControl formControlName="password" id="new_password" type="text">
+          </div>
+          <div class="mb-2">
+            <label cLabel for="confirm_password">Confirm Password</label>
+            <input cFormControl formControlName="passwordConfirmation" id="confirm_password" type="text">
+          </div>
+          <br><br>
+          <input cButton color="primary" [disabled]="loadingSubmit || changePasswordForm.invalid" type="submit">
+        </form>
+      </c-card-body>
+    </c-card>
+    <c-toaster [placement]="position" class="p-3" position="fixed">
+      <c-toast
+        (visibleChange)="onVisibleChange($event)"
+        [visible]="visible">
+        <c-toast-header>
+          Message
+        </c-toast-header>
+        <c-toast-body>
+          <p>{{message}}</p>
+        </c-toast-body>
+      </c-toast>
+    </c-toaster>
+  </c-col>
+</c-row>
