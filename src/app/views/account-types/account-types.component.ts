@@ -42,10 +42,13 @@ export class AccountTypesComponent {
   loading: boolean = true;
   loadingSubmit: boolean = false;
   public visible = false;
+  fileToUpload: any
+  imgSrc: any;
+  error: any = '';
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.accountTypeForm = this.fb.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
     });
   }
 
@@ -63,11 +66,14 @@ export class AccountTypesComponent {
     })
   }
 
-  displayAddAccount(name: any = null, id: any = null) {
+  displayAddAccount(name: any = null, id: any = null, path: any = null) {
     this.id = id;
+    this.imgSrc = '';
+    this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm && name) {
-      this.accountTypeForm.patchValue({name: name})
+      this.accountTypeForm.patchValue({name: name});
+      this.imgSrc = path;
     } else {
       this.accountTypeForm.reset();
     }
@@ -75,24 +81,33 @@ export class AccountTypesComponent {
 
   submitNewAccountType() {
     this.loadingSubmit = true;
+    this.error = '';
     const name = this.accountTypeForm.get('name')?.value;
     if (this.id) {
-      this.gameService.updateAccountType(this.id, name).then(data => {
+      this.gameService.updateAccountType(this.id, name, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
           this.getAccountTypes();
+        } else {
+          this.error = data?.message;
         }
       })
     } else {
-      this.gameService.postNewAccountType(name).then(data => {
+      this.gameService.postNewAccountType(name, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
           this.getAccountTypes();
+        } else {
+          this.error = data?.message;
         }
       })
     }
+  }
+
+  handleFileInput(event: any) {
+    this.fileToUpload = event.target.files[0];
   }
 
   deleteAccountType(id: any) {

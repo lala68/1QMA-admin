@@ -21,15 +21,15 @@
         <form cForm [formGroup]="changePasswordForm" (ngSubmit)="submitNewPass()">
           <div class="mb-2">
             <label cLabel for="current_password">Current Password</label>
-            <input cFormControl formControlName="currentPassword" id="current_password" type="text">
+            <input cFormControl formControlName="currentPassword" id="current_password" type="password">
           </div>
           <div class="mb-2">
             <label cLabel for="new_password">New Password</label>
-            <input cFormControl formControlName="password" id="new_password" type="text">
+            <input cFormControl formControlName="password" id="new_password" type="password">
           </div>
           <div class="mb-2">
             <label cLabel for="confirm_password">Confirm Password</label>
-            <input cFormControl formControlName="passwordConfirmation" id="confirm_password" type="text">
+            <input cFormControl formControlName="passwordConfirmation" id="confirm_password" type="password">
           </div>
           <br><br>
           <input cButton color="primary" [disabled]="loadingSubmit || changePasswordForm.invalid" type="submit">

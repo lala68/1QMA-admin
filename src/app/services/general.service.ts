@@ -18,10 +18,8 @@ export class GeneralService {
   async getUserData(): Promise<any> {
     let b = await Preferences.get({key: 'account'});
     if (b.value != null) {
-      console.log(JSON.parse(b.value));
       this.user = JSON.parse(b.value);
       this.userId = (this.user._id);
-      console.log(this.userId)
     }
   }
 

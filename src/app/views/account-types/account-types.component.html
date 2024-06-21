@@ -18,10 +18,21 @@
             <label cLabel for="name">Name Of accountType</label>
             <input cFormControl formControlName="name" id="name" type="text">
           </div>
-          <input cButton color="primary" [disabled]="loadingSubmit || accountTypeForm.invalid" type="submit">
-          <button (click)="displayAddAccount()" cButton color="secondary" variant="outline">Back
-        </button>
-        </form>
+             <div class="mb-3">
+            <label cLabel for="name">Icon Of accountType</label>
+           <input type="file" (change)="handleFileInput($event)"
+                                 class="form-control mt-2">
+                                  @if (imgSrc){
+        <img [src]="'http://staging.api.1qma.games/' + imgSrc" width="100px"/>
+        }
+        </div>
+   <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <input cButton color="primary" [disabled]="loadingSubmit || accountTypeForm.invalid" type="submit">
+        <button (click)="displayAddAccount()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
         }
 
         @for (item of accountTypes; track item.name;let i = $index){
@@ -29,7 +40,7 @@
         <ul cListGroup>
           <li cListGroupItem>
             <div style="width: 20%; display: inline-block">{{item?.name}}</div>
-            <button cButton color="light" (click)="displayAddAccount(item.name, item._id)">
+            <button cButton color="light" (click)="displayAddAccount(item.name, item._id, item.icon)">
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button cButton color="light" (click)="toggleModal()">

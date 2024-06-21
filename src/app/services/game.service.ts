@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
@@ -12,7 +12,8 @@ export class GameService {
 
   constructor(private http: HttpClient,
               private config: ConfigService,
-              private processHTTPMsgService: ProcessHttpMessageService,) { }
+              private processHTTPMsgService: ProcessHttpMessageService,) {
+  }
 
   getAllSettings(): Observable<any> {
     let headers = new HttpHeaders({
@@ -26,7 +27,11 @@ export class GameService {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.post<any>(this.config.url('admin/settings/add'), {name: name, key: key, value: value}, {headers: headers})
+    return this.http.post<any>(this.config.url('admin/settings/add'), {
+      name: name,
+      key: key,
+      value: value
+    }, {headers: headers})
       .toPromise();
   }
 
@@ -47,19 +52,23 @@ export class GameService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  async postNewCategory(data: any): Promise<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    return this.http.post<any>(this.config.url('admin/categories/add'), {name: data}, {headers: headers})
+  async postNewCategory(data: any, icon: any = null): Promise<any> {
+    const formData = new FormData();
+    formData.append('name', data);
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/categories/add'), formData)
       .toPromise();
   }
 
-  async updateCategory(id: any, name: any): Promise<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    return this.http.post<any>(this.config.url('admin/categories/update'), {id: id, name: name}, {headers: headers})
+  async updateCategory(id: any, name: any, icon: any = null): Promise<any> {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('id', id);
+    formData.append('icon', icon);
+    // if (!icon) {
+    //   formData.delete('icon')
+    // }
+    return this.http.post<any>(this.config.url('admin/categories/update'), formData)
       .toPromise();
   }
 
@@ -79,19 +88,20 @@ export class GameService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  async postNewAccountType(data: any): Promise<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    return this.http.post<any>(this.config.url('admin/accountTypes/add'), {name: data}, {headers: headers})
+  async postNewAccountType(data: any, icon: any = null): Promise<any> {
+    const formData = new FormData();
+    formData.append('name', data);
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/accountTypes/add'), formData)
       .toPromise();
   }
 
-  async updateAccountType(id: any, name: any): Promise<any> {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    return this.http.post<any>(this.config.url('admin/accountTypes/update'), {id: id, name: name}, {headers: headers})
+  async updateAccountType(id: any, name: any, icon: any): Promise<any> {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('id', id);
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/accountTypes/update'), formData)
       .toPromise();
   }
 

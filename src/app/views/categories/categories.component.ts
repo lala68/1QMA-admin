@@ -40,6 +40,9 @@ export class CategoriesComponent implements OnInit {
   loading: boolean = true;
   loadingSubmit: boolean = false;
   public visible = false;
+  fileToUpload: any
+  imgSrc: any;
+  error: any = '';
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.categoryForm = this.fb.group({
@@ -61,33 +64,45 @@ export class CategoriesComponent implements OnInit {
     })
   }
 
-  displayAddCategory(name: any = null, id: any = null) {
+  displayAddCategory(name: any = null, id: any = null, path: any = null) {
     this.id = id;
+    this.imgSrc = '';
+    this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm && name) {
-      this.categoryForm.setValue({name: name})
+      this.categoryForm.setValue({name: name});
+      this.imgSrc = path;
     } else {
       this.categoryForm.reset();
     }
   }
 
+  handleFileInput(event: any) {
+    this.fileToUpload = event.target.files[0];
+  }
+
   submitNewCategory() {
     this.loadingSubmit = true;
+    this.error = '';
     const name = this.categoryForm.get('name')?.value;
     if (this.id) {
-      this.gameService.updateCategory(this.id, name).then(data => {
+      this.gameService.updateCategory(this.id, name, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
           this.getCategories();
+        } else {
+          this.error = data?.message;
         }
       })
     } else {
-      this.gameService.postNewCategory(name).then(data => {
+      this.gameService.postNewCategory(name, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
           this.getCategories();
+        } else {
+          this.error = data?.message;
         }
       })
     }
@@ -98,6 +113,8 @@ export class CategoriesComponent implements OnInit {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getCategories();
+      } else {
+        this.error = data?.messsage;
       }
     })
   }

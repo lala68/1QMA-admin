@@ -41,8 +41,6 @@ export class UserService {
   }
 
   async changePassword(data: any): Promise<any> {
-    console.log(this.generalService.user)
-    console.log(this.generalService.userId)
     let headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
@@ -78,7 +76,6 @@ export class UserService {
 
   async isAuthenticated(): Promise<boolean> {
     const user = await Preferences.get({key: 'account'});
-    console.log(user)
     if (user.value != null) {
       this.generalService.user = JSON.parse(user.value);
       this.generalService.userId = (this.generalService.user._id);

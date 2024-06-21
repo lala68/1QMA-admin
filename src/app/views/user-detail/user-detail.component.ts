@@ -26,7 +26,6 @@ export class UserDetailComponent {
     if(!this.user){
       this.router.navigate(['/users'])
     }
-    console.log(this.user)
   }
 
 }
