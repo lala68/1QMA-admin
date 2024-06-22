@@ -9,7 +9,7 @@
         <c-spinner style="display: block; margin: 0 auto"></c-spinner>
         }
         @if (!loading && !displayForm){
-        <button (click)="displayAddCategory()" class="mb-2" cButton color="primary" variant="outline">Add New Category
+        <button (click)="displayAddCategory()" class="mb-3" cButton color="primary" variant="outline">Add New Category
         </button>
         }
         @if (displayForm){
@@ -37,9 +37,12 @@
 
         @for (item of categories; track item.name;let i = $index){
         @if (item.name && !displayForm){
-        <ul cListGroup>
-          <li cListGroupItem>
-            <div style="width: 20%; display: inline-block">{{item?.name}}</div>
+        <div cListGroup>
+          <div cListGroupItem class="mb-3">
+            <div class="avatar">
+              <img class="avatar-img" [src]="'http://staging.api.1qma.games/' + item?.icon">
+            </div>
+            <div style="width: 30%; display: inline-block">{{item?.name}}</div>
             <button cButton color="light" (click)="displayAddCategory(item.name, item._id, item.icon)">
               <svg cIcon name="cilPencil"></svg>
             </button>
@@ -59,8 +62,8 @@
                 <button (click)="toggleModal()" cButton color="primary">No</button>
               </c-modal-footer>
             </c-modal>
-          </li>
-        </ul>
+          </div>
+        </div>
         }
         }
       </c-card-body>

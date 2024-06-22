@@ -1,20 +1,48 @@
+<!--<c-row>-->
+<!--  <c-col md="12" xl="6">-->
+<!--    <c-widget-stat-b style="color: white"-->
+<!--                     [title]="'Number of Users'"-->
+<!--                     class="mb-4 text-white"-->
+<!--                     color="primary"-->
+<!--                     [value]="dashboard?.usersCount"-->
+<!--    >-->
+<!--    </c-widget-stat-b>-->
+<!--  </c-col>-->
+<!--  <c-col md="12" xl="6">-->
+<!--    <c-widget-stat-b-->
+<!--      [title]="'Number of Games Played'"-->
+<!--      class="mb-4"-->
+<!--      color="warning"-->
+<!--      [value]="dashboard?.gamesCount ? dashboard?.gamesCount : '0'"-->
+<!--    >-->
+<!--    </c-widget-stat-b>-->
+<!--  </c-col>-->
+<!--</c-row>-->
 <c-row>
-  <c-col [sm]="3">
-    <c-card class="text-center mb-4">
-      <c-card-header>Number of Users</c-card-header>
-      <c-card-body>
-        <h5 cCardTitle>{{dashboard?.usersCount}}</h5>
-<!--        <button cButton color="primary">Go To Users Page</button>-->
-      </c-card-body>
-    </c-card>
+  <c-col lg="6" xs="12">
+    <c-widget-stat-f
+      [title]="'Number of Users'"
+      class="mb-3"
+      color="primary"
+      [value]="dashboard?.usersCount"
+    >
+      <ng-template cTemplateId="widgetIconTemplate">
+        <svg cIcon name="cilUser" size="xl" width="24"></svg>
+      </ng-template>
+    </c-widget-stat-f>
   </c-col>
-  <c-col [sm]="3">
-    <c-card class="text-center mb-4">
-      <c-card-header>Number of Games Played</c-card-header>
-      <c-card-body>
-        <h5 cCardTitle>{{dashboard?.gamesCount}}</h5>
-<!--        <button cButton color="primary">Go To Users Page</button>-->
-      </c-card-body>
-    </c-card>
+  <c-col lg="6" xs="12">
+    <c-widget-stat-f
+      [title]="'Number of Games Played'"
+      class="mb-3"
+      color="warning"
+      [value]="dashboard?.gamesCount ? dashboard?.gamesCount : '0'"
+    >
+      <ng-template cTemplateId="widgetIconTemplate">
+        <svg cIcon name="cilGamepad" size="xl" width="24"></svg>
+      </ng-template>
+    </c-widget-stat-f>
   </c-col>
 </c-row>
+
+

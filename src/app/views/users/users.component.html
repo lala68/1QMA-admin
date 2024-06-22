@@ -27,6 +27,7 @@
     >
       <thead class="text-nowrap text-truncate">
       <tr>
+        <th class="bg-body-secondary"></th>
         <th class="bg-body-secondary">Name</th>
         <th class="bg-body-secondary">Email</th>
         <th class="bg-body-secondary">Created</th>
@@ -38,6 +39,11 @@
       <tbody>
       @for (user of paginatedUsers; track user.firstName;let i = $index) {
       <tr>
+          <td>
+          <div class="avatar">
+  <img class="avatar-img" [src]="'http://staging.api.1qma.games/' + user?.profilePicture" alt="user@email.com">
+</div>
+                </td>
         <td>
           <div class="fw-semibold">{{ user.firstName }} {{user.lastName}}</div>
                   <div class="small text-body-secondary text-nowrap">
@@ -46,12 +52,12 @@
                 <td>
                   <div class="d-flex justify-content-between">
                     <div class="float-start fw-semibold">
-                      {{ user.email }}
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="fw-semibold text-nowrap">{{ user.created_at }}</div>
+      {{ user.email }}
+      </div>
+    </div>
+  </td>
+  <td>
+    <div class="fw-semibold text-nowrap">{{ user.created_at }}</div>
                 </td>
                   <td>
                   <div class="fw-semibold text-nowrap">{{ user.referer?.firstName }} {{user.referer?.lastName}}</div>
@@ -78,9 +84,9 @@
         </c-toast-header>
         <c-toast-body>
           <p>{{message}}</p>
-<!--          <c-progress thin>-->
-<!--            <c-progress-bar [value]="percentage"></c-progress-bar>-->
-<!--          </c-progress>-->
+          <!--          <c-progress thin>-->
+          <!--            <c-progress-bar [value]="percentage"></c-progress-bar>-->
+          <!--          </c-progress>-->
         </c-toast-body>
       </c-toast>
     </c-toaster>

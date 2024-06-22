@@ -11,25 +11,31 @@ import {
   CardHeaderComponent,
   ColComponent,
   FormCheckLabelDirective,
-  GutterDirective,
+  GutterDirective, ProgressBarComponent,
   ProgressBarDirective,
   ProgressComponent,
   RowComponent,
-  TableDirective,
-  TextColorDirective
+  TableDirective, TemplateIdDirective,
+  TextColorDirective, WidgetStatBComponent, WidgetStatCComponent, WidgetStatEComponent, WidgetStatFComponent
 } from '@coreui/angular';
-import {IconDirective} from '@coreui/icons-angular';
 
 import {GameService} from "../../services/game.service";
+import {IconDirective} from "@coreui/icons-angular";
+import {cilArrowRight, cilChartPie} from "@coreui/icons";
 
 @Component({
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss'],
   standalone: true,
-  imports: [TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent, CardHeaderComponent, TableDirective, AvatarComponent]
+  imports: [TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective,
+    IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, NgStyle, CardFooterComponent,
+    GutterDirective, ProgressBarDirective, ProgressComponent, CardHeaderComponent, TableDirective, AvatarComponent,
+    WidgetStatBComponent, WidgetStatFComponent, WidgetStatEComponent, ProgressBarComponent,
+    TemplateIdDirective,]
 })
 export class DashboardComponent implements OnInit{
   dashboard: any;
+  icons = { cilChartPie, cilArrowRight };
 
   constructor(private gameService: GameService) {
   }
