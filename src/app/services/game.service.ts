@@ -101,6 +101,9 @@ export class GameService {
     formData.append('name', name);
     formData.append('id', id);
     formData.append('icon', icon);
+    if (!icon) {
+      formData.delete('icon')
+    }
     return this.http.post<any>(this.config.url('admin/accountTypes/update'), formData)
       .toPromise();
   }

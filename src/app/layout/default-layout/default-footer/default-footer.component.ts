@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FooterComponent } from '@coreui/angular';
+import {ConfigService} from "../../../services/config.service";
 
 @Component({
     selector: 'app-default-footer',
@@ -8,7 +9,7 @@ import { FooterComponent } from '@coreui/angular';
     standalone: true,
 })
 export class DefaultFooterComponent extends FooterComponent {
-  constructor() {
+  constructor(public configService: ConfigService) {
     super();
   }
 }
