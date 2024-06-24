@@ -23,7 +23,8 @@ export class UserService {
 
   getUsers(): Observable<any> {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Token': this.generalService.token
     })
     return this.http.get<any>(this.config.url('admin/users'), {headers: headers})
       .pipe(catchError(this.processHTTPMsgService.handleError));
@@ -42,7 +43,8 @@ export class UserService {
 
   async changePassword(data: any): Promise<any> {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Token': this.generalService.token
     })
     return this.http.post<any>(this.config.url('admin/updatePassword'), {
       id: this.generalService.user._id,
@@ -55,7 +57,8 @@ export class UserService {
 
   async toggleUserActivation(id: any, active: any): Promise<any> {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Token': this.generalService.token
     })
     return this.http.post<any>(this.config.url('admin/users/toggleActive'), {
       id: id,
@@ -66,7 +69,8 @@ export class UserService {
 
   async logout(): Promise<any> {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Token': this.generalService.token
     })
     return this.http.post<any>(this.config.url('admin/logout'), {
       id: this.generalService.userId,
