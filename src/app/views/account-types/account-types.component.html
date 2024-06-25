@@ -23,7 +23,7 @@
            <input type="file" (change)="handleFileInput($event)"
                                  class="form-control mt-2">
                                   @if (imgSrc){
-        <img [src]="'http://staging.api.1qma.games/' + imgSrc" width="100px"/>
+        <img [src]="'http://api.staging.1qma.games/' + imgSrc" width="100px"/>
         }
         </div>
    <div role="alert" style="color: #ff5722; margin: 10px 0">
@@ -40,7 +40,7 @@
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <div class="avatar">
-              <img class="avatar-img" [src]="'http://staging.api.1qma.games/' + item?.icon">
+              <img class="avatar-img" [src]="'http://api.staging.1qma.games/' + item?.icon">
             </div>
             <div style="width: 30%; display: inline-block">{{item?.name}}</div>
             <button cButton color="light" (click)="displayAddAccount(item.name, item._id, item.icon)">
