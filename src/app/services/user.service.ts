@@ -26,7 +26,7 @@ export class UserService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.get<any>(this.config.url('admin/users'), {headers: headers})
+    return this.http.get<any>(this.config.url('admin/users'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -37,7 +37,7 @@ export class UserService {
     return this.http.post<any>(this.config.url('admin/login'), {
       email: data.email,
       password: data.password
-    }, {headers: headers})
+    }, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -51,7 +51,7 @@ export class UserService {
       currentPassword: data.currentPassword,
       password: data.password,
       passwordConfirmation: data.passwordConfirmation
-    }, {headers: headers})
+    }, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -63,7 +63,7 @@ export class UserService {
     return this.http.post<any>(this.config.url('admin/users/toggleActive'), {
       id: id,
       active: active
-    }, {headers: headers})
+    }, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -74,7 +74,7 @@ export class UserService {
     })
     return this.http.post<any>(this.config.url('admin/logout'), {
       id: this.generalService.userId,
-    }, {headers: headers})
+    }, {headers: headers, withCredentials: true})
       .toPromise();
   }
 

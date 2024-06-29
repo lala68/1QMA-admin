@@ -22,7 +22,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.get<any>(this.config.url('admin/settings'), {headers: headers})
+    return this.http.get<any>(this.config.url('admin/settings'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -35,7 +35,7 @@ export class GameService {
       name: name,
       key: key,
       value: value
-    }, {headers: headers})
+    }, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -44,7 +44,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.post<any>(this.config.url('admin/settings/update'), {id: id, value: value}, {headers: headers})
+    return this.http.post<any>(this.config.url('admin/settings/update'), {id: id, value: value}, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -54,7 +54,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.get<any>(this.config.url('admin/categories'), {headers: headers})
+    return this.http.get<any>(this.config.url('admin/categories'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -65,7 +65,7 @@ export class GameService {
     const formData = new FormData();
     formData.append('name', data);
     formData.append('icon', icon);
-    return this.http.post<any>(this.config.url('admin/categories/add'), formData, { headers: headers })
+    return this.http.post<any>(this.config.url('admin/categories/add'), formData, { headers: headers, withCredentials: true })
       .toPromise();
   }
 
@@ -80,7 +80,7 @@ export class GameService {
     // if (!icon) {
     //   formData.delete('icon')
     // }
-    return this.http.post<any>(this.config.url('admin/categories/update'), formData, { headers: headers })
+    return this.http.post<any>(this.config.url('admin/categories/update'), formData, { headers: headers, withCredentials: true })
       .toPromise();
   }
 
@@ -89,7 +89,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.post<any>(this.config.url('admin/categories/delete'), {id: id}, {headers: headers})
+    return this.http.post<any>(this.config.url('admin/categories/delete'), {id: id}, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -98,7 +98,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.get<any>(this.config.url('admin/accountTypes'), {headers: headers})
+    return this.http.get<any>(this.config.url('admin/accountTypes'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -109,7 +109,7 @@ export class GameService {
     const formData = new FormData();
     formData.append('name', data);
     formData.append('icon', icon);
-    return this.http.post<any>(this.config.url('admin/accountTypes/add'), formData, { headers: headers })
+    return this.http.post<any>(this.config.url('admin/accountTypes/add'), formData, { headers: headers, withCredentials: true })
       .toPromise();
   }
 
@@ -124,7 +124,7 @@ export class GameService {
     if (!icon) {
       formData.delete('icon')
     }
-    return this.http.post<any>(this.config.url('admin/accountTypes/update'), formData, { headers: headers })
+    return this.http.post<any>(this.config.url('admin/accountTypes/update'), formData, { headers: headers, withCredentials: true })
       .toPromise();
   }
 
@@ -133,7 +133,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.post<any>(this.config.url('admin/accountTypes/delete'), {id: id}, {headers: headers})
+    return this.http.post<any>(this.config.url('admin/accountTypes/delete'), {id: id}, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
@@ -142,7 +142,7 @@ export class GameService {
       'Content-Type': 'application/json',
       'Access-Token': this.generalService.token
     })
-    return this.http.get<any>(this.config.url('admin/dashboard'), {headers: headers})
+    return this.http.get<any>(this.config.url('admin/dashboard'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }
