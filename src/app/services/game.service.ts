@@ -20,7 +20,7 @@ export class GameService {
   getAllSettings(): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.get<any>(this.config.url('admin/settings'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
@@ -29,7 +29,7 @@ export class GameService {
   async postNewSettings(name: any, key: any, value: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/settings/add'), {
       name: name,
@@ -42,7 +42,7 @@ export class GameService {
   async updateSettings(id: any, value: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/settings/update'), {id: id, value: value}, {headers: headers, withCredentials: true})
       .toPromise();
@@ -52,7 +52,7 @@ export class GameService {
   getCategories(): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.get<any>(this.config.url('admin/categories'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
@@ -60,7 +60,7 @@ export class GameService {
 
   async postNewCategory(data: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({
-      'Access-Token': this.generalService.token
+
     });
     const formData = new FormData();
     formData.append('name', data);
@@ -71,7 +71,7 @@ export class GameService {
 
   async updateCategory(id: any, name: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({
-      'Access-Token': this.generalService.token
+
     });
     const formData = new FormData();
     formData.append('name', name);
@@ -87,7 +87,7 @@ export class GameService {
   async deleteCategory(id: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/categories/delete'), {id: id}, {headers: headers, withCredentials: true})
       .toPromise();
@@ -96,7 +96,7 @@ export class GameService {
   getAccountTypes(): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.get<any>(this.config.url('admin/accountTypes'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
@@ -104,7 +104,7 @@ export class GameService {
 
   async postNewAccountType(data: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({
-      'Access-Token': this.generalService.token
+
     });
     const formData = new FormData();
     formData.append('name', data);
@@ -115,7 +115,7 @@ export class GameService {
 
   async updateAccountType(id: any, name: any, icon: any): Promise<any> {
     let headers = new HttpHeaders({
-      'Access-Token': this.generalService.token
+
     });
     const formData = new FormData();
     formData.append('name', name);
@@ -131,7 +131,7 @@ export class GameService {
   async deleteAccountType(id: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/accountTypes/delete'), {id: id}, {headers: headers, withCredentials: true})
       .toPromise();
@@ -140,7 +140,7 @@ export class GameService {
   getDashboard(): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.get<any>(this.config.url('admin/dashboard'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));

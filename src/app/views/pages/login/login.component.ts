@@ -48,10 +48,8 @@ export class LoginComponent {
     this.userService.loginUser(this.loginForm.value).then(data => {
       this.loadingSubmit = false;
       if (data.status == 1) {
-        this.generalService.saveToStorage('accessToken', data?.data.token);
-        this.generalService.saveToStorage('account', JSON.stringify(data?.data?.user));
+        this.generalService.saveToStorage('account', JSON.stringify(data?.data));
         this.generalService.userId = data?.data?._id;
-        this.generalService.token = data?.data?.token;
         this.router.navigate(['dashboard']);
       } else {
         this.error = data.message;

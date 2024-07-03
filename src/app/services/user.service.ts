@@ -24,7 +24,7 @@ export class UserService {
   getUsers(): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.get<any>(this.config.url('admin/users'), {headers: headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
@@ -44,7 +44,7 @@ export class UserService {
   async changePassword(data: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/updatePassword'), {
       id: this.generalService.user._id,
@@ -58,7 +58,7 @@ export class UserService {
   async toggleUserActivation(id: any, active: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/users/toggleActive'), {
       id: id,
@@ -70,7 +70,7 @@ export class UserService {
   async logout(): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Token': this.generalService.token
+
     })
     return this.http.post<any>(this.config.url('admin/logout'), {
       id: this.generalService.userId,
@@ -81,9 +81,27 @@ export class UserService {
   async isAuthenticated(): Promise<boolean> {
     const user = await Preferences.get({key: 'account'});
     if (user.value != null) {
-      this.generalService.user = JSON.parse(user.value);
-      this.generalService.userId = (this.generalService.user._id);
-      this.isLoggedIn = true;
+      // this.generalService.user = JSON.parse(user.value);
+      // this.generalService.userId = (this.generalService.user._id);
+      // this.isLoggedIn = true;
+      try {
+        var testIfJson = JSON.parse(user.value);
+        console.log(testIfJson)
+        if (typeof testIfJson == "object") {
+          //Json
+          this.generalService.user = JSON.parse(user.value);
+          this.generalService.userId = (this.generalService.user._id);
+          this.isLoggedIn = true;
+        } else {
+          //Not Json
+          this.generalService.user = (user.value);
+          this.generalService.userId = (this.generalService.user._id);
+          this.isLoggedIn = true;
+        }
+      } catch {
+        this.generalService.user = (user.value);
+        this.generalService.userId = (this.generalService.user._id);
+      }
     }
     return !!user.value;
   }

@@ -7,7 +7,6 @@ import {Preferences} from "@capacitor/preferences";
 export class GeneralService {
   user: any;
   userId: any;
-  token: any;
 
   constructor() {
   }
@@ -17,14 +16,24 @@ export class GeneralService {
   }
 
   async getUserData(): Promise<any> {
-    let token = await Preferences.get({key: 'accessToken'});
-    if (token.value != null) {
-      this.token = (token.value);
-    }
-    let b = await Preferences.get({key: 'account'});
-    if (b.value != null) {
-      this.user = JSON.parse(b.value);
-      this.userId = (this.user._id);
+    let user = await Preferences.get({key: 'account'});
+    if (user.value != null) {
+      try {
+        var testIfJson = JSON.parse(user.value);
+        console.log(testIfJson)
+        if (typeof testIfJson == "object") {
+          //Json
+          this.user = JSON.parse(user.value);
+          this.userId = (this.user._id);
+        } else {
+          //Not Json
+          this.user = (user.value);
+          this.userId = (this.user._id);
+        }
+      } catch {
+        this.user = (user.value);
+        this.userId = (this.user._id);
+      }
     }
   }
 
