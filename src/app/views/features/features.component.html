@@ -1,0 +1,156 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Features</strong>
+      </c-card-header>
+      <c-card-body>
+        @if (loading){
+        <c-spinner style="display: block; margin: 0 auto"></c-spinner>
+        }
+        @if (!loading && !displayForm){
+        <button (click)="displayAddFeature()" class="mb-3" cButton color="primary" variant="outline">Add New Feature
+        </button>
+        }
+        @if (!displayForm){
+        <table
+     [hover]="true"
+     [responsive]="true"
+     [striped]="true"
+     align="middle"
+     cTable
+     class="mb-0 border"
+   >
+     <thead class="text-nowrap text-truncate">
+     <tr>
+       <th class="bg-body-secondary"></th>
+       <th class="bg-body-secondary">Count</th>
+       <th class="bg-body-secondary">Title</th>
+       <th class="bg-body-secondary">Active</th>
+       <th class="bg-body-secondary">Edit</th>
+       <th class="bg-body-secondary">Delete</th>
+     </tr>
+     </thead>
+     <tbody>
+       @for (feature of features; track feature.type;let i = $index) {
+        <tr>
+          <td>
+            <div class="avatar">
+              <img class="avatar-img"
+                   [src]="feature?.icon ? 'https://api.staging.1qma.games/' + feature?.icon : '/assets/images/frame.png'">
+            </div>
+          </td>
+          <td>
+            {{feature?.count}}
+          </td>
+          <td>
+            {{feature?.title}}
+          </td>
+          <td>
+            <c-form-check [switch]="true">
+              <input [checked]="feature.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
+                     (change)="onCheckedChange(feature._id, $event)"/>
+            </c-form-check>
+          </td>
+          <td>
+            <button cButton color="light" (click)="displayAddFeature(feature)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+          </td>
+          <td>
+            <button cButton color="light" (click)="toggleModal()">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+          </td>
+        </tr>
+
+        }
+        </tbody>
+        </table>
+                 <c-toaster [placement]="position" class="p-3" position="fixed">
+      <c-toast
+        (timer)="onTimerChange($event)"
+        (visibleChange)="onVisibleChange($event)"
+        [visible]="visibleToast">
+        <c-toast-header>
+          Message
+        </c-toast-header>
+        <c-toast-body>
+          <p>{{message}}</p>
+        </c-toast-body>
+      </c-toast>
+    </c-toaster>
+    <br>
+        }
+        @if (displayForm){
+        <form cForm [formGroup]="featureForm" (ngSubmit)="submitNewFeature()">
+          <div class="w-100 d-inline-flex">
+          <div class="w-25 m-3">
+            <label cLabel for="name">Count Of Feature</label>
+            <input cFormControl formControlName="count" id="count" type="number">
+          </div>
+          <div class="w-25 m-3">
+           <label cLabel for="name">Type Of Feature</label>
+            <select aria-label="Default select example" cSelect cFormControl formControlName="title">
+            <option value="Invitation">Invitation</option>
+          </select>
+          </div>
+          <div class="w-25 m-3">
+            <label cLabel for="name">Price Of Coin</label>
+            <input cFormControl formControlName="coinPrice" id="coinPrice" type="number">
+          </div>
+          <div class="w-25 m-3">
+           <label cLabel for="name">Type Of Coin</label>
+            <select aria-label="Default select example" cSelect cFormControl formControlName="coinType">
+             <option value="Bronze">Bronze</option>
+             <option value="Silver">Silver</option>
+             <option value="Gold">Gold</option>
+           </select>
+          </div>
+          <div class="w-25 m-3">
+            <label cLabel for="name">Price Of Feature</label>
+            <input cFormControl formControlName="price" id="price" type="number">
+          </div>
+          </div>
+             <div class="mb-3">
+            <label cLabel for="name">Icon Of Feature</label>
+           <input type="file" (change)="handleFileInput($event)"
+                                 class="form-control mt-2">
+                                  @if (imgSrc){
+        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
+        }
+        </div>
+   <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <input cButton color="primary" [disabled]="loadingSubmit || featureForm.invalid" type="submit">
+        <button (click)="displayAddFeature()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
+        }
+
+        @for (item of features; track item.type;let i = $index){
+        @if (item.type && !displayForm){
+        <div cListGroup class="mb-3">
+          <div cListGroupItem>
+            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+              <c-modal-header>
+                <h5 cModalTitle>Delete Feature</h5>
+                <button (click)="toggleModal()" cButtonClose></button>
+              </c-modal-header>
+              <c-modal-body>Do you want to delete this feature?</c-modal-body>
+              <c-modal-footer>
+                <button (click)="deleteFeature(item._id)" cButton color="secondary">
+                  Yes
+                </button>
+                <button (click)="toggleModal()" cButton color="primary">No</button>
+              </c-modal-footer>
+            </c-modal>
+          </div>
+        </div>
+        }
+        }
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

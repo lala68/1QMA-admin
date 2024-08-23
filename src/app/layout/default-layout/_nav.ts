@@ -26,6 +26,24 @@ export const navItems: INavData[] = [
     iconComponent: {name: 'cilList'},
   },
   {
+    name: 'Shop',
+    url: '/shop',
+    iconComponent: {name: 'cilCart'},
+    children: [{
+      name: 'Features',
+      url: '/features',
+    },
+      {
+        name: 'Asset',
+        url: '/assets',
+      },
+      {
+        name: 'Bundles',
+        url: '/bundles',
+      }
+    ]
+  },
+  {
     name: 'Settings',
     url: '/setting',
     iconComponent: {name: 'cilSettings'},
