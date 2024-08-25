@@ -78,9 +78,9 @@ export class FeaturesComponent {
     this.featureForm = this.fb.group({
       count: ['', [Validators.required]],
       title: ['', [Validators.required]],
-      price: ['', [Validators.required]],
-      coinPrice: ['', [Validators.required]],
-      coinType: ['', [Validators.required]],
+      price: ['', []],
+      coinPrice: ['', []],
+      coinType: ['', []],
     });
   }
 
@@ -100,8 +100,7 @@ export class FeaturesComponent {
             if (feature.details && feature.details.length > 0) {
               try {
                 // Parse the first item in the details array
-                const parsedDetails = JSON.parse(feature.details[0]);
-
+                const parsedDetails = (feature.details[0]);
                 // Return the feature with additional properties
                 return {
                   ...feature,
@@ -126,12 +125,12 @@ export class FeaturesComponent {
     this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm) {
-      this.imgSrc = item.icon;
-      this.featureForm.controls['count'].setValue(JSON.parse(item.details[0]).count);
-      this.featureForm.controls['title'].setValue(JSON.parse(item.details[0]).title)
-      this.featureForm.controls['coinPrice'].setValue(JSON.parse(item.coinPrice).price)
-      this.featureForm.controls['coinType'].setValue(JSON.parse(item.coinPrice).coin)
-      this.featureForm.controls['price'].setValue(item.realPrice)
+      this.imgSrc = item?.icon;
+      this.featureForm.controls['count'].setValue((item.details[0])?.count);
+      this.featureForm.controls['title'].setValue((item.details[0])?.title)
+      this.featureForm.controls['coinPrice'].setValue((item.coinPrice)?.price)
+      this.featureForm.controls['coinType'].setValue((item.coinPrice)?.coin)
+      this.featureForm.controls['price'].setValue(item?.realPrice)
     } else {
       this.featureForm.reset();
     }

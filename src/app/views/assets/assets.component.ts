@@ -78,9 +78,9 @@ export class AssetsComponent {
     this.assetForm = this.fb.group({
       count: ['', [Validators.required]],
       title: ['', [Validators.required]],
-      price: ['', [Validators.required]],
-      coinPrice: ['', [Validators.required]],
-      coinType: ['', [Validators.required]],
+      price: ['', []],
+      coinPrice: ['', []],
+      coinType: ['', []],
     });
   }
 
@@ -99,7 +99,7 @@ export class AssetsComponent {
             if (assets.details && assets.details.length > 0) {
               try {
                 // Parse the first item in the details array
-                const parsedDetails = JSON.parse(assets.details[0]);
+                const parsedDetails = (assets.details[0]);
 
                 // Return the feature with additional properties
                 return {
@@ -126,10 +126,10 @@ export class AssetsComponent {
     this.displayForm = !this.displayForm;
     if (this.displayForm) {
       this.imgSrc = item.icon;
-      this.assetForm.controls['count'].setValue(JSON.parse(item.details[0]).count);
-      this.assetForm.controls['title'].setValue(JSON.parse(item.details[0]).title);
-      this.assetForm.controls['coinPrice'].setValue(JSON.parse(item.coinPrice).price);
-      this.assetForm.controls['coinType'].setValue(JSON.parse(item.coinPrice).coin);
+      this.assetForm.controls['count'].setValue((item.details[0])?.count);
+      this.assetForm.controls['title'].setValue((item.details[0])?.title);
+      this.assetForm.controls['coinPrice'].setValue((item.coinPrice)?.price);
+      this.assetForm.controls['coinType'].setValue((item.coinPrice)?.coin);
       this.assetForm.controls['price'].setValue(item.realPrice)
     } else {
       this.assetForm.reset();
@@ -197,6 +197,7 @@ export class AssetsComponent {
     console.log('Checkbox checked state:', inputElement.checked);
     // Additional logic when the checked state changes
   }
+
   position = 'top-end';
   percentage = 0;
 

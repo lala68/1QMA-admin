@@ -174,14 +174,16 @@ export class GameService {
     const formData = new FormData();
     formData.append('type', type);
     if (type == 'bundle') {
-      formData.append('details', JSON.stringify([{
-        title: data.featureTitle,
-        count: data.featureCount
-      }, {title: data.assetTitle, count: data.assetCount}]));
+      formData.append('details[0][title]', data.featureTitle);
+      formData.append('details[0][count]', data.featureCount);
+      formData.append('details[1][title]', data.assetTitle);
+      formData.append('details[1][count]', data.assetCount);
     } else {
-      formData.append('details', JSON.stringify({title: data.title, count: data.count}));
+      formData.append('details[title]', data.title);
+      formData.append('details[count]', data.count);
     }
-    formData.append('coinPrice', JSON.stringify({price: data.coinPrice, coin: data.coinType}));
+    formData.append('coinPrice[price]', data.coinPrice);
+    formData.append('coinPrice[coin]', data.coinType);
     formData.append('realPrice', data.price);
     formData.append('icon', icon);
     return this.http.post<any>(this.config.url('admin/shopItems/add'), formData, {
@@ -196,8 +198,17 @@ export class GameService {
     const formData = new FormData();
     formData.append('id', id);
     formData.append('type', type);
-    formData.append('details', JSON.stringify({title: data.title, count: data.count}));
-    formData.append('coinPrice', JSON.stringify({price: data.coinPrice, coin: data.coinType}));
+    if (type == 'bundle') {
+      formData.append('details[0][title]', data.featureTitle);
+      formData.append('details[0][count]', data.featureCount);
+      formData.append('details[1][title]', data.assetTitle);
+      formData.append('details[1][count]', data.assetCount);
+    } else {
+      formData.append('details[title]', data.title);
+      formData.append('details[count]', data.count);
+    }
+    formData.append('coinPrice[price]', data.coinPrice);
+    formData.append('coinPrice[coin]', data.coinType);
     formData.append('realPrice', data.price);
     formData.append('icon', icon);
     if (!icon) {
@@ -229,7 +240,7 @@ export class GameService {
     })
     return this.http.post<any>(this.config.url('admin/shopItems/toggleActive'), {
       id: id,
-      active: active
+      isActive: active
     }, {headers: headers, withCredentials: true})
       .toPromise();
   }

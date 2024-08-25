@@ -103,21 +103,17 @@ export class BundlesComponent {
           .map((bundle: any) => {
             if (bundle.details && bundle.details.length > 0) {
               try {
-                let jsonString = bundle.details[0];
-                let parsedArray = JSON.parse(jsonString);
-                console.log(parsedArray[0]);
-                console.log(parsedArray[1]);
                 // Parse the first item in the details array
-                const parsedDetails = parsedArray[0];
-                const parsedDetails2 = parsedArray[1];
+                const parsedDetails = bundle.details[0];
+                const parsedDetails2 = bundle.details[1];
 
                 // Return the feature with additional properties
                 return {
                   ...bundle,
-                  featureTitle: parsedDetails.featureTitle || '', // Extract the title if available
-                  featureCount: parsedDetails.featureCount || 0,  // Extract the count if available
-                  assetTitle: parsedDetails2.assetTitle || '', // Extract the title if available
-                  assetCount: parsedDetails2.assetCount || 0   // Extract the count if available
+                  featureTitle: parsedDetails?.featureTitle || '', // Extract the title if available
+                  featureCount: parsedDetails?.featureCount || 0,  // Extract the count if available
+                  assetTitle: parsedDetails2?.assetTitle || '', // Extract the title if available
+                  assetCount: parsedDetails2?.assetCount || 0   // Extract the count if available
                 };
               } catch (e) {
                 console.error('Error parsing feature details:', e);
@@ -132,18 +128,18 @@ export class BundlesComponent {
   }
 
   displayAddBundle(item: any = null) {
-    this.id = item?.id;
+    this.id = item?._id;
     this.imgSrc = '';
     this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm) {
       this.imgSrc = item?.icon;
-      this.bundleForm.controls['featureCount'].setValue(JSON.parse(item.details[0])[0].count);
-      this.bundleForm.controls['featureTitle'].setValue(JSON.parse(item.details[0])[0].title);
-      this.bundleForm.controls['assetCount'].setValue(JSON.parse(item.details[0])[1].count);
-      this.bundleForm.controls['assetTitle'].setValue(JSON.parse(item.details[0])[1].title);
-      this.bundleForm.controls['coinPrice'].setValue(JSON.parse(item.coinPrice).price);
-      this.bundleForm.controls['coinType'].setValue(JSON.parse(item.coinPrice).coin);
+      this.bundleForm.controls['featureCount'].setValue((item.details[0])?.count);
+      this.bundleForm.controls['featureTitle'].setValue((item.details[0])?.title);
+      this.bundleForm.controls['assetCount'].setValue((item.details[0])?.count);
+      this.bundleForm.controls['assetTitle'].setValue((item.details[0])?.title);
+      this.bundleForm.controls['coinPrice'].setValue((item.coinPrice)?.price);
+      this.bundleForm.controls['coinType'].setValue((item.coinPrice)?.coin);
       this.bundleForm.controls['price'].setValue(item.realPrice)
     } else {
       this.bundleForm.reset();
