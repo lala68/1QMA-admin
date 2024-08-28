@@ -58,7 +58,7 @@
             </button>
           </td>
           <td>
-            <button cButton color="light" (click)="toggleModal()">
+            <button cButton color="light" (click)="toggleModal(feature._id)">
               <svg cIcon name="cilTrash"></svg>
             </button>
           </td>
@@ -140,7 +140,7 @@
               </c-modal-header>
               <c-modal-body>Do you want to delete this feature?</c-modal-body>
               <c-modal-footer>
-                <button (click)="deleteFeature(item._id)" cButton color="secondary">
+                <button (click)="deleteFeature()" cButton color="secondary">
                   Yes
                 </button>
                 <button (click)="toggleModal()" cButton color="primary">No</button>

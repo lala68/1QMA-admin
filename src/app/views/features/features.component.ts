@@ -73,6 +73,7 @@ export class FeaturesComponent {
   imgSrc: any;
   error: any = '';
   message: any;
+  selectedId: any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.featureForm = this.fb.group({
@@ -167,8 +168,8 @@ export class FeaturesComponent {
     this.fileToUpload = event.target.files[0];
   }
 
-  deleteFeature(id: any) {
-    this.gameService.deleteShopItem(id).then(data => {
+  deleteFeature() {
+    this.gameService.deleteShopItem(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getFeatures();
@@ -176,8 +177,11 @@ export class FeaturesComponent {
     })
   }
 
-  toggleModal() {
+  toggleModal(id: any = null) {
     this.visible = !this.visible;
+    if (id) {
+      this.selectedId = id;
+    }
   }
 
   handleLiveDemoChange(event: any) {

@@ -40,6 +40,7 @@ export class WizardQuestionsComponent {
   public visible = false;
   error: any = '';
   dynamicForm: FormGroup;
+  selectedId: any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.questionForm = this.fb.group({
@@ -114,8 +115,8 @@ export class WizardQuestionsComponent {
     }
   }
 
-  deleteQuestion(id: any) {
-    this.gameService.deleteQuestion(id).then(data => {
+  deleteQuestion() {
+    this.gameService.deleteQuestion(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getQuestions();
@@ -123,8 +124,11 @@ export class WizardQuestionsComponent {
     })
   }
 
-  toggleModal() {
+  toggleModal(id: any = null) {
     this.visible = !this.visible;
+    if (id) {
+      this.selectedId = id;
+    }
   }
 
   handleLiveDemoChange(event: any) {

@@ -43,6 +43,7 @@ export class CategoriesComponent implements OnInit {
   fileToUpload: any
   imgSrc: any;
   error: any = '';
+  selectedId: any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.categoryForm = this.fb.group({
@@ -108,8 +109,8 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  deleteCategory(id: any) {
-    this.gameService.deleteCategory(id).then(data => {
+  deleteCategory() {
+    this.gameService.deleteCategory(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getCategories();
@@ -119,8 +120,11 @@ export class CategoriesComponent implements OnInit {
     })
   }
 
-  toggleModal() {
+  toggleModal(id: any = null) {
     this.visible = !this.visible;
+    if (id) {
+      this.selectedId = id;
+    }
   }
 
   handleLiveDemoChange(event: any) {

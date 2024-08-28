@@ -73,6 +73,7 @@ export class AssetsComponent {
   imgSrc: any;
   error: any = '';
   message: any;
+  selectedId: any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.assetForm = this.fb.group({
@@ -166,8 +167,8 @@ export class AssetsComponent {
     this.fileToUpload = event.target.files[0];
   }
 
-  deleteAsset(id: any) {
-    this.gameService.deleteShopItem(id).then(data => {
+  deleteAsset() {
+    this.gameService.deleteShopItem(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getAssets();
@@ -175,8 +176,11 @@ export class AssetsComponent {
     })
   }
 
-  toggleModal() {
+  toggleModal(id: any = null) {
     this.visible = !this.visible;
+    if (id) {
+      this.selectedId = id;
+    }
   }
 
   handleLiveDemoChange(event: any) {

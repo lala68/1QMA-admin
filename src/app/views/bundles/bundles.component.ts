@@ -76,6 +76,7 @@ export class BundlesComponent {
   imgSrc: any;
   error: any = '';
   message: any;
+  selectedId : any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.bundleForm = this.fb.group({
@@ -176,8 +177,8 @@ export class BundlesComponent {
     this.fileToUpload = event.target.files[0];
   }
 
-  deleteBundle(id: any) {
-    this.gameService.deleteShopItem(id).then(data => {
+  deleteBundle() {
+    this.gameService.deleteShopItem(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getBundles();
@@ -185,8 +186,11 @@ export class BundlesComponent {
     })
   }
 
-  toggleModal() {
+  toggleModal(id: any = null) {
     this.visible = !this.visible;
+    if (id) {
+      this.selectedId = id;
+    }
   }
 
   handleLiveDemoChange(event: any) {

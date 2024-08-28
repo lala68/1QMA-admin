@@ -45,6 +45,7 @@ export class AccountTypesComponent {
   fileToUpload: any
   imgSrc: any;
   error: any = '';
+  selectedId: any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.accountTypeForm = this.fb.group({
@@ -110,8 +111,8 @@ export class AccountTypesComponent {
     this.fileToUpload = event.target.files[0];
   }
 
-  deleteAccountType(id: any) {
-    this.gameService.deleteAccountType(id).then(data => {
+  deleteAccountType() {
+    this.gameService.deleteAccountType(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
         this.getAccountTypes();
@@ -119,8 +120,11 @@ export class AccountTypesComponent {
     })
   }
 
-  toggleModal() {
+  toggleModal(id: any = null) {
     this.visible = !this.visible;
+    if (id) {
+      this.selectedId = id;
+    }
   }
 
   handleLiveDemoChange(event: any) {
