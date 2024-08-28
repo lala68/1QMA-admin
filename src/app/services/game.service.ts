@@ -245,4 +245,56 @@ export class GameService {
       .toPromise();
   }
 
+
+  getQuestions(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/registerQuestions'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postNewQuestion(data: any, options: any = ''): Promise<any> {
+    let headers = new HttpHeaders({});
+    return this.http.post<any>(this.config.url('admin/registerQuestions/add'), {
+      question: data.question,
+      type: data.type,
+      placeholder: data.placeholder,
+      options: options
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateQuestion(id: any, data: any, options: any = ''): Promise<any> {
+    let headers = new HttpHeaders({});
+    return this.http.post<any>(this.config.url('admin/registerQuestions/update'), {
+      id: id,
+      question: data.question,
+      type: data.type,
+      placeholder: data.placeholder,
+      options: options
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteQuestion(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/registerQuestions/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+
 }

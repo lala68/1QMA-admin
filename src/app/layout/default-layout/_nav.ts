@@ -44,10 +44,16 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name: 'Wizard questions',
+    url: '/wizard-questions',
+    iconComponent: {name: 'cilList'},
+  },
+  {
     name: 'Settings',
     url: '/setting',
     iconComponent: {name: 'cilSettings'},
   }
+
   // {
   //   name: 'Game Setting',
   //   url: '/base',
