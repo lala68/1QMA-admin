@@ -27,9 +27,11 @@
             <select aria-label="Default select example" cSelect cFormControl formControlName="type">
               <option value="multiple_options">multiple_options</option>
               <option value="text">Text</option>
+              <option value="select">Select</option>
+              <option value="toggle">Toggle</option>
             </select>
           </div>
-            <div *ngIf="questionForm.get('type')?.value === 'multiple_options'">
+            <div *ngIf="questionForm.get('type')?.value === 'multiple_options' || questionForm.get('type')?.value === 'select'">
             <label cLabel for="type">Add Options</label>
                 <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
                   <div formArrayName="textInputs" class="mb-3 w-100">

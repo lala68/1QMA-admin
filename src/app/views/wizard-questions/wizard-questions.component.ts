@@ -88,7 +88,7 @@ export class WizardQuestionsComponent {
     this.loadingSubmit = true;
     this.error = '';
     if (this.id) {
-      const option = this.questionForm.controls['type'].value == 'multiple_options' ? this.dynamicForm.value.textInputs : ''
+      const option = (this.questionForm.controls['type'].value == 'multiple_options' || this.questionForm.controls['type'].value == 'select') ? this.dynamicForm.value.textInputs : ''
       this.gameService.updateQuestion(this.id, this.questionForm.value, option).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
@@ -100,7 +100,7 @@ export class WizardQuestionsComponent {
         }
       })
     } else {
-      const option = this.questionForm.controls['type'].value == 'multiple_options' ? this.dynamicForm.value.textInputs : ''
+      const option = (this.questionForm.controls['type'].value == 'multiple_options' || this.questionForm.controls['type'].value == 'select') ? this.dynamicForm.value.textInputs : ''
       this.gameService.postNewQuestion(this.questionForm.value, option).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
