@@ -1,0 +1,82 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Charities</strong>
+      </c-card-header>
+      <c-card-body>
+        @if (loading){
+        <c-spinner style="display: block; margin: 0 auto"></c-spinner>
+        }
+        @if (!loading && !displayForm){
+        <button (click)="displayAddCharity()" class="mb-3" cButton color="primary" variant="outline">Add New Charity
+        </button>
+        }
+        @if (displayForm){
+        <form cForm [formGroup]="charityForm" (ngSubmit)="submitNewCharity()">
+          <div class="mb-3">
+            <label cLabel for="name">Title Of charity</label>
+            <input cFormControl formControlName="title" id="title" type="text">
+          </div>
+ <!-- Dynamic Activities Array -->
+  <div formArrayName="activities">
+    <div *ngFor="let activity of activities.controls; let i = index" [formGroupName]="i" class="mb-3">
+      <label cLabel for="dynamicActivity-{{ i }}">Activity {{ i + 1 }}</label>
+      <input cFormControl formControlName="activity" id="dynamicActivity-{{ i }}" type="text">
+      <button type="button" (click)="removeActivity(i)" *ngIf="activities.length > 1">Remove</button>
+    </div>
+  </div>
+  <button type="button" (click)="addActivity()">Add Activity</button>
+             <div class="mb-3">
+            <label cLabel for="name">Icon Of charity</label>
+           <input type="file" (change)="handleFileInput($event)"
+                                 class="form-control mt-2">
+                                  @if (imgSrc){
+        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
+        }
+        </div>
+   <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <input cButton color="primary" [disabled]="loadingSubmit || charityForm.invalid" type="submit">
+        <button (click)="displayAddCharity()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
+
+        }
+
+        @for (item of charities; track item.title;let i = $index){
+        @if (item.title && !displayForm){
+        <div cListGroup class="mb-3">
+          <div cListGroupItem>
+            <div class="avatar">
+              <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
+            </div>
+            <div style="width: 30%; display: inline-block">{{item?.title}}</div>
+            <button cButton color="light" (click)="displayAddCharity(item.title, item._id, item.icon)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+            <button cButton color="light" (click)="toggleModal(item._id)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+              <c-modal-header>
+                <h5 cModalTitle>Delete Charity</h5>
+                <button (click)="toggleModal()" cButtonClose></button>
+              </c-modal-header>
+              <c-modal-body>Do you want to delete this charity?</c-modal-body>
+              <c-modal-footer>
+                <button (click)="deleteCharity()" cButton color="secondary">
+                  Yes
+                </button>
+                <button (click)="toggleModal()" cButton color="primary">No</button>
+              </c-modal-footer>
+            </c-modal>
+          </div>
+        </div>
+        }
+        }
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

@@ -82,6 +82,7 @@ export class FeaturesComponent {
       price: ['', []],
       coinPrice: ['', []],
       coinType: ['', []],
+      description: ['', []],
     });
   }
 
@@ -132,6 +133,7 @@ export class FeaturesComponent {
       this.featureForm.controls['coinPrice'].setValue((item.coinPrice)?.price)
       this.featureForm.controls['coinType'].setValue((item.coinPrice)?.coin)
       this.featureForm.controls['price'].setValue(item?.realPrice)
+      this.featureForm.controls['description'].setValue(item?.description)
     } else {
       this.featureForm.reset();
     }

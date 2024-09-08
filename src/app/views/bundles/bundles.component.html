@@ -98,9 +98,9 @@
          <div class="w-25 m-3">
           <label cLabel for="name">Type Of Asset</label>
            <select aria-label="Default select example" cSelect cFormControl formControlName="assetTitle">
-           <option value="Bronze">Bronze</option>
-           <option value="Silver">Silver</option>
-           <option value="Gold">Gold</option>
+           <option value="bronze">Bronze</option>
+           <option value="silver">Silver</option>
+           <option value="gold">Gold</option>
          </select>
          </div>
          </div>
@@ -112,9 +112,9 @@
          <div class="w-25 m-3">
           <label cLabel for="name">Type Of Coin</label>
            <select aria-label="Default select example" cSelect cFormControl formControlName="coinType">
-            <option value="Bronze">Bronze</option>
-            <option value="Silver">Silver</option>
-            <option value="Gold">Gold</option>
+            <option value="bronze">Bronze</option>
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
           </select>
          </div>
          <div class="w-25 m-3">
@@ -122,7 +122,11 @@
            <input cFormControl formControlName="price" id="price" type="number">
          </div>
          </div>
-            <div class="mb-3">
+          <div class="w-75 m-3">
+            <label cLabel for="name">Description Of Bunndle</label>
+            <textarea rows="3" cFormControl formControlName="description" id="description" type="text"></textarea>
+          </div>
+            <div class="m-3">
            <label cLabel for="name">Icon Of Bundle</label>
           <input type="file" (change)="handleFileInput($event)"
                                 class="form-control mt-2">

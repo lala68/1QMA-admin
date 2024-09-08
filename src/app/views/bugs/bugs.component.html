@@ -1,0 +1,50 @@
+<table
+  [hover]="true"
+  [responsive]="true"
+  [striped]="true"
+  align="middle"
+  cTable
+  class="mb-0 border"
+>
+  <thead class="text-nowrap text-truncate">
+  <tr>
+    <th class="bg-body-secondary"></th>
+    <th class="bg-body-secondary">Title</th>
+    <th class="bg-body-secondary">Description</th>
+    <th class="bg-body-secondary">Created</th>
+    <th class="bg-body-secondary">action</th>
+  </tr>
+  </thead>
+  <tbody>
+  @for (bug of paginatedBugs; track bug.firstName;let i = $index) {
+  <tr>
+  <td>
+  {{bug.title}}
+  </td>
+    <td>
+  {{bug.description}}
+  </td>
+<td>
+<div class="fw-semibold text-nowrap">{{ bug.created_at }}</div>
+                </td>
+                  <td>
+                  <div class="fw-semibold text-nowrap">{{ bug.referer?.firstName }} {{bug.referer?.lastName}}</div>
+                </td>
+                 <td>
+                  <div class="fw-semibold text-nowrap" style="cursor: pointer;" (click)="gotoDetail(bug)"><svg cIcon name="cilArrowRight" size="lg"></svg></div>
+                </td>
+              </tr>
+  }
+  </tbody>
+</table>
+<c-pagination aria-label="Page navigation example">
+  <li cPageItem>
+    <a cPageLink aria-label="Previous" (click)="previousPage()"><span aria-hidden="true">&laquo;</span></a>
+  </li>
+  <li cPageItem *ngFor="let page of pages" [class.active]="page === currentPage">
+    <a cPageLink (click)="goToPage(page)">{{ page }}</a>
+  </li>
+  <li cPageItem>
+    <a cPageLink aria-label="Next" (click)="nextPage()"><span aria-hidden="true">&raquo;</span></a>
+  </li>
+</c-pagination>

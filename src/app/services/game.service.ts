@@ -26,7 +26,7 @@ export class GameService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  async postNewSettings(name: any, key: any, value: any): Promise<any> {
+  async postNewSettings(name: any, key: any, value: any, type: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
 
@@ -34,17 +34,18 @@ export class GameService {
     return this.http.post<any>(this.config.url('admin/settings/add'), {
       name: name,
       key: key,
-      value: value
+      value: value,
+      type: type
     }, {headers: headers, withCredentials: true})
       .toPromise();
   }
 
-  async updateSettings(id: any, value: any): Promise<any> {
+  async updateSettings(id: any, value: any, type: any): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
 
     })
-    return this.http.post<any>(this.config.url('admin/settings/update'), {id: id, value: value}, {
+    return this.http.post<any>(this.config.url('admin/settings/update'), {id: id, value: value, type: type}, {
       headers: headers,
       withCredentials: true
     })
@@ -185,6 +186,7 @@ export class GameService {
     formData.append('coinPrice[price]', data.coinPrice);
     formData.append('coinPrice[coin]', data.coinType);
     formData.append('realPrice', data.price);
+    formData.append('description', data.description);
     formData.append('icon', icon);
     return this.http.post<any>(this.config.url('admin/shopItems/add'), formData, {
       headers: headers,
@@ -210,6 +212,7 @@ export class GameService {
     formData.append('coinPrice[price]', data.coinPrice);
     formData.append('coinPrice[coin]', data.coinType);
     formData.append('realPrice', data.price);
+    formData.append('description', data.description);
     formData.append('icon', icon);
     if (!icon) {
       formData.delete('icon')
@@ -290,6 +293,116 @@ export class GameService {
 
     })
     return this.http.post<any>(this.config.url('admin/registerQuestions/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  getCharities(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/charityCategories'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postNewCharity(data: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('title', data);
+    formData.append('activities', '');
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/charityCategories/add'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateCharity(id: any, name: any, icon: any): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('title', name);
+    formData.append('id', id);
+    formData.append('icon', icon);
+    if (!icon) {
+      formData.delete('icon')
+    }
+    return this.http.post<any>(this.config.url('admin/charityCategories/update'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteCharity(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/charityCategories/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+
+  getBugReports(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/bugReports'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getBugTypes(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/bugTypes'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postNewBugTypes(data: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('title', data);
+    formData.append('activities', '');
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/bugTypes/add'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateBugType(id: any, name: any, icon: any): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('title', name);
+    formData.append('id', id);
+    formData.append('icon', icon);
+    if (!icon) {
+      formData.delete('icon')
+    }
+    return this.http.post<any>(this.config.url('admin/bugTypes/update'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteBugType(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/bugTypes/delete'), {id: id}, {
       headers: headers,
       withCredentials: true
     })

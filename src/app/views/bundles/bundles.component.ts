@@ -87,6 +87,7 @@ export class BundlesComponent {
       coinPrice: ['', [Validators.required]],
       coinType: ['', [Validators.required]],
       price: ['', [Validators.required]],
+      description: ['', [Validators.required]],
     });
   }
 
@@ -141,7 +142,8 @@ export class BundlesComponent {
       this.bundleForm.controls['assetTitle'].setValue((item.details[0])?.title);
       this.bundleForm.controls['coinPrice'].setValue((item.coinPrice)?.price);
       this.bundleForm.controls['coinType'].setValue((item.coinPrice)?.coin);
-      this.bundleForm.controls['price'].setValue(item.realPrice)
+      this.bundleForm.controls['price'].setValue(item.realPrice);
+      this.bundleForm.controls['description'].setValue(item.description);
     } else {
       this.bundleForm.reset();
     }

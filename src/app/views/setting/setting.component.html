@@ -1,53 +1,76 @@
 <c-row ngPreserveWhitespaces>
   <c-col xs="12">
-    <c-card class="mb-4">
-      <c-card-header>
-        <strong>Game Settings</strong>
-      </c-card-header>
-      <c-card-body>
-        @if (loading){
-        <c-spinner style="display: block; margin: 0 auto"></c-spinner>
-        }
-        @if (!loading && !displayForm){
-        <button (click)="displayAddSetting()" class="mb-2" cButton color="primary" variant="outline">Add New Setting
-        </button>
-        }
-        @if (displayForm){
-        <form cForm [formGroup]="settingsForm" (ngSubmit)="submitNewSetting()">
-          <div class="mb-3">
-            <label cLabel for="name">Name Of Setting</label>
-            <input cFormControl formControlName="name" id="name" type="text">
-          </div>
-          @if (!id){
-        <div class="mb-3">
-          <label cLabel for="name">Key Of Setting</label>
-          <input cFormControl formControlName="key" id="key" type="text">
-        </div>
-        }
-        <div class="mb-3">
-          <label cLabel for="name">Value Of Setting</label>
-          <input cFormControl formControlName="value" id="value" type="text">
-        </div>
-
-        <input cButton color="primary" [disabled]="loadingSubmit || settingsForm.invalid" type="submit">
-         <button (click)="displayAddSetting()" cButton color="secondary" variant="outline">Back
+    <!-- Add New Setting Button (shown when form is not visible) -->
+    <div *ngIf="!loading && !displayForm">
+      <button (click)="displayAddSetting(null, null, null, null, 'test')" class="mb-2" cButton
+              color="primary" variant="outline">Add New Setting
       </button>
-      </form>
-        }
+    </div>
+    <div *ngFor="let category of settings; let i = index">
+      <c-card class="mb-4" *ngIf="(selectedType && i == 0) || !selectedType">
+        <c-card-header>
+          <strong>{{ category.title }} Settings</strong>
+        </c-card-header>
+        <c-card-body>
+          <!-- Loading Spinner -->
+          <div *ngIf="loading">
+            <c-spinner style="display: block; margin: 0 auto"></c-spinner>
+          </div>
 
-        @for (item of settings; track item.name;let i = $index){
-        @if (item.name && !displayForm){
-        <ul cListGroup>
-          <li cListGroupItem>
-            <div style="width: 40%; display: inline-block">{{item?.name}} : {{item?.value}}</div>
-            <button cButton color="light" (click)="displayAddSetting(item.name, item.value, item._id, item.key)">
-              <svg cIcon name="cilPencil"></svg>
-            </button>
-          </li>
-        </ul>
-        }
-        }
-      </c-card-body>
-    </c-card>
+          <!-- Form for Adding/Editing Settings -->
+          <div *ngIf="displayForm">
+            <form cForm [formGroup]="settingsForm" (ngSubmit)="submitNewSetting()">
+              <!-- Name Field (always visible) -->
+              <div class="w-25 mb-3">
+                <label cLabel for="name">Type Of Setting</label>
+                <select cSelect cFormControl formControlName="type">
+                  <option *ngFor="let type of settingTypes | keyvalue" [value]="type.value">
+                    {{type.value}}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label cLabel for="name">Name Of Setting</label>
+                <input cFormControl formControlName="name" id="name" type="text">
+              </div>
+
+              <!-- Key Field (shown only when adding new setting) -->
+              <div class="mb-3" *ngIf="!isEditing">
+                <label cLabel for="key">Key Of Setting</label>
+                <input cFormControl formControlName="key" id="key" type="text">
+              </div>
+
+              <!-- Value Field (always visible) -->
+              <div class="mb-3">
+                <label cLabel for="value">Value Of Setting</label>
+                <input cFormControl formControlName="value" id="value" type="text">
+              </div>
+              <!-- Submit Button -->
+              <input cButton color="primary" [disabled]="loadingSubmit || settingsForm.invalid" type="submit">
+              <button (click)="displayAddSetting(null, null, null, null, '')" cButton color="secondary"
+                      variant="outline">Back
+              </button>
+            </form>
+          </div>
+
+          <!-- Display Settings List -->
+          <ul *ngFor="let item of category.settings; let i = index" cListGroup class="p-0">
+            <li cListGroupItem *ngIf="!selectedType"
+                [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
+                class="list-item">
+              <div class="item-content">
+                <span class="bullet"></span>
+                <div class="text">{{ item?.name }} : {{ item?.value }}</div>
+              </div>
+              <button cButton color="light"
+                      class="edit-button"
+                      (click)="displayAddSetting(item.name, item.value, item._id, item.key, item.type)">
+                <svg cIcon name="cilPencil"></svg>
+              </button>
+            </li>
+          </ul>
+        </c-card-body>
+      </c-card>
+    </div>
   </c-col>
 </c-row>

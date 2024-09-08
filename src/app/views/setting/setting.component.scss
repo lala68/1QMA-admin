@@ -1,0 +1,42 @@
+.even-row {
+  background-color: #f0f0f0; /* Light grey background for even rows */
+  border-radius: 3px;
+}
+
+.odd-row {
+  background-color: white; /* Default background for odd rows */
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+}
+
+.item-content {
+  display: flex;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.bullet {
+  width: 10px;
+  height: 10px;
+  background-color: black; /* Bullet color */
+  border-radius: 50%;
+  margin-right: 10px;
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+.text {
+  overflow-wrap: break-word; /* Wrap text to avoid overflow */
+  flex: 1;
+}
+
+.edit-button {
+  margin-left: 10px;
+  display: flex;
+  align-items: center; /* Center button content vertically */
+}
