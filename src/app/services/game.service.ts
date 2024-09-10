@@ -308,11 +308,15 @@ export class GameService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  async postNewCharity(data: any, icon: any = null): Promise<any> {
+  async postNewCharity(title: any, activities: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
-    formData.append('title', data);
-    formData.append('activities', '');
+    formData.append('title', title);
+    // Append each activity as an object
+    activities.forEach((activity: any, index: any) => {
+      // Use square brackets to indicate an array item in FormData
+      formData.append(`activities[${index}][title]`, activity.title);
+    });
     formData.append('icon', icon);
     return this.http.post<any>(this.config.url('admin/charityCategories/add'), formData, {
       headers: headers,
@@ -321,10 +325,14 @@ export class GameService {
       .toPromise();
   }
 
-  async updateCharity(id: any, name: any, icon: any): Promise<any> {
+  async updateCharity(id: any, data: any, icon: any): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
-    formData.append('title', name);
+    formData.append('title', data.title);
+    data.activities.forEach((activity: any, index: any) => {
+      // Use square brackets to indicate an array item in FormData
+      formData.append(`activities[${index}][title]`, activity.title);
+    });
     formData.append('id', id);
     formData.append('icon', icon);
     if (!icon) {

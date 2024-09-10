@@ -22,12 +22,19 @@
   <div formArrayName="activities">
     <div *ngFor="let activity of activities.controls; let i = index" [formGroupName]="i" class="mb-3">
       <label cLabel for="dynamicActivity-{{ i }}">Activity {{ i + 1 }}</label>
-      <input cFormControl formControlName="activity" id="dynamicActivity-{{ i }}" type="text">
-      <button type="button" (click)="removeActivity(i)" *ngIf="activities.length > 1">Remove</button>
+      <div class="w-100 d-inline-flex">
+      <input cFormControl formControlName="title" id="dynamicActivity-{{ i }}" type="text">
+      <button class="ms-2" cButton color="light" (click)="removeActivity(i)" *ngIf="activities.length > 1">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
     </div>
   </div>
-  <button type="button" (click)="addActivity()">Add Activity</button>
-             <div class="mb-3">
+  </div>
+<button cButton color="light" (click)="addActivity()">
+              <svg cIcon name="cilPlus"></svg>
+            </button>
+            <br>
+             <div class="mt-4 mb-3">
             <label cLabel for="name">Icon Of charity</label>
            <input type="file" (change)="handleFileInput($event)"
                                  class="form-control mt-2">
@@ -53,7 +60,7 @@
               <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
             </div>
             <div style="width: 30%; display: inline-block">{{item?.title}}</div>
-            <button cButton color="light" (click)="displayAddCharity(item.title, item._id, item.icon)">
+            <button cButton color="light" (click)="displayAddCharity(item.title, item.activities, item._id, item.icon)">
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button cButton color="light" (click)="toggleModal(item._id)">

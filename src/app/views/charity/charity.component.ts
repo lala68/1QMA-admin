@@ -56,9 +56,10 @@ export class CharityComponent {
     this.getCharities();
   }
 
-  createActivity(): FormGroup {
+// Function to create a new activity form group
+  createActivity(activity?: any): FormGroup {
     return this.fb.group({
-      activity: ['']
+      title: [activity ? activity.title : '', Validators.required]
     });
   }
 
@@ -88,25 +89,36 @@ export class CharityComponent {
     })
   }
 
-  displayAddCharity(title: any = null, id: any = null, path: any = null) {
+  displayAddCharity(title: any = null, activities: any = null, id: any = null, path: any = null) {
     this.id = id;
     this.imgSrc = '';
+    this.fileToUpload = '';
     this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm && title) {
       this.charityForm.patchValue({title: title});
+
+      // Clear the existing FormArray
+      const activitiesArray = this.charityForm.get('activities') as FormArray;
+      activitiesArray.clear();
+
+      // Loop through the activities and populate the form array
+      activities.forEach((activity: any) => {
+        activitiesArray.push(this.createActivity(activity));
+      });
       this.imgSrc = path;
     } else {
       this.charityForm.reset();
+      const activitiesArray = this.charityForm.get('activities') as FormArray;
+      activitiesArray.clear();
     }
   }
 
   submitNewCharity() {
     this.loadingSubmit = true;
     this.error = '';
-    const title = this.charityForm.get('title')?.value;
     if (this.id) {
-      this.gameService.updateCharity(this.id, title, this.fileToUpload).then(data => {
+      this.gameService.updateCharity(this.id, this.charityForm.value, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
@@ -116,7 +128,7 @@ export class CharityComponent {
         }
       })
     } else {
-      this.gameService.postNewCharity(title, this.fileToUpload).then(data => {
+      this.gameService.postNewCharity(this.charityForm.controls['title'].value, this.charityForm.controls['activities'].value, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
