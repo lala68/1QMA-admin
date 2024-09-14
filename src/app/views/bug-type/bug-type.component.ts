@@ -46,25 +46,28 @@ import {GameService} from "../../services/game.service";
   templateUrl: './bug-type.component.html',
   styleUrl: './bug-type.component.scss'
 })
-export class BugTypeComponent implements OnInit{
+export class BugTypeComponent implements OnInit {
   loading: boolean = true;
   bugs: any = [];
   displayForm: any = false;
   id: any;
+  active: any;
   bugForm: FormGroup;
   loadingSubmit: boolean = false;
   public visible = false;
-  public visibleToast = false;
   fileToUpload: any
   imgSrc: any;
   error: any = '';
-  message: any;
   selectedId: any;
+  public visibleToast = false;
+  message: any;
+  position = 'top-end';
+  percentage = 0;
 
   constructor(private router: Router, private gameService: GameService, private fb: FormBuilder) {
     this.bugForm = this.fb.group({
       category: ['', [Validators.required]],
-      subCategories : this.fb.array([this.createSubCategory()]),  // Dynamic form array for additional activities
+      subCategories: this.fb.array([this.createSubCategory()]),  // Dynamic form array for additional activities
     });
   }
 
@@ -99,8 +102,9 @@ export class BugTypeComponent implements OnInit{
     this.subCategories.removeAt(index);
   }
 
-  displayAddBugType(category: any = null, subCategories: any = null, id: any = null, path: any = null) {
+  displayAddBugType(category: any = null, subCategories: any = null, id: any = null, active: any = null, path: any = null) {
     this.id = id;
+    this.active = active;
     this.imgSrc = '';
     this.fileToUpload = '';
     this.error = '';
@@ -108,7 +112,7 @@ export class BugTypeComponent implements OnInit{
 
     // Reset and populate form based on whether category is provided
     if (this.displayForm && category) {
-      this.bugForm.patchValue({ category });
+      this.bugForm.patchValue({category});
 
       // Clear and re-populate subCategories array
       this.subCategories.clear();
@@ -126,7 +130,7 @@ export class BugTypeComponent implements OnInit{
     this.loadingSubmit = true;
     this.error = '';
     if (this.id) {
-      this.gameService.updateBugType(this.id, this.bugForm.value, this.fileToUpload).then(data => {
+      this.gameService.updateBugType(this.id, this.bugForm.value, this.active, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
@@ -170,6 +174,36 @@ export class BugTypeComponent implements OnInit{
 
   handleLiveDemoChange(event: any) {
     this.visible = event;
+  }
+
+  toggleToast() {
+    this.visibleToast = !this.visibleToast;
+  }
+
+  onVisibleChange($event: boolean) {
+    this.visibleToast = $event;
+    this.percentage = !this.visibleToast ? 0 : this.percentage;
+  }
+
+  onTimerChange($event: number) {
+    this.percentage = $event * 25;
+  }
+
+  onCheckedChange(id: any, item: any, event: Event): void {
+    this.loading = true
+    const inputElement = event.target as HTMLInputElement;
+
+    this.gameService.updateBugType(id, item, inputElement.checked).then(data => {
+      if (data?.status == 1) {
+        this.message = data?.message;
+      } else {
+        this.message = data?.message;
+      }
+      this.getBugTypes();
+      this.toggleToast();
+    })
+    console.log('Checkbox checked state:', inputElement.checked);
+    // Additional logic when the checked state changes
   }
 
 }

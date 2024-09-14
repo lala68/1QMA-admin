@@ -12,6 +12,20 @@
         <button (click)="displayAddAccount()" class="mb-3" cButton color="primary" variant="outline">Add New Account Type
         </button>
         }
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast">
+            <c-toast-header>
+              Message
+            </c-toast-header>
+            <c-toast-body>
+              <p>{{message}}</p>
+            </c-toast-body>
+          </c-toast>
+        </c-toaster>
+        <br>
         @if (displayForm){
         <form cForm [formGroup]="accountTypeForm" (ngSubmit)="submitNewAccountType()">
           <div class="mb-3">
@@ -36,14 +50,20 @@
         }
 
         @for (item of accountTypes; track item.name;let i = $index){
-        @if (item.name && !displayForm){
+        @if (item.name && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <div class="avatar">
               <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
             </div>
-            <div style="width: 30%; display: inline-block">{{item?.name}}</div>
-            <button cButton color="light" (click)="displayAddAccount(item.name, item._id, item.icon)">
+            <div style="width: 40%; display: inline-block">{{item?.name}}</div>
+            <button cButton color="light">
+              <c-form-check [switch]="true">
+                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
+                       (change)="onCheckedChange(item._id, item.name, $event)"/>
+              </c-form-check>
+            </button>
+            <button cButton color="light" (click)="displayAddAccount(item.name, item._id, item.isActive, item.icon)">
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button cButton color="light" (click)="toggleModal(item._id)">

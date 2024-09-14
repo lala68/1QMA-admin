@@ -74,11 +74,12 @@ export class GameService {
       .toPromise();
   }
 
-  async updateCategory(id: any, name: any, icon: any = null): Promise<any> {
+  async updateCategory(id: any, name: any, active: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('name', name);
     formData.append('id', id);
+    formData.append('isActive', active);
     formData.append('icon', icon);
     // if (!icon) {
     //   formData.delete('icon')
@@ -123,11 +124,12 @@ export class GameService {
       .toPromise();
   }
 
-  async updateAccountType(id: any, name: any, icon: any): Promise<any> {
+  async updateAccountType(id: any, name: any, active: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('name', name);
     formData.append('id', id);
+    formData.append('isActive', active);
     formData.append('icon', icon);
     if (!icon) {
       formData.delete('icon')
@@ -272,12 +274,13 @@ export class GameService {
       .toPromise();
   }
 
-  async updateQuestion(id: any, data: any, options: any = ''): Promise<any> {
+  async updateQuestion(id: any, data: any, options: any = '', active: any): Promise<any> {
     let headers = new HttpHeaders({});
     return this.http.post<any>(this.config.url('admin/registerQuestions/update'), {
       id: id,
       question: data.question,
       type: data.type,
+      isActive: active,
       placeholder: data.placeholder,
       options: options
     }, {
@@ -325,7 +328,7 @@ export class GameService {
       .toPromise();
   }
 
-  async updateCharity(id: any, data: any, icon: any): Promise<any> {
+  async updateCharity(id: any, data: any, active: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('title', data.title);
@@ -335,6 +338,7 @@ export class GameService {
     });
     formData.append('id', id);
     formData.append('icon', icon);
+    formData.append('isActive', active);
     if (!icon) {
       formData.delete('icon')
     }
@@ -391,7 +395,7 @@ export class GameService {
       .toPromise();
   }
 
-  async updateBugType(id: any, data: any, icon: any): Promise<any> {
+  async updateBugType(id: any, data: any, active: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('category', data.category);
@@ -400,6 +404,7 @@ export class GameService {
       formData.append(`subCategories[${index}][title]`, activity.title);
     });
     formData.append('id', id);
+    formData.append('isActive', active);
     formData.append('icon', icon);
     if (!icon) {
       formData.delete('icon')

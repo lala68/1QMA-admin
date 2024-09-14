@@ -1,0 +1,24 @@
+/* Fix column widths */
+.email-column {
+  width: 20%; /* Adjust percentage or use px if preferred */
+}
+
+.category-column {
+  width: 20%;
+}
+
+.description-column {
+  width: 60%;
+}
+
+/* Ensure table responsiveness and text truncation for large content */
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th, td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

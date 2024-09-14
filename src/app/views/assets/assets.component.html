@@ -12,7 +12,7 @@
         <button (click)="displayAddAsset()" class="mb-3" cButton color="primary" variant="outline">Add New Asset
         </button>
         }
-        @if (!displayForm){
+        @if (!displayForm && !loading){
         <table
      [hover]="true"
      [responsive]="true"
@@ -136,7 +136,7 @@
         }
 
         @for (item of assets; track item.type;let i = $index){
-        @if (item.type && !displayForm){
+        @if (item.type && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">

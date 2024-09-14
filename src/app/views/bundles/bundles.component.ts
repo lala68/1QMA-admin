@@ -216,6 +216,7 @@ export class BundlesComponent {
   }
 
   onCheckedChange(id: any, event: Event): void {
+    this.loading = true;
     const inputElement = event.target as HTMLInputElement;
 
     this.gameService.toggleShopItemActivation(id, inputElement.checked).then(data => {
@@ -224,6 +225,7 @@ export class BundlesComponent {
       } else {
         this.message = data?.message;
       }
+      this.getBundles();
       this.toggleToast();
     })
     console.log('Checkbox checked state:', inputElement.checked);

@@ -64,8 +64,9 @@ export class BugsComponent implements OnInit {
 
   async getBugReports() {
     this.gameService.getBugReports().subscribe(data => {
-      this.reports = data.data;
+      this.paginatedBugs = data.data;
       this.totalItems = data.data.length;
+      this.loading = false;
     })
   }
 

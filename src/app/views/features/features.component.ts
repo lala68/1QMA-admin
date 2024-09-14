@@ -74,6 +74,8 @@ export class FeaturesComponent {
   error: any = '';
   message: any;
   selectedId: any;
+  position = 'top-end';
+  percentage = 0;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.featureForm = this.fb.group({
@@ -191,6 +193,7 @@ export class FeaturesComponent {
   }
 
   onCheckedChange(id: any, event: Event): void {
+    this.loading = true;
     const inputElement = event.target as HTMLInputElement;
     this.gameService.toggleShopItemActivation(id, inputElement.checked).then(data => {
       if (data?.status == 1) {
@@ -198,14 +201,12 @@ export class FeaturesComponent {
       } else {
         this.message = data?.message;
       }
+      this.getFeatures();
       this.toggleToast();
     })
     console.log('Checkbox checked state:', inputElement.checked);
     // Additional logic when the checked state changes
   }
-
-  position = 'top-end';
-  percentage = 0;
 
   toggleToast() {
     this.visibleToast = !this.visibleToast;

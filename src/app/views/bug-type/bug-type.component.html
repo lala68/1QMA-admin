@@ -62,7 +62,8 @@
                   cButton
                   color="light"
                   (click)="addSubCategory()">
-            <svg cIcon name="cilPlus"></svg> Add Subcategory
+            <svg cIcon name="cilPlus"></svg>
+            Add Subcategory
           </button>
 
           <!-- Bug Type Icon Upload -->
@@ -74,7 +75,7 @@
             <!-- Display uploaded icon -->
             <img *ngIf="imgSrc"
                  [src]="'https://api.staging.1qma.games/' + imgSrc"
-                 width="100px" />
+                 width="100px"/>
           </div>
 
           <!-- Error Display -->
@@ -115,9 +116,15 @@
               <div>{{ item?.category }}</div>
             </div>
             <div>
+              <button cButton color="light">
+                <c-form-check [switch]="true">
+                  <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
+                         (change)="onCheckedChange(item._id, item, $event)"/>
+                </c-form-check>
+              </button>
               <button cButton
                       color="light"
-                      (click)="displayAddBugType(item.category, item.subCategories, item._id, item.icon)">
+                      (click)="displayAddBugType(item.category, item.subCategories, item._id,item.isActive, item.icon)">
                 <svg cIcon name="cilPencil"></svg>
               </button>
               <button cButton
@@ -145,11 +152,13 @@
               <button type="button"
                       (click)="deleteBug()"
                       cButton
-                      color="secondary">Yes</button>
+                      color="secondary">Yes
+              </button>
               <button type="button"
                       (click)="toggleModal()"
                       cButton
-                      color="primary">No</button>
+                      color="primary">No
+              </button>
             </c-modal-footer>
           </c-modal>
         </div>

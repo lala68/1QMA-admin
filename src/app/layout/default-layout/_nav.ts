@@ -57,7 +57,7 @@ export const navItems: INavData[] = [
       url: '/bugs',
     },
       {
-        name: 'Setting',
+        name: 'Bug Types',
         url: '/bug-types',
       }
     ]

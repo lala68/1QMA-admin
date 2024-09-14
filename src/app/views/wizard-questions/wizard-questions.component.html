@@ -12,6 +12,20 @@
         <button (click)="displayAddQuestion()" class="mb-3" cButton color="primary" variant="outline">Add New Question
         </button>
         }
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast">
+            <c-toast-header>
+              Message
+            </c-toast-header>
+            <c-toast-body>
+              <p>{{message}}</p>
+            </c-toast-body>
+          </c-toast>
+        </c-toaster>
+        <br>
         @if (displayForm){
         <form cForm [formGroup]="questionForm" (ngSubmit)="submitNewQuestion()">
           <div class="mb-3">
@@ -59,10 +73,16 @@
         }
 
         @for (item of questions; track item.question;let i = $index){
-        @if (item.question && !displayForm){
+        @if (item.question && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
-            <div style="width: 30%; display: inline-block">{{item?.question}}</div>
+            <div style="width: 50%; display: inline-block">{{item?.question}}</div>
+            <button cButton color="light">
+              <c-form-check [switch]="true">
+                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
+                       (change)="onCheckedChange(item._id, item, $event)"/>
+              </c-form-check>
+            </button>
             <button cButton color="light" (click)="displayAddQuestion(item, item._id)">
               <svg cIcon name="cilPencil"></svg>
             </button>

@@ -12,7 +12,7 @@
         <button (click)="displayAddFeature()" class="mb-3" cButton color="primary" variant="outline">Add New Feature
         </button>
         }
-        @if (!displayForm){
+        @if (!displayForm && !loading){
         <table
      [hover]="true"
      [responsive]="true"
