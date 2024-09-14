@@ -376,11 +376,13 @@ export class GameService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  async postNewBugTypes(data: any, icon: any = null): Promise<any> {
+  async postNewBugTypes(category: any, subCategories: any, icon: any = null): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
-    formData.append('title', data);
-    formData.append('activities', '');
+    formData.append('category', category);
+    subCategories.forEach((subCategory: any, index: any) => {
+      formData.append(`subCategories[${index}][title]`, subCategory.title);
+    });
     formData.append('icon', icon);
     return this.http.post<any>(this.config.url('admin/bugTypes/add'), formData, {
       headers: headers,
@@ -389,10 +391,14 @@ export class GameService {
       .toPromise();
   }
 
-  async updateBugType(id: any, name: any, icon: any): Promise<any> {
+  async updateBugType(id: any, data: any, icon: any): Promise<any> {
     let headers = new HttpHeaders({});
     const formData = new FormData();
-    formData.append('title', name);
+    formData.append('category', data.category);
+    data.subCategories.forEach((activity: any, index: any) => {
+      // Use square brackets to indicate an array item in FormData
+      formData.append(`subCategories[${index}][title]`, activity.title);
+    });
     formData.append('id', id);
     formData.append('icon', icon);
     if (!icon) {

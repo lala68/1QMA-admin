@@ -49,15 +49,24 @@ export const navItems: INavData[] = [
     iconComponent: {name: 'cilList'},
   },
   {
+    name: 'Bugs',
+    url: '/bugs',
+    iconComponent: {name: 'cilBug'},
+    children: [{
+      name: 'Reports',
+      url: '/bugs',
+    },
+      {
+        name: 'Setting',
+        url: '/bug-types',
+      }
+    ]
+  },
+  {
     name: 'Charity',
     url: '/charity',
     iconComponent: {name: 'cilGift'},
   },
-  // {
-  //   name: 'Bug Reports',
-  //   url: '/bugs',
-  //   iconComponent: {name: 'cilBug'},
-  // },
   {
     name: 'Settings',
     url: '/setting',

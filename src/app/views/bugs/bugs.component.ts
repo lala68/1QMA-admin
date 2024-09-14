@@ -9,7 +9,7 @@ import {
   CardHeaderComponent,
   ColComponent, FormCheckComponent, FormCheckInputDirective,
   FormCheckLabelDirective,
-  GutterDirective,
+  GutterDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective,
   NavComponent,
   NavItemComponent, NavLinkDirective, PageItemDirective, PageLinkDirective, PaginationComponent, ProgressBarComponent,
   ProgressBarDirective,
@@ -23,8 +23,8 @@ import {
   TextColorDirective, ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent
 } from "@coreui/angular";
 import {IconDirective} from "@coreui/icons-angular";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgFor, NgStyle} from "@angular/common";
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {CommonModule, NgFor, NgStyle} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.component";
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
@@ -33,20 +33,20 @@ import {GameService} from "../../services/game.service";
 @Component({
   selector: 'app-bugs',
   standalone: true,
-  imports: [TextColorDirective, CardComponent, CardBodyComponent, RowComponent,
+  imports: [TextColorDirective, CardComponent, CardBodyComponent, RowComponent, CommonModule,
     ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, SpinnerComponent,
     FormCheckLabelDirective, NgStyle, CardFooterComponent, GutterDirective, RouterLink,
     ProgressBarDirective, ProgressComponent, CardHeaderComponent, TableDirective,
+    ModalFooterComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent,
     AvatarComponent, TabContentComponent, TabContentRefDirective, TabPaneComponent, NavComponent, NavItemComponent,
     NavLinkDirective, NgFor, PaginationComponent, PageItemDirective, PageLinkDirective, FormsModule,
     ChecksRadiosComponent, FormCheckComponent, DocsExampleComponent, FormCheckInputDirective, FormCheckInputDirective,
     ToasterComponent, ToastComponent, ToastHeaderComponent, ToastBodyComponent, ProgressBarDirective, ProgressComponent, ProgressBarComponent],
-
   templateUrl: './bugs.component.html',
   styleUrl: './bugs.component.scss'
 })
-export class BugsComponent implements OnInit{
-  public bugs: any = [];
+export class BugsComponent implements OnInit {
+  public reports: any = [];
   public bugsArray: any = [];
   paginatedBugs: any[] = [];
   loading: boolean = true;
@@ -55,7 +55,7 @@ export class BugsComponent implements OnInit{
   totalItems: number = 0;
   pages: number[] = [];
 
-  constructor(private router: Router, private gameService: GameService) {
+  constructor(private router: Router, private gameService: GameService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -63,8 +63,8 @@ export class BugsComponent implements OnInit{
   }
 
   async getBugReports() {
-    this.gameService.getBugTypes().subscribe(data => {
-      this.bugs = data.data;
+    this.gameService.getBugReports().subscribe(data => {
+      this.reports = data.data;
       this.totalItems = data.data.length;
     })
   }
@@ -103,4 +103,5 @@ export class BugsComponent implements OnInit{
   gotoDetail(data: any) {
 
   }
+
 }

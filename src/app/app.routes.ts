@@ -47,6 +47,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
+        path: 'bug-types',
+        loadChildren: () => import('./views/bug-type/routes').then((m) => m.routes),
+        canActivate: [authGuard]
+      },
+      {
         path: 'charity',
         loadChildren: () => import('./views/charity/routes').then((m) => m.routes),
         canActivate: [authGuard]
