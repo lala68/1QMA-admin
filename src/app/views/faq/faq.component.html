@@ -1,0 +1,89 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>FAQ</strong>
+      </c-card-header>
+      <c-card-body>
+        @if (loading){
+        <c-spinner style="display: block; margin: 0 auto"></c-spinner>
+        }
+        @if (!loading && !displayForm){
+        <button (click)="displayAddFaq()" class="mb-3" cButton color="primary" variant="outline">Add New FAQ
+        </button>
+        }
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast">
+            <c-toast-header>
+              Message
+            </c-toast-header>
+            <c-toast-body>
+              <p>{{message}}</p>
+            </c-toast-body>
+          </c-toast>
+        </c-toaster>
+        <br>
+        @if (displayForm){
+        <form cForm [formGroup]="faqForm" (ngSubmit)="submitNewFaq()">
+          <div class="mb-3">
+            <label cLabel for="question">Question</label>
+            <input cFormControl formControlName="question" id="question" type="text">
+          </div>
+          <div class="mb-3">
+            <label cLabel for="answer">Answer</label>
+            <input cFormControl formControlName="answer" id="answer" type="text">
+          </div>
+
+   <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <input cButton color="primary" [disabled]="loadingSubmit || faqForm.invalid" type="submit">
+        <button (click)="displayAddFaq()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
+        }
+
+        @for (item of faqs; track item.question;let i = $index){
+        @if (item.question && !displayForm && !loading){
+        <div cListGroup class="mb-3">
+          <div cListGroupItem>
+            <div class="avatar">
+              <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
+            </div>
+            <div style="width: 40%; display: inline-block">{{item?.question}}</div>
+            <button cButton color="light">
+              <c-form-check [switch]="true">
+                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
+                       (change)="onCheckedChange(item._id, item, $event)"/>
+              </c-form-check>
+            </button>
+            <button cButton color="light" (click)="displayAddFaq(item.question, item.answer, item._id, item.isActive)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+            <button cButton color="light" (click)="toggleModal(item._id)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+              <c-modal-header>
+                <h5 cModalTitle>Delete Faq</h5>
+                <button (click)="toggleModal()" cButtonClose></button>
+              </c-modal-header>
+              <c-modal-body>Do you want to delete this faq?</c-modal-body>
+              <c-modal-footer>
+                <button (click)="deleteFaq()" cButton color="secondary">
+                  Yes
+                </button>
+                <button (click)="toggleModal()" cButton color="primary">No</button>
+              </c-modal-footer>
+            </c-modal>
+          </div>
+        </div>
+        }
+        }
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

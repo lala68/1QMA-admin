@@ -428,5 +428,101 @@ export class GameService {
       .toPromise();
   }
 
+  getFaqs(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/faqs'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postNewFaq(data: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    return this.http.post<any>(this.config.url('admin/faqs/add'), {
+      question: data.question,
+      answer: data.answer,
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateFaq(id: any, data: any, active: any): Promise<any> {
+    let headers = new HttpHeaders({});
+    return this.http.post<any>(this.config.url('admin/faqs/update'), {
+      question: data.question,
+      answer: data.answer,
+      id: id,
+      isActive: active,
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteFaq(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/faqs/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+
+  getSponsors(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+    return this.http.get<any>(this.config.url('admin/sponsors'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postNewSponsors(data: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('link', data.link);
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/sponsors/add'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateSponsors(id: any, data: any, active: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('link', data.link);
+    formData.append('id', id);
+    formData.append('isActive', active);
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/sponsors/update'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteSponsors(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/sponsors/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
 
 }
