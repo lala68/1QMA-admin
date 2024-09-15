@@ -87,6 +87,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
+        path: 'privacy',
+        loadChildren: () => import('./views/privacy/routes').then((m) => m.routes),
+        canActivate: [authGuard]
+      },
+      {
         path: 'users',
         loadChildren: () => import('./views/users/routes').then((m) => m.routes),
         canActivate: [authGuard]

@@ -21,7 +21,7 @@ import {
   SpinnerComponent,
   TemplateIdDirective,
   TextColorDirective,
-  ThemeDirective, ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent
+  ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent
 } from "@coreui/angular";
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
 import {GameService} from "../../services/game.service";
@@ -34,10 +34,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
     ModalBodyComponent, FormModule, ButtonDirective, SpinnerComponent, ReactiveFormsModule, IconDirective,
     RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,
     DocsExampleComponent, AccordionComponent, AccordionItemComponent, TemplateIdDirective, AccordionButtonDirective,
-    BgColorDirective, ToastBodyComponent,
-    ToastComponent,
-    ToasterComponent,
-    ToastHeaderComponent,],
+    BgColorDirective, ToastBodyComponent, ToastComponent, ToasterComponent, ToastHeaderComponent],
   templateUrl: './account-types.component.html',
   styleUrl: './account-types.component.scss'
 })

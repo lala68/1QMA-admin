@@ -524,5 +524,26 @@ export class GameService {
       .toPromise();
   }
 
+  getPrivacy(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/faqs/privacyPolicies'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postPrivacy(data: any): Promise<any> {
+    console.log(data)
+    let headers = new HttpHeaders({});
+    return this.http.post<any>(this.config.url('admin/faqs/updatePrivacyPolicies'), {
+      ...data
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
 
 }

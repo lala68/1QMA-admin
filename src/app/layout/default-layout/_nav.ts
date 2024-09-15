@@ -81,6 +81,11 @@ export const navItems: INavData[] = [
     name: 'Settings',
     url: '/setting',
     iconComponent: {name: 'cilSettings'},
+  },
+  {
+    name: 'Privacy & Policy',
+    url: '/privacy',
+    iconComponent: {name: 'cilSettings'},
   }
   // {
   //   name: 'Game Setting',

@@ -37,7 +37,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/scss/styles.scss"
+              "src/scss/styles.scss",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": []
@@ -109,7 +110,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/scss/styles.scss"
+              "src/scss/styles.scss",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": []
           }
