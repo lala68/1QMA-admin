@@ -83,9 +83,14 @@ export const navItems: INavData[] = [
     iconComponent: {name: 'cilSettings'},
   },
   {
+    name: 'Terms Of Service',
+    url: '/terms',
+    iconComponent: {name: 'cilInbox'},
+  },
+  {
     name: 'Privacy & Policy',
     url: '/privacy',
-    iconComponent: {name: 'cilSettings'},
+    iconComponent: {name: 'cilInbox'},
   }
   // {
   //   name: 'Game Setting',

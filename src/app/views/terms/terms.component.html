@@ -1,0 +1,28 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Terms Of Service</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="editorForm"  (ngSubmit)="submitForm()">
+          <quill-editor formControlName="terms" [style]="{ height: '300px' }"></quill-editor>
+          <input cButton color="primary" [disabled]="loading" type="submit">
+        </form>
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast">
+            <c-toast-header>
+              Message
+            </c-toast-header>
+            <c-toast-body>
+              <p>{{message}}</p>
+            </c-toast-body>
+          </c-toast>
+        </c-toaster>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

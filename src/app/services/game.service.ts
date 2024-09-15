@@ -534,9 +534,28 @@ export class GameService {
   }
 
   async postPrivacy(data: any): Promise<any> {
-    console.log(data)
     let headers = new HttpHeaders({});
     return this.http.post<any>(this.config.url('admin/faqs/updatePrivacyPolicies'), {
+      ...data
+    }, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  getTerms(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/faqs/termsOfService'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postTerms(data: any): Promise<any> {
+    let headers = new HttpHeaders({});
+    return this.http.post<any>(this.config.url('admin/faqs/updateTermsOfService'), {
       ...data
     }, {
       headers: headers,
