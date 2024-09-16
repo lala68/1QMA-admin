@@ -80,7 +80,7 @@ export const navItems: INavData[] = [
   {
     name: 'Survival League',
     url: '/survival-league',
-    iconComponent: {name: 'cilGift'},
+    iconComponent: {name: 'cibPlaystation'},
   },
   {
     name: 'Settings',
