@@ -564,5 +564,63 @@ export class GameService {
       .toPromise();
   }
 
+  getLeagues(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.get<any>(this.config.url('admin/survivalLeagues'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  async postNewLeague(data: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('startDate', data.startDate);
+    formData.append('endDate', data.endDate);
+    formData.append('totalScore', data.totalScore);
+    formData.append('totalGames', data.totalGames);
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/survivalLeagues/add'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateLeague(id: any, data: any, active: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('startDate', data.startDate);
+    formData.append('endDate', data.endDate);
+    formData.append('totalScore', data.totalScore);
+    formData.append('totalGames', data.totalGames);
+    formData.append('icon', icon);
+    formData.append('id', id);
+    formData.append('isActive', active);
+    if (!icon) {
+      formData.delete('icon')
+    }
+    return this.http.post<any>(this.config.url('admin/survivalLeagues/update'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteLeague(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/survivalLeagues/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
 
 }

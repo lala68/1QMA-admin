@@ -97,6 +97,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
+        path: 'survival-league',
+        loadChildren: () => import('./views/survival-league/routes').then((m) => m.routes),
+        canActivate: [authGuard]
+      },
+      {
         path: 'users',
         loadChildren: () => import('./views/users/routes').then((m) => m.routes),
         canActivate: [authGuard]

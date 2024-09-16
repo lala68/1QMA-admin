@@ -78,6 +78,11 @@ export const navItems: INavData[] = [
     iconComponent: {name: 'cilGift'},
   },
   {
+    name: 'Survival League',
+    url: '/survival-league',
+    iconComponent: {name: 'cilGift'},
+  },
+  {
     name: 'Settings',
     url: '/setting',
     iconComponent: {name: 'cilSettings'},

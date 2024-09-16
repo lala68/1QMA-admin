@@ -1,0 +1,113 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Survival League</strong>
+      </c-card-header>
+      <c-card-body>
+        @if (loading){
+        <c-spinner style="display: block; margin: 0 auto"></c-spinner>
+        }
+        @if (!loading && !displayForm){
+        <button (click)="displayAddLeague()" class="mb-3" cButton color="primary" variant="outline">Add New League
+        </button>
+        }
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast">
+            <c-toast-header>
+              Message
+            </c-toast-header>
+            <c-toast-body>
+              <p>{{message}}</p>
+            </c-toast-body>
+          </c-toast>
+        </c-toaster>
+        <br>
+        @if (displayForm){
+        <form cForm [formGroup]="leagueForm" (ngSubmit)="submitNewLeague()">
+          <div class="m-3 mt-0">
+            <label cLabel for="title">Name Of League</label>
+            <input cFormControl formControlName="title" id="title" type="text">
+          </div>
+          <div class=d-flex w-100>
+             <div class="m-3 w-50">
+                <label cLabel for="startDate">Start Date</label>
+                <input cFormControl formControlName="startDate" id="startDate" type="date">
+              </div>
+            <div class="m-3 w-50">
+              <label cLabel for="endDate">End Date</label>
+              <input cFormControl formControlName="endDate" id="endDate" type="date">
+             </div>
+          </div>
+           <div class=d-flex w-100>
+             <div class="m-3 w-50">
+                <label cLabel for="totalScore">Total Score</label>
+                <input cFormControl formControlName="totalScore" id="totalScore" type="number">
+              </div>
+            <div class="m-3 w-50">
+              <label cLabel for="totalGames">Total Games</label>
+              <input cFormControl formControlName="totalGames" id="totalGames" type="number">
+             </div>
+          </div>
+             <div class="m-3">
+            <label cLabel for="name">Icon Of League</label>
+           <input type="file" (change)="handleFileInput($event)"
+                                 class="form-control mt-2">
+                                  @if (imgSrc){
+        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
+        }
+        </div>
+        <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <br>
+        <input class="m-3" cButton color="primary" [disabled]="loadingSubmit || leagueForm.invalid" type="submit">
+        <button (click)="displayAddLeague()" cButton color="secondary" variant="outline">Back
+        </button>
+      </form>
+        }
+
+        @for (item of leagues; track item.title;let i = $index){
+        @if (item.title && !displayForm && !loading){
+        <div cListGroup class="mb-3">
+          <div cListGroupItem>
+            <div class="avatar">
+              <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
+            </div>
+            <div style="width: 40%; display: inline-block">{{item?.title}}</div>
+            <button cButton color="light">
+              <c-form-check [switch]="true">
+                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
+                       (change)="onCheckedChange(item._id, item.title, $event)"/>
+              </c-form-check>
+            </button>
+            <button cButton color="light" (click)="displayAddLeague(item, item._id, item.isActive, item.icon)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+            <button cButton color="light" (click)="toggleModal(item._id)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+              <c-modal-header>
+                <h5 cModalTitle>Delete League</h5>
+                <button (click)="toggleModal()" cButtonClose></button>
+              </c-modal-header>
+              <c-modal-body>Do you want to delete this league?</c-modal-body>
+              <c-modal-footer>
+                <button (click)="deleteLeague()" cButton color="secondary">
+                  Yes
+                </button>
+                <button (click)="toggleModal()" cButton color="primary">No</button>
+              </c-modal-footer>
+            </c-modal>
+          </div>
+        </div>
+        }
+        }
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
