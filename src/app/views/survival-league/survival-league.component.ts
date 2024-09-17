@@ -21,11 +21,12 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {IconDirective} from "@coreui/icons-angular";
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
 import {GameService} from "../../services/game.service";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-survival-league',
   standalone: true,
-  imports: [ModalFooterComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ButtonCloseDirective,
+  imports: [CommonModule, ModalFooterComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ButtonCloseDirective,
     ModalBodyComponent, FormModule, ButtonDirective, SpinnerComponent, ReactiveFormsModule, IconDirective,
     RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,
     DocsExampleComponent, AccordionComponent, AccordionItemComponent, TemplateIdDirective, AccordionButtonDirective,

@@ -78,11 +78,15 @@
               <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
             </div>
             <div style="width: 40%; display: inline-block">{{item?.title}}</div>
-            <button cButton color="light">
-              <c-form-check [switch]="true">
-                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
-                       (change)="onCheckedChange(item._id, item.title, $event)"/>
-              </c-form-check>
+<!--            <button cButton color="light">-->
+<!--              <c-form-check [switch]="true">-->
+<!--                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"-->
+<!--                       (change)="onCheckedChange(item._id, item.title, $event)"/>-->
+<!--              </c-form-check>-->
+<!--            </button>-->
+            <button cButton color="light" class="m-1" [disabled]="!item?.isActive">
+              <c-spinner *ngIf="item?.isActive" aria-hidden="true" color="success" size="sm" variant="grow"></c-spinner>
+              <c-spinner *ngIf="!item?.isActive" aria-hidden="true" color="danger" size="sm" variant="grow"></c-spinner>
             </button>
             <button cButton color="light" (click)="displayAddLeague(item, item._id, item.isActive, item.icon)">
               <svg cIcon name="cilPencil"></svg>

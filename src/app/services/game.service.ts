@@ -582,6 +582,9 @@ export class GameService {
     formData.append('totalScore', data.totalScore);
     formData.append('totalGames', data.totalGames);
     formData.append('icon', icon);
+    if (!icon) {
+      formData.delete('icon')
+    }
     return this.http.post<any>(this.config.url('admin/survivalLeagues/add'), formData, {
       headers: headers,
       withCredentials: true

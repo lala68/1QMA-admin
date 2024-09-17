@@ -5,8 +5,11 @@
         <strong>Privacy & Policy</strong>
       </c-card-header>
       <c-card-body>
-        <form [formGroup]="editorForm"  (ngSubmit)="submitForm()">
+        <form [formGroup]="editorForm" (ngSubmit)="submitForm()">
           <quill-editor formControlName="privacyPolicies" [style]="{ height: '300px' }"></quill-editor>
+          <br>
+          <br>
+          <br>
           <input cButton color="primary" [disabled]="loading" type="submit">
         </form>
         <c-toaster [placement]="position" class="p-3" position="fixed">
