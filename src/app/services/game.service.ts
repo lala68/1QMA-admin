@@ -154,13 +154,14 @@ export class GameService {
   }
 
   getDashboard(): Observable<any> {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+    });
 
-    })
-    return this.http.get<any>(this.config.url('admin/dashboard'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+    return this.http.get<any>(this.config.url('admin/dashboard'), { headers, withCredentials: true })
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
+
 
 //  features
   getAllShopItems(): Observable<any> {
@@ -169,7 +170,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/shopItems'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postNewShopItem(data: any, type: any, icon: any = null): Promise<any> {
@@ -308,7 +309,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/charityCategories'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postNewCharity(title: any, activities: any, icon: any = null): Promise<any> {
@@ -368,7 +369,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/bugReports'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   getBugTypes(): Observable<any> {
@@ -377,7 +378,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/bugTypes'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postNewBugTypes(category: any, subCategories: any, icon: any = null): Promise<any> {
@@ -434,7 +435,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/faqs'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postNewFaq(data: any, icon: any = null): Promise<any> {
@@ -530,7 +531,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/faqs/privacyPolicies'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postPrivacy(data: any): Promise<any> {
@@ -550,7 +551,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/faqs/termsOfService'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postTerms(data: any): Promise<any> {
@@ -570,7 +571,7 @@ export class GameService {
 
     })
     return this.http.get<any>(this.config.url('admin/survivalLeagues'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async postNewLeague(data: any, icon: any = null): Promise<any> {

@@ -16,24 +16,25 @@ export class ProcessHttpMessageService {
     const userAccount = this.injector.get<UserService>(UserService);
     let errMsg: string;
 
-    if (error.error instanceof ErrorEvent) {
-      errMsg = error.error.title;
+    if (error instanceof ErrorEvent) {
+      errMsg = error.message;
     } else {
       // errMsg = `${error.status} - ${error.statusText || ''} ${error.error}`;
-      errMsg = error.error.title;
+      errMsg = error.message;
     }
-    switch (error.error.status) {
+    switch (error.status) {
       case 400:
         // alert('request-is-not-valid.');
         // alert(error.error.title);
         break;
 
       case 401:
-        // await userAccount.forceToLoginAgain();
+        await userAccount.forceToLoginAgain();
         break;
 
       case 403:
-        alert('Forbidden-resource');
+        // alert('Forbidden-resource');
+        await userAccount.forceToLoginAgain();
         break;
 
       case 413:

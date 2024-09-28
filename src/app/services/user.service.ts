@@ -17,6 +17,7 @@ export class UserService {
 
   constructor(private http: HttpClient,
               private config: ConfigService,
+              private router: Router,
               private processHTTPMsgService: ProcessHttpMessageService,
               private generalService: GeneralService) {
   }
@@ -27,7 +28,7 @@ export class UserService {
 
     })
     return this.http.get<any>(this.config.url('admin/users'), {headers: headers, withCredentials: true})
-      .pipe(catchError(this.processHTTPMsgService.handleError));
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
   async loginUser(data: any): Promise<any> {
@@ -104,5 +105,10 @@ export class UserService {
       }
     }
     return !!user.value;
+  }
+
+  async forceToLoginAgain() {
+    await Preferences.clear();
+    await this.router.navigate(['/login']);
   }
 }

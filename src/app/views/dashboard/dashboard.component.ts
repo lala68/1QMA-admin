@@ -22,6 +22,7 @@ import {
 import {GameService} from "../../services/game.service";
 import {IconDirective} from "@coreui/icons-angular";
 import {cilArrowRight, cilChartPie} from "@coreui/icons";
+import {ProcessHttpMessageService} from "../../services/process-http-message.service";
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -37,7 +38,7 @@ export class DashboardComponent implements OnInit{
   dashboard: any;
   icons = { cilChartPie, cilArrowRight };
 
-  constructor(private gameService: GameService) {
+  constructor(private gameService: GameService, private processHttp: ProcessHttpMessageService) {
   }
 
   ngOnInit(): void {
@@ -49,6 +50,8 @@ export class DashboardComponent implements OnInit{
       if (data.status == 1) {
         this.dashboard = data.data;
       }
+    }, error => {
+      return this.processHttp.handleError(error);
     })
   }
 
