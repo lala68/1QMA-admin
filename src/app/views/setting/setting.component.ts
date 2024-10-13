@@ -66,7 +66,7 @@ export class SettingComponent {
   }
 
   displayAddSetting(name: string | null = null, value: string | null = null, id: string | null = null,
-                    key: string | null = null, type: any) {
+                    key: string | null = null, type: any = '') {
     this.selectedType = type;
     this.isEditing = !!id; // Check if it's an edit (if `id` exists, it's an edit)
     this.id = id; // Set the ID
@@ -81,7 +81,7 @@ export class SettingComponent {
     // Toggle form visibility and set form values based on add/edit mode
     this.displayForm = !this.displayForm;
     if (this.isEditing) {
-      this.settingsForm.setValue({name: name, key: key, value: value, type: type});
+      this.settingsForm.setValue({name: name, key: key, value: value, type: this.selectedType});
     } else {
       this.settingsForm.reset(); // Reset form for adding a new setting
     }
@@ -102,7 +102,7 @@ export class SettingComponent {
         }
       })
     } else {
-      this.gameService.postNewSettings(this.settingsForm.get('name')?.value, this.settingsForm.get('key')?.value, this.settingsForm.get('value')?.value, this.selectedType).then(data => {
+      this.gameService.postNewSettings(this.settingsForm.get('name')?.value, this.settingsForm.get('key')?.value, this.settingsForm.get('value')?.value, this.settingsForm.get('type')?.value).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;

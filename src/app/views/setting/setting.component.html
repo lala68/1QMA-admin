@@ -2,7 +2,7 @@
   <c-col xs="12">
     <!-- Add New Setting Button (shown when form is not visible) -->
     <div *ngIf="!loading && !displayForm">
-      <button (click)="displayAddSetting(null, null, null, null, 'test')" class="mb-2" cButton
+      <button (click)="displayAddSetting(null, null, null, null, '')" class="mb-2" cButton
               color="primary" variant="outline">Add New Setting
       </button>
     </div>
@@ -52,7 +52,6 @@
               </button>
             </form>
           </div>
-
           <!-- Display Settings List -->
           <ul *ngFor="let item of category.settings; let i = index" cListGroup class="p-0">
             <li cListGroupItem *ngIf="!selectedType"
