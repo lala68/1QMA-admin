@@ -87,6 +87,14 @@ export class SettingComponent {
     }
   }
 
+  onTypeChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    console.log('Selected value:', selectedValue);
+    this.selectedType = selectedValue;
+
+    // You can handle further logic based on the selected value here.
+  }
+
 
   submitNewSetting() {
     this.loadingSubmit = true;

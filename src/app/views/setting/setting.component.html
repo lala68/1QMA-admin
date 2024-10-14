@@ -2,7 +2,7 @@
   <c-col xs="12">
     <!-- Add New Setting Button (shown when form is not visible) -->
     <div *ngIf="!loading && !displayForm">
-      <button (click)="displayAddSetting(null, null, null, null, '')" class="mb-2" cButton
+      <button (click)="displayAddSetting(null, null, null, null, 'test')" class="mb-2" cButton
               color="primary" variant="outline">Add New Setting
       </button>
     </div>
@@ -23,9 +23,9 @@
               <!-- Name Field (always visible) -->
               <div class="w-25 mb-3">
                 <label cLabel for="name">Type Of Setting</label>
-                <select cSelect cFormControl formControlName="type">
+                <select cSelect cFormControl formControlName="type" (change)="onTypeChange($event)">
                   <option *ngFor="let type of settingTypes | keyvalue" [value]="type.value">
-                    {{type.value}}
+                    {{ type.value }}
                   </option>
                 </select>
               </div>
