@@ -44,7 +44,7 @@
         currency.value }}</option>
        </select>
                 <!-- Conditional Buttons for Default/Non-default Activity -->
-      <button cButton color="light" *ngIf="!activity.get('isDefault')?.value">
+      <button cButton color="light" *ngIf="!activity.get('isDefault')?.value && activity.get('_id')?.value">
         <input class="form-check-input" type="checkbox" [checked]="activity.get('isDefault')?.value"
                (change)="onCheckedDefaultActivityChange(activity.get('_id')?.value)">
         <label class="form-check-label">
@@ -55,7 +55,7 @@
       <button cButton color="light" *ngIf="activity.get('isDefault')?.value">
         <label class="form-check-label">
           <svg cIcon name="cilCheck" color="success"></svg>
-          Default
+          default
         </label>
       </button>
            <button class="ms-2" cButton color="light" (click)="removeActivity(i)" *ngIf="activities.length > 1">
@@ -117,7 +117,7 @@
             <button cButton color="light" *ngIf="item.isDefault">
               <label class="form-check-label">
                 <svg cIcon name="cilCheck" color="success"></svg>
-                Default
+                default
               </label>
             </button>
             <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">

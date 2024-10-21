@@ -70,7 +70,7 @@ export class CharityComponent {
 // Function to create a new activity form group
   createActivity(activity?: any): FormGroup {
     return this.fb.group({
-      _id: [activity ? activity._id : '', Validators.required],
+      _id: [activity ? activity._id : ''],
       title: [activity ? activity.title : '', Validators.required],
       neededFund: [activity ? activity.neededFund : '', Validators.required],
       currency: [activity ? activity.currency : '', Validators.required],
@@ -227,11 +227,10 @@ export class CharityComponent {
 
   onCheckedDefaultActivityChange(id: any): void {
     this.loading = true;
-    this.gameService.makeAsDefaultActivity(id).then(data => {
+    this.gameService.makeAsDefaultActivity(this.id, id).then(data => {
       if (data?.status == 1) {
         this.displayForm = false;
         this.getCharities();
-        this.toggleToast();
       } else {
         this.message = data?.message;
       }

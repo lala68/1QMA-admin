@@ -357,20 +357,16 @@ export class GameService {
 
   async makeAsDefault(id: any): Promise<any> {
     let headers = new HttpHeaders({});
-    const formData = new FormData();
-    formData.append('id', id);
-    return this.http.post<any>(this.config.url('admin/charityCategories/makeAsDefault'), formData, {
+    return this.http.post<any>(this.config.url('admin/charityCategories/makeAsDefault'), {id}, {
       headers: headers,
       withCredentials: true
     })
       .toPromise();
   }
 
-  async makeAsDefaultActivity(id: any): Promise<any> {
+  async makeAsDefaultActivity(id: any, activityId: any): Promise<any> {
     let headers = new HttpHeaders({});
-    const formData = new FormData();
-    formData.append('id', id);
-    return this.http.post<any>(this.config.url('admin/charityCategories/activity/makeAsDefault'), formData, {
+    return this.http.post<any>(this.config.url('admin/charityCategories/activity/makeAsDefault'), {id, activityId}, {
       headers: headers,
       withCredentials: true
     })
