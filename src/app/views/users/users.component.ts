@@ -74,7 +74,7 @@ export class UsersComponent implements OnInit {
   async getUsers() {
     this.userService.getUsers().subscribe(data => {
       // if (data.status == 1) {
-        this.users = data.users.data;
+        this.users = data.users.data.users;
         this.totalItems = data.users.data.length;
         this.onTabChange(0)
       // }

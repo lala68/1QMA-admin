@@ -54,6 +54,7 @@ export class CharityComponent {
   message: any;
   position = 'top-end';
   percentage = 0;
+  currencies: any;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.charityForm = this.fb.group({
@@ -69,7 +70,11 @@ export class CharityComponent {
 // Function to create a new activity form group
   createActivity(activity?: any): FormGroup {
     return this.fb.group({
-      title: [activity ? activity.title : '', Validators.required]
+      _id: [activity ? activity._id : '', Validators.required],
+      title: [activity ? activity.title : '', Validators.required],
+      neededFund: [activity ? activity.neededFund : '', Validators.required],
+      currency: [activity ? activity.currency : '', Validators.required],
+      isDefault: [activity ? activity.isDefault : false]
     });
   }
 
@@ -94,12 +99,13 @@ export class CharityComponent {
     this.gameService.getCharities().subscribe(data => {
       this.loading = false;
       if (data.status === 1) {
-        this.charities = data.data;
+        this.charities = data.data.charityCategories;
+        this.currencies = data.data.currencies;
       }
     })
   }
 
-  displayAddCharity(title: any = null, activities: any = null, id: any = null, active: any = null, path: any = null) {
+  displayAddCharity(title: any = null, neededFund: any = null, isDefault: any = false, currency: any = null, activities: any = null, id: any = null, active: any = null, path: any = null) {
     this.id = id;
     this.active = active;
     this.imgSrc = '';
@@ -107,7 +113,7 @@ export class CharityComponent {
     this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm && title) {
-      this.charityForm.patchValue({title: title});
+      this.charityForm.patchValue({title: title, neededFund: neededFund, currency: currency, isDefault: isDefault});
 
       // Clear the existing FormArray
       const activitiesArray = this.charityForm.get('activities') as FormArray;
@@ -202,6 +208,35 @@ export class CharityComponent {
       this.toggleToast();
     })
     console.log('Checkbox checked state:', inputElement.checked);
+    // Additional logic when the checked state changes
+  }
+
+  onCheckedDefaultChange(id: any): void {
+    this.loading = true;
+
+    this.gameService.makeAsDefault(id).then(data => {
+      if (data?.status == 1) {
+        this.message = data?.message;
+      } else {
+        this.message = data?.message;
+      }
+      this.getCharities();
+    })
+    // Additional logic when the checked state changes
+  }
+
+  onCheckedDefaultActivityChange(id: any): void {
+    this.loading = true;
+    this.gameService.makeAsDefaultActivity(id).then(data => {
+      if (data?.status == 1) {
+        this.displayForm = false;
+        this.getCharities();
+        this.toggleToast();
+      } else {
+        this.message = data?.message;
+      }
+      this.getCharities();
+    })
     // Additional logic when the checked state changes
   }
 }

@@ -4,7 +4,7 @@
     </button>
     <br>
     <br>
-    <c-card class="mb-4">
+    <c-card class="m-3">
       <c-card-header>
         <strong>{{user?.firstName}} {{user?.lastName}}</strong>
       </c-card-header>
@@ -16,6 +16,43 @@
         City: <strong>{{user?.city}}</strong><br>
         Education: <strong>{{user?.education?.title}}</strong><br>
         Gender: <strong>{{user?.gender?.title}}</strong><br>
+        Number of Invited user: <strong>{{user?.invitations?.length}}</strong><br>
+        Assets: Bronze <strong>{{user?.assets?.coins?.bronze}} </strong> Silver
+        <strong>{{user?.assets?.coins?.silver}}
+        </strong>Gold <strong>{{user?.assets?.coins?.gold}}</strong><br>
+        <form cForm [formGroup]="userCoinForm" (ngSubmit)="submitAddCoin()">
+          <div class="w-100 d-inline-flex align-items-center">
+            <div class="w-25 m-3">
+              <label cLabel for="numberOfCoins">Count Of Coin</label>
+              <input cFormControl formControlName="numberOfCoins" id="numberOfCoins" type="number">
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel>Type Of Asset</label>
+              <select aria-label="Default select example" cSelect cFormControl formControlName="coinType">
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+              </select>
+            </div>
+            <div role="alert" style="color: #ff5722; margin: 10px 0">
+              {{error}}
+            </div>
+            <input style="margin-top: 30px" cButton color="primary" [disabled]="loadingSubmit || userCoinForm.invalid" type="submit">
+          </div>
+        </form>
+        <br>
+        <form cForm [formGroup]="userInvitationForm" (ngSubmit)="submitAddInvitation()">
+          <div class="w-100 d-inline-flex align-items-center">
+            <div class="w-25 m-3">
+              <label cLabel for="numberOfInvitations">Count Of Invitation</label>
+              <input cFormControl formControlName="numberOfInvitations" id="numberOfInvitations" type="number">
+            </div>
+            <div role="alert" style="color: #ff5722; margin: 10px 0">
+              {{error}}
+            </div>
+            <input style="margin-top: 30px" cButton color="primary" [disabled]="loadingSubmit || userInvitationForm.invalid" type="submit">
+          </div>
+        </form>
       </c-card-body>
     </c-card>
   </c-col>

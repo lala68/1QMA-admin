@@ -158,7 +158,7 @@ export class GameService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.get<any>(this.config.url('admin/dashboard'), { headers, withCredentials: true })
+    return this.http.get<any>(this.config.url('admin/dashboard'), {headers, withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
   }
 
@@ -333,9 +333,14 @@ export class GameService {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('title', data.title);
+    formData.append('neededFund', data.neededFund);
+    formData.append('currency', data.currency);
     data.activities.forEach((activity: any, index: any) => {
       // Use square brackets to indicate an array item in FormData
       formData.append(`activities[${index}][title]`, activity.title);
+      formData.append(`activities[${index}][neededFund]`, activity.neededFund);
+      formData.append(`activities[${index}][currency]`, activity.currency);
+      formData.append(`activities[${index}][isDefault]`, activity.isDefault);
     });
     formData.append('id', id);
     formData.append('icon', icon);
@@ -344,6 +349,28 @@ export class GameService {
       formData.delete('icon')
     }
     return this.http.post<any>(this.config.url('admin/charityCategories/update'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async makeAsDefault(id: any): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('id', id);
+    return this.http.post<any>(this.config.url('admin/charityCategories/makeAsDefault'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async makeAsDefaultActivity(id: any): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('id', id);
+    return this.http.post<any>(this.config.url('admin/charityCategories/activity/makeAsDefault'), formData, {
       headers: headers,
       withCredentials: true
     })

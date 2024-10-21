@@ -36,9 +36,29 @@
   <div formArrayName="activities">
     <div *ngFor="let activity of activities.controls; let i = index" [formGroupName]="i" class="mb-3">
       <label cLabel for="dynamicActivity-{{ i }}">Activity {{ i + 1 }}</label>
-      <div class="w-100 d-inline-flex">
-      <input cFormControl formControlName="title" id="dynamicActivity-{{ i }}" type="text">
-      <button class="ms-2" cButton color="light" (click)="removeActivity(i)" *ngIf="activities.length > 1">
+      <div class="w-100 d-inline-flex align-items-center">
+      <input class=" w-25 m-1" cFormControl formControlName="title" id="dynamicActivity-{{ i }}" type="text">
+      <input class="w-25 m-1" cFormControl formControlName="neededFund" id="dynamicActivity-{{ i }}" type="number">
+       <select class="w-25 m-1" aria-label="Default select example" cSelect cFormControl formControlName="currency">
+          <option *ngFor="let currency of currencies | keyvalue" [value]="currency.value">{{ currency.key }} - {{
+        currency.value }}</option>
+       </select>
+                <!-- Conditional Buttons for Default/Non-default Activity -->
+      <button cButton color="light" *ngIf="!activity.get('isDefault')?.value">
+        <input class="form-check-input" type="checkbox" [checked]="activity.get('isDefault')?.value"
+               (change)="onCheckedDefaultActivityChange(activity.get('_id')?.value)">
+        <label class="form-check-label">
+          default
+        </label>
+      </button>
+
+      <button cButton color="light" *ngIf="activity.get('isDefault')?.value">
+        <label class="form-check-label">
+          <svg cIcon name="cilCheck" color="success"></svg>
+          Default
+        </label>
+      </button>
+           <button class="ms-2" cButton color="light" (click)="removeActivity(i)" *ngIf="activities.length > 1">
               <svg cIcon name="cilTrash"></svg>
             </button>
     </div>
@@ -73,18 +93,32 @@
             <div class="avatar">
               <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
             </div>
-            <div style="width: 50%; display: inline-block">{{item?.title}}</div>
+            <div style="width: 40%; display: inline-block">{{item?.title}}</div>
             <button cButton color="light">
               <c-form-check [switch]="true">
                 <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
                        (change)="onCheckedChange(item._id, item, $event)"/>
               </c-form-check>
             </button>
-            <button cButton color="light" (click)="displayAddCharity(item.title, item.activities, item._id, item.isActive, item.icon)">
+            <button cButton color="light"
+                    (click)="displayAddCharity(item.title,item.neededFund,item.isDefault, item.currency,  item.activities, item._id, item.isActive, item.icon)">
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button cButton color="light" (click)="toggleModal(item._id)">
               <svg cIcon name="cilTrash"></svg>
+            </button>
+            <button cButton color="light" *ngIf="!item.isDefault">
+              <input class="form-check-input" type="checkbox" [value]="item.isDefault"
+                     [checked]="item.isDefault" (change)="onCheckedDefaultChange(item._id)">
+              <label class="form-check-label">
+                default
+              </label>
+            </button>
+            <button cButton color="light" *ngIf="item.isDefault">
+              <label class="form-check-label">
+                <svg cIcon name="cilCheck" color="success"></svg>
+                Default
+              </label>
             </button>
             <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
               <c-modal-header>

@@ -68,6 +68,28 @@ export class UserService {
       .toPromise();
   }
 
+  async addCoinUser(id: any, numberOfCoins: any, coinType: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/users/addCoins'), {
+      id, coinType, numberOfCoins
+    }, {headers: headers, withCredentials: true})
+      .toPromise();
+  }
+
+ async addInvitationUser(id: any, numberOfInvitations: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/users/addInvitations'), {
+      id, numberOfInvitations
+    }, {headers: headers, withCredentials: true})
+      .toPromise();
+  }
+
   async logout(): Promise<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
