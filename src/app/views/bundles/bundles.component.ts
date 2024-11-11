@@ -100,7 +100,7 @@ export class BundlesComponent {
     this.gameService.getAllShopItems().subscribe(data => {
       this.loading = false;
       if (data.status === 1) {
-        this.bundles = data.data
+        this.bundles = data.data.shopItems
           .filter((bundle: any) => bundle.type === 'bundle')  // Filter only 'feature' types
           .map((bundle: any) => {
             if (bundle.details && bundle.details.length > 0) {

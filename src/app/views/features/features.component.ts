@@ -98,7 +98,7 @@ export class FeaturesComponent {
     this.gameService.getAllShopItems().subscribe(data => {
       this.loading = false;
       if (data.status === 1) {
-        this.features = data.data
+        this.features = data.data.shopItems
           .filter((feature: any) => feature.type === 'feature')  // Filter only 'feature' types
           .map((feature: any) => {
             if (feature.details && feature.details.length > 0) {

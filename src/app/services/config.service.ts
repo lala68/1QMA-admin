@@ -5,7 +5,7 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class ConfigService {
-  version: any = '1.1.8';
+  version: any = '1.1.9';
 
   constructor() {
   }

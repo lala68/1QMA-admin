@@ -95,7 +95,7 @@ export class AssetsComponent {
     this.gameService.getAllShopItems().subscribe(data => {
       this.loading = false;
       if (data.status === 1) {
-        this.assets = data.data
+        this.assets = data.data.shopItems
           .filter((assets: any) => assets.type === 'asset')  // Filter only 'feature' types
           .map((assets: any) => {
             if (assets.details && assets.details.length > 0) {
