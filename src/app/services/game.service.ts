@@ -337,6 +337,7 @@ export class GameService {
     formData.append('currency', data.currency);
     data.activities.forEach((activity: any, index: any) => {
       // Use square brackets to indicate an array item in FormData
+      formData.append(`activities[${index}][id]`, activity._id);
       formData.append(`activities[${index}][title]`, activity.title);
       formData.append(`activities[${index}][neededFund]`, activity.neededFund);
       formData.append(`activities[${index}][currency]`, activity.currency);

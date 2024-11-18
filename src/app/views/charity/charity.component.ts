@@ -74,6 +74,9 @@ export class CharityComponent {
       title: [activity ? activity.title : '', Validators.required],
       neededFund: [activity ? activity.neededFund : '', Validators.required],
       currency: [activity ? activity.currency : '', Validators.required],
+      progress: [
+        { value: activity && activity?.progress ? 'prg: ' + activity.progress : '', disabled: true }
+      ],
       isDefault: [activity ? activity.isDefault : false]
     });
   }
