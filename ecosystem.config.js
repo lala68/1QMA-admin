@@ -8,7 +8,7 @@ module.exports = {
       path: "/root/projects/sources/1qma.admin",
       "pre-deploy": "git reset --hard",
       "post-deploy":
-        "npm install; pm2 startOrRestart ~/projects/config/1qma.admin.json --update-env --env production; pm2 save;",
+        "npm install; ng build --configuration production; cp -rf /root/projects/sources/1qma.admin/source/dist/coreui-free-angular-admin-template/browser /var/www/html/admin.1qma.games/;",
     },
 
     staging: {
