@@ -7,12 +7,17 @@
       <c-card-body>
         @if (loading){
         <c-spinner style="display: block; margin: 0 auto"></c-spinner>
-        }
-        @if (!loading && !displayForm){
-        <button (click)="displayAddBundle()" class="mb-3" cButton color="primary" variant="outline">Add New Bundle
+        } @if (!loading && !displayForm){
+        <button
+          (click)="displayAddBundle()"
+          class="mb-3"
+          cButton
+          color="primary"
+          variant="outline"
+        >
+          Add New Bundle
         </button>
-        }
-        @if (!displayForm && !loading){
+        } @if (!displayForm && !loading){
         <table
           [hover]="true"
           [responsive]="true"
@@ -22,131 +27,202 @@
           class="mb-0 border"
         >
           <thead class="text-nowrap text-truncate">
-          <tr>
-            <th class="bg-body-secondary"></th>
-            <th class="bg-body-secondary">Price</th>
-            <th class="bg-body-secondary">Active</th>
-            <th class="bg-body-secondary">Edit</th>
-            <th class="bg-body-secondary">Delete</th>
-          </tr>
+            <tr>
+              <th class="bg-body-secondary"></th>
+              <th class="bg-body-secondary">Price</th>
+              <th class="bg-body-secondary">Active</th>
+              <th class="bg-body-secondary">Edit</th>
+              <th class="bg-body-secondary">Delete</th>
+            </tr>
           </thead>
           <tbody>
-          @for (bundle of bundles; track bundle.type;let i = $index) {
-        <tr>
-          <td>
-            <div class="avatar">
-              <img class="avatar-img"
-                   [src]="bundle?.icon ? 'https://api.staging.1qma.games/' + bundle?.icon : '/assets/images/frame.png'">
-            </div>
-          </td>
-          <td>
-            {{bundle?.realPrice}}
-          </td>
-          <td>
-            <c-form-check [switch]="true">
-              <input [checked]="bundle.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
-                     (change)="onCheckedChange(bundle._id, $event)"/>
-            </c-form-check>
-          </td>
-          <td>
-            <button cButton color="light" (click)="displayAddBundle(bundle)">
-              <svg cIcon name="cilPencil"></svg>
-            </button>
-          </td>
-          <td>
-            <button cButton color="light" (click)="toggleModal(bundle._id)">
-              <svg cIcon name="cilTrash"></svg>
-            </button>
-          </td>
-        </tr>
+            @for (bundle of bundles; track bundle.type;let i = $index) {
+            <tr>
+              <td>
+                <div class="avatar">
+                  <img
+                    class="avatar-img"
+                    [src]="
+                      bundle?.icon
+                        ? 'https://api.1qma.games/' + bundle?.icon
+                        : '/assets/images/frame.png'
+                    "
+                  />
+                </div>
+              </td>
+              <td>
+                {{ bundle?.realPrice }}
+              </td>
+              <td>
+                <c-form-check [switch]="true">
+                  <input
+                    [checked]="bundle.isActive"
+                    style="cursor: pointer"
+                    cFormCheckInput
+                    type="checkbox"
+                    (change)="onCheckedChange(bundle._id, $event)"
+                  />
+                </c-form-check>
+              </td>
+              <td>
+                <button
+                  cButton
+                  color="light"
+                  (click)="displayAddBundle(bundle)"
+                >
+                  <svg cIcon name="cilPencil"></svg>
+                </button>
+              </td>
+              <td>
+                <button cButton color="light" (click)="toggleModal(bundle._id)">
+                  <svg cIcon name="cilTrash"></svg>
+                </button>
+              </td>
+            </tr>
 
-        }
-        </tbody>
-      </table>
-      <c-toaster [placement]="position" class="p-3" position="fixed">
-        <c-toast
-          (timer)="onTimerChange($event)"
-          (visibleChange)="onVisibleChange($event)"
-          [visible]="visibleToast">
-          <c-toast-header>
-            Message
-          </c-toast-header>
-          <c-toast-body>
-            <p>{{message}}</p>
+            }
+          </tbody>
+        </table>
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast"
+          >
+            <c-toast-header> Message </c-toast-header>
+            <c-toast-body>
+              <p>{{ message }}</p>
             </c-toast-body>
           </c-toast>
         </c-toaster>
-        <br>
-        }
-        @if (displayForm){
+        <br />
+        } @if (displayForm){
         <form cForm [formGroup]="bundleForm" (ngSubmit)="submitNewBundle()">
-           <div class="w-100 d-inline-flex">
-         <div class="w-25 m-3">
-           <label cLabel for="name">Count Of Feature</label>
-           <input cFormControl formControlName="featureCount" id="featureCount" type="number">
-         </div>
-         <div class="w-25 m-3">
-           <label cLabel for="name">Type Of Feature</label>
-            <select aria-label="Default select example" cSelect cFormControl formControlName="featureTitle">
-            <option value="invitation">Invitation</option>
-          </select>
+          <div class="w-100 d-inline-flex">
+            <div class="w-25 m-3">
+              <label cLabel for="name">Count Of Feature</label>
+              <input
+                cFormControl
+                formControlName="featureCount"
+                id="featureCount"
+                type="number"
+              />
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Type Of Feature</label>
+              <select
+                aria-label="Default select example"
+                cSelect
+                cFormControl
+                formControlName="featureTitle"
+              >
+                <option value="invitation">Invitation</option>
+              </select>
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Count Of Asset</label>
+              <input
+                cFormControl
+                formControlName="assetCount"
+                id="assetCount"
+                type="number"
+              />
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Type Of Asset</label>
+              <select
+                aria-label="Default select example"
+                cSelect
+                cFormControl
+                formControlName="assetTitle"
+              >
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+              </select>
+            </div>
           </div>
-         <div class="w-25 m-3">
-           <label cLabel for="name">Count Of Asset</label>
-           <input cFormControl formControlName="assetCount" id="assetCount" type="number">
-         </div>
-         <div class="w-25 m-3">
-          <label cLabel for="name">Type Of Asset</label>
-           <select aria-label="Default select example" cSelect cFormControl formControlName="assetTitle">
-           <option value="bronze">Bronze</option>
-           <option value="silver">Silver</option>
-           <option value="gold">Gold</option>
-         </select>
-         </div>
-         </div>
-           <div class="w-100 d-inline-flex">
-         <div class="w-25 m-3">
-           <label cLabel for="name">Price Of Coin</label>
-           <input cFormControl formControlName="coinPrice" id="coinPrice" type="number">
-         </div>
-         <div class="w-25 m-3">
-          <label cLabel for="name">Type Of Coin</label>
-           <select aria-label="Default select example" cSelect cFormControl formControlName="coinType">
-            <option value="bronze">Bronze</option>
-            <option value="silver">Silver</option>
-            <option value="gold">Gold</option>
-          </select>
-         </div>
-         <div class="w-25 m-3">
-           <label cLabel for="name">Price Of Bundle</label>
-           <input cFormControl formControlName="price" id="price" type="number">
-         </div>
-         </div>
+          <div class="w-100 d-inline-flex">
+            <div class="w-25 m-3">
+              <label cLabel for="name">Price Of Coin</label>
+              <input
+                cFormControl
+                formControlName="coinPrice"
+                id="coinPrice"
+                type="number"
+              />
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Type Of Coin</label>
+              <select
+                aria-label="Default select example"
+                cSelect
+                cFormControl
+                formControlName="coinType"
+              >
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+              </select>
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Price Of Bundle</label>
+              <input
+                cFormControl
+                formControlName="price"
+                id="price"
+                type="number"
+              />
+            </div>
+          </div>
           <div class="w-75 m-3">
             <label cLabel for="name">Description Of Bunndle</label>
-            <textarea rows="3" cFormControl formControlName="description" id="description" type="text"></textarea>
+            <textarea
+              rows="3"
+              cFormControl
+              formControlName="description"
+              id="description"
+              type="text"
+            ></textarea>
           </div>
-            <div class="m-3">
-           <label cLabel for="name">Icon Of Bundle</label>
-          <input type="file" (change)="handleFileInput($event)"
-                                class="form-control mt-2">
-                                 @if (imgSrc){
-        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
-        }
-        </div>
-   <div role="alert" style="color: #ff5722; margin: 10px 0">
-        {{error}}
-        </div>
-        <input cButton color="primary" [disabled]="loadingSubmit || bundleForm.invalid" type="submit">
-        <button (click)="displayAddBundle()" cButton color="secondary" variant="outline">Back
-      </button>
-      </form>
-        }
-        @for (item of bundles; track item.type;let i = $index){
-        @if (item.type && !displayForm && !loading){
+          <div class="m-3">
+            <label cLabel for="name">Icon Of Bundle</label>
+            <input
+              type="file"
+              (change)="handleFileInput($event)"
+              class="form-control mt-2"
+            />
+            @if (imgSrc){
+            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+            }
+          </div>
+          <div role="alert" style="color: #ff5722; margin: 10px 0">
+            {{ error }}
+          </div>
+          <input
+            cButton
+            color="primary"
+            [disabled]="loadingSubmit || bundleForm.invalid"
+            type="submit"
+          />
+          <button
+            (click)="displayAddBundle()"
+            cButton
+            color="secondary"
+            variant="outline"
+          >
+            Back
+          </button>
+        </form>
+        } @for (item of bundles; track item.type;let i = $index){ @if (item.type
+        && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
-            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+            <c-modal
+              id="liveDemoModal"
+              [visible]="visible"
+              (visibleChange)="handleLiveDemoChange($event)"
+            >
               <c-modal-header>
                 <h5 cModalTitle>Delete Bundle</h5>
                 <button (click)="toggleModal()" cButtonClose></button>
@@ -156,13 +232,14 @@
                 <button (click)="deleteBundle()" cButton color="secondary">
                   Yes
                 </button>
-                <button (click)="toggleModal()" cButton color="primary">No</button>
+                <button (click)="toggleModal()" cButton color="primary">
+                  No
+                </button>
               </c-modal-footer>
             </c-modal>
           </div>
         </div>
-        }
-        }
+        } }
       </c-card-body>
     </c-card>
   </c-col>

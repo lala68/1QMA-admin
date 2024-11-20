@@ -5,52 +5,67 @@
         <strong>Bugs Type</strong>
       </c-card-header>
       <c-card-body>
-
         <!-- Spinner for loading -->
-        <c-spinner *ngIf="loading" style="display: block; margin: 0 auto"></c-spinner>
+        <c-spinner
+          *ngIf="loading"
+          style="display: block; margin: 0 auto"
+        ></c-spinner>
 
         <!-- Button to add new bug type -->
-        <button *ngIf="!loading && !displayForm"
-                (click)="displayAddBugType()"
-                class="mb-3"
-                cButton
-                color="primary"
-                variant="outline">
+        <button
+          *ngIf="!loading && !displayForm"
+          (click)="displayAddBugType()"
+          class="mb-3"
+          cButton
+          color="primary"
+          variant="outline"
+        >
           Add New Bug Type
         </button>
 
         <!-- Bug Type Form -->
-        <form *ngIf="displayForm"
-              cForm
-              [formGroup]="bugForm"
-              (ngSubmit)="submitNewBug()">
-
+        <form
+          *ngIf="displayForm"
+          cForm
+          [formGroup]="bugForm"
+          (ngSubmit)="submitNewBug()"
+        >
           <div class="mb-3">
             <label cLabel for="category">Title Of Category</label>
-            <input cFormControl
-                   formControlName="category"
-                   id="category"
-                   type="text"
-                   required>
+            <input
+              cFormControl
+              formControlName="category"
+              id="category"
+              type="text"
+              required
+            />
           </div>
 
           <!-- Dynamic Activities Array -->
           <div formArrayName="subCategories">
-            <div *ngFor="let activity of subCategories.controls; let i = index"
-                 [formGroupName]="i"
-                 class="mb-3">
-              <label cLabel for="dynamicActivity-{{ i }}">Subcategory {{ i + 1 }}</label>
+            <div
+              *ngFor="let activity of subCategories.controls; let i = index"
+              [formGroupName]="i"
+              class="mb-3"
+            >
+              <label cLabel for="dynamicActivity-{{ i }}"
+                >Subcategory {{ i + 1 }}</label
+              >
               <div class="w-100 d-inline-flex">
-                <input cFormControl
-                       formControlName="title"
-                       id="dynamicActivity-{{ i }}"
-                       type="text"
-                       required>
-                <button class="ms-2"
-                        cButton
-                        color="light"
-                        (click)="removeSubCategory(i)"
-                        *ngIf="subCategories.length > 1">
+                <input
+                  cFormControl
+                  formControlName="title"
+                  id="dynamicActivity-{{ i }}"
+                  type="text"
+                  required
+                />
+                <button
+                  class="ms-2"
+                  cButton
+                  color="light"
+                  (click)="removeSubCategory(i)"
+                  *ngIf="subCategories.length > 1"
+                >
                   <svg cIcon name="cilTrash"></svg>
                 </button>
               </div>
@@ -58,10 +73,12 @@
           </div>
 
           <!-- Button to add a new subcategory -->
-          <button type="button"
-                  cButton
-                  color="light"
-                  (click)="addSubCategory()">
+          <button
+            type="button"
+            cButton
+            color="light"
+            (click)="addSubCategory()"
+          >
             <svg cIcon name="cilPlus"></svg>
             Add Subcategory
           </button>
@@ -69,100 +86,128 @@
           <!-- Bug Type Icon Upload -->
           <div class="mt-4 mb-3">
             <label cLabel for="icon">Icon Of Bug Type</label>
-            <input type="file"
-                   (change)="handleFileInput($event)"
-                   class="form-control mt-2">
+            <input
+              type="file"
+              (change)="handleFileInput($event)"
+              class="form-control mt-2"
+            />
             <!-- Display uploaded icon -->
-            <img *ngIf="imgSrc"
-                 [src]="'https://api.staging.1qma.games/' + imgSrc"
-                 width="100px"/>
+            <img
+              *ngIf="imgSrc"
+              [src]="'https://api.1qma.games/' + imgSrc"
+              width="100px"
+            />
           </div>
 
           <!-- Error Display -->
-          <div *ngIf="error"
-               role="alert"
-               class="alert alert-danger mt-2 mb-3">
+          <div *ngIf="error" role="alert" class="alert alert-danger mt-2 mb-3">
             {{ error }}
           </div>
 
           <!-- Submit and Back Buttons -->
           <div class="d-flex justify-content-between">
-            <input cButton
-                   color="primary"
-                   [disabled]="loadingSubmit || bugForm.invalid"
-                   type="submit"
-                   value="Submit">
-            <button type="button"
-                    (click)="displayAddBugType()"
-                    cButton
-                    color="secondary"
-                    variant="outline">
+            <input
+              cButton
+              color="primary"
+              [disabled]="loadingSubmit || bugForm.invalid"
+              type="submit"
+              value="Submit"
+            />
+            <button
+              type="button"
+              (click)="displayAddBugType()"
+              cButton
+              color="secondary"
+              variant="outline"
+            >
               Back
             </button>
           </div>
         </form>
 
         <!-- Display Bug Types List -->
-        <div *ngFor="let item of bugs; let i = index"
-             class="mb-3"
-             cListGroup>
-          <div *ngIf="item.category && !displayForm"
-               cListGroupItem
-               class="d-flex justify-content-between align-items-center">
+        <div *ngFor="let item of bugs; let i = index" class="mb-3" cListGroup>
+          <div
+            *ngIf="item.category && !displayForm"
+            cListGroupItem
+            class="d-flex justify-content-between align-items-center"
+          >
             <div class="d-flex align-items-center">
-              <img class="avatar-img me-2"
-                   [src]="'https://api.staging.1qma.games/' + item?.icon"
-                   width="40px">
+              <img
+                class="avatar-img me-2"
+                [src]="'https://api.1qma.games/' + item?.icon"
+                width="40px"
+              />
               <div>{{ item?.category }}</div>
             </div>
             <div>
               <button cButton color="light">
                 <c-form-check [switch]="true">
-                  <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
-                         (change)="onCheckedChange(item._id, item, $event)"/>
+                  <input
+                    [checked]="item.isActive"
+                    style="cursor: pointer"
+                    cFormCheckInput
+                    type="checkbox"
+                    (change)="onCheckedChange(item._id, item, $event)"
+                  />
                 </c-form-check>
               </button>
-              <button cButton
-                      color="light"
-                      (click)="displayAddBugType(item.category, item.subCategories, item._id,item.isActive, item.icon)">
+              <button
+                cButton
+                color="light"
+                (click)="
+                  displayAddBugType(
+                    item.category,
+                    item.subCategories,
+                    item._id,
+                    item.isActive,
+                    item.icon
+                  )
+                "
+              >
                 <svg cIcon name="cilPencil"></svg>
               </button>
-              <button cButton
-                      color="light"
-                      (click)="toggleModal(item._id)">
+              <button cButton color="light" (click)="toggleModal(item._id)">
                 <svg cIcon name="cilTrash"></svg>
               </button>
             </div>
           </div>
 
           <!-- Modal for Delete Confirmation -->
-          <c-modal id="liveDemoModal"
-                   [visible]="visible"
-                   (visibleChange)="handleLiveDemoChange($event)">
+          <c-modal
+            id="liveDemoModal"
+            [visible]="visible"
+            (visibleChange)="handleLiveDemoChange($event)"
+          >
             <c-modal-header>
               <h5 cModalTitle>Delete Bug Type</h5>
-              <button type="button"
-                      (click)="toggleModal()"
-                      cButtonClose></button>
+              <button
+                type="button"
+                (click)="toggleModal()"
+                cButtonClose
+              ></button>
             </c-modal-header>
-            <c-modal-body>
-              Do you want to delete this Bug Type?
-            </c-modal-body>
+            <c-modal-body> Do you want to delete this Bug Type? </c-modal-body>
             <c-modal-footer>
-              <button type="button"
-                      (click)="deleteBug()"
-                      cButton
-                      color="secondary">Yes
+              <button
+                type="button"
+                (click)="deleteBug()"
+                cButton
+                color="secondary"
+              >
+                Yes
               </button>
-              <button type="button"
-                      (click)="toggleModal()"
-                      cButton
-                      color="primary">No
+              <button
+                type="button"
+                (click)="toggleModal()"
+                cButton
+                color="primary"
+              >
+                No
               </button>
             </c-modal-footer>
           </c-modal>
         </div>
-
       </c-card-body>
     </c-card>
   </c-col>

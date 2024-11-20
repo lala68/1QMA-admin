@@ -7,85 +7,129 @@
       <c-card-body>
         @if (loading){
         <c-spinner style="display: block; margin: 0 auto"></c-spinner>
-        }
-        @if (!loading && !displayForm){
-        <button (click)="displayAddAccount()" class="mb-3" cButton color="primary" variant="outline">Add New Account Type
+        } @if (!loading && !displayForm){
+        <button
+          (click)="displayAddAccount()"
+          class="mb-3"
+          cButton
+          color="primary"
+          variant="outline"
+        >
+          Add New Account Type
         </button>
         }
         <c-toaster [placement]="position" class="p-3" position="fixed">
           <c-toast
             (timer)="onTimerChange($event)"
             (visibleChange)="onVisibleChange($event)"
-            [visible]="visibleToast">
-            <c-toast-header>
-              Message
-            </c-toast-header>
+            [visible]="visibleToast"
+          >
+            <c-toast-header> Message </c-toast-header>
             <c-toast-body>
-              <p>{{message}}</p>
+              <p>{{ message }}</p>
             </c-toast-body>
           </c-toast>
         </c-toaster>
-        <br>
+        <br />
         @if (displayForm){
-        <form cForm [formGroup]="accountTypeForm" (ngSubmit)="submitNewAccountType()">
+        <form
+          cForm
+          [formGroup]="accountTypeForm"
+          (ngSubmit)="submitNewAccountType()"
+        >
           <div class="mb-3">
             <label cLabel for="name">Name Of accountType</label>
-            <input cFormControl formControlName="name" id="name" type="text">
+            <input cFormControl formControlName="name" id="name" type="text" />
           </div>
-             <div class="mb-3">
+          <div class="mb-3">
             <label cLabel for="name">Icon Of accountType</label>
-           <input type="file" (change)="handleFileInput($event)"
-                                 class="form-control mt-2">
-                                  @if (imgSrc){
-        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
-        }
-        </div>
-   <div role="alert" style="color: #ff5722; margin: 10px 0">
-        {{error}}
-        </div>
-        <input cButton color="primary" [disabled]="loadingSubmit || accountTypeForm.invalid" type="submit">
-        <button (click)="displayAddAccount()" cButton color="secondary" variant="outline">Back
-      </button>
-      </form>
-        }
-
-        @for (item of accountTypes; track item.name;let i = $index){
-        @if (item.name && !displayForm && !loading){
+            <input
+              type="file"
+              (change)="handleFileInput($event)"
+              class="form-control mt-2"
+            />
+            @if (imgSrc){
+            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+            }
+          </div>
+          <div role="alert" style="color: #ff5722; margin: 10px 0">
+            {{ error }}
+          </div>
+          <input
+            cButton
+            color="primary"
+            [disabled]="loadingSubmit || accountTypeForm.invalid"
+            type="submit"
+          />
+          <button
+            (click)="displayAddAccount()"
+            cButton
+            color="secondary"
+            variant="outline"
+          >
+            Back
+          </button>
+        </form>
+        } @for (item of accountTypes; track item.name;let i = $index){ @if
+        (item.name && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <div class="avatar">
-              <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
+              <img
+                class="avatar-img"
+                [src]="'https://api.1qma.games/' + item?.icon"
+              />
             </div>
-            <div style="width: 40%; display: inline-block">{{item?.name}}</div>
+            <div style="width: 40%; display: inline-block">
+              {{ item?.name }}
+            </div>
             <button cButton color="light">
               <c-form-check [switch]="true">
-                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
-                       (change)="onCheckedChange(item._id, item.name, $event)"/>
+                <input
+                  [checked]="item.isActive"
+                  style="cursor: pointer"
+                  cFormCheckInput
+                  type="checkbox"
+                  (change)="onCheckedChange(item._id, item.name, $event)"
+                />
               </c-form-check>
             </button>
-            <button cButton color="light" (click)="displayAddAccount(item.name, item._id, item.isActive, item.icon)">
+            <button
+              cButton
+              color="light"
+              (click)="
+                displayAddAccount(item.name, item._id, item.isActive, item.icon)
+              "
+            >
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button cButton color="light" (click)="toggleModal(item._id)">
               <svg cIcon name="cilTrash"></svg>
             </button>
-            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+            <c-modal
+              id="liveDemoModal"
+              [visible]="visible"
+              (visibleChange)="handleLiveDemoChange($event)"
+            >
               <c-modal-header>
                 <h5 cModalTitle>Delete Account Type</h5>
                 <button (click)="toggleModal()" cButtonClose></button>
               </c-modal-header>
-              <c-modal-body>Do you want to delete this account type?</c-modal-body>
+              <c-modal-body
+                >Do you want to delete this account type?</c-modal-body
+              >
               <c-modal-footer>
                 <button (click)="deleteAccountType()" cButton color="secondary">
                   Yes
                 </button>
-                <button (click)="toggleModal()" cButton color="primary">No</button>
+                <button (click)="toggleModal()" cButton color="primary">
+                  No
+                </button>
               </c-modal-footer>
             </c-modal>
           </div>
         </div>
-        }
-        }
+        } }
       </c-card-body>
     </c-card>
   </c-col>

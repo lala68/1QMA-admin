@@ -7,113 +7,219 @@
       <c-card-body>
         @if (loading){
         <c-spinner style="display: block; margin: 0 auto"></c-spinner>
-        }
-        @if (!loading && !displayForm){
-        <button (click)="displayAddCharity()" class="mb-3" cButton color="primary" variant="outline">Add New Charity
+        } @if (!loading && !displayForm){
+        <button
+          (click)="displayAddCharity()"
+          class="mb-3"
+          cButton
+          color="primary"
+          variant="outline"
+        >
+          Add New Charity
         </button>
         }
         <c-toaster [placement]="position" class="p-3" position="fixed">
           <c-toast
             (timer)="onTimerChange($event)"
             (visibleChange)="onVisibleChange($event)"
-            [visible]="visibleToast">
-            <c-toast-header>
-              Message
-            </c-toast-header>
+            [visible]="visibleToast"
+          >
+            <c-toast-header> Message </c-toast-header>
             <c-toast-body>
-              <p>{{message}}</p>
+              <p>{{ message }}</p>
             </c-toast-body>
           </c-toast>
         </c-toaster>
-        <br>
+        <br />
         @if (displayForm){
         <form cForm [formGroup]="charityForm" (ngSubmit)="submitNewCharity()">
           <div class="mb-3">
             <label cLabel for="name">Title Of charity</label>
-            <input cFormControl formControlName="title" id="title" type="text">
+            <input
+              cFormControl
+              formControlName="title"
+              id="title"
+              type="text"
+            />
           </div>
- <!-- Dynamic Activities Array -->
-  <div formArrayName="activities">
-    <div *ngFor="let activity of activities.controls; let i = index" [formGroupName]="i" class="mb-3">
-      <label cLabel for="dynamicActivity-{{ i }}">Activity {{ i + 1 }}</label>
-      <div class="w-100 d-inline-flex align-items-center">
-      <input class=" w-25 m-1" cFormControl formControlName="title" id="dynamicActivity-{{ i }}" type="text">
-      <input class="w-25 m-1" cFormControl formControlName="neededFund" id="dynamicActivity-{{ i }}" type="number">
-       <select class="w-15 m-1" aria-label="Default select example" cSelect cFormControl formControlName="currency">
-          <option *ngFor="let currency of currencies | keyvalue" [value]="currency.value">{{ currency.key }} - {{
-        currency.value }}</option>
-       </select>
-       <input class="m-1" style="width: 100px" cFormControl formControlName="progress" id="dynamicActivity-{{ i }}" type="text" disable>
+          <!-- Dynamic Activities Array -->
+          <div formArrayName="activities">
+            <div
+              *ngFor="let activity of activities.controls; let i = index"
+              [formGroupName]="i"
+              class="mb-3"
+            >
+              <label cLabel for="dynamicActivity-{{ i }}"
+                >Activity {{ i + 1 }}</label
+              >
+              <div class="w-100 d-inline-flex align-items-center">
+                <input
+                  class="w-25 m-1"
+                  cFormControl
+                  formControlName="title"
+                  id="dynamicActivity-{{ i }}"
+                  type="text"
+                />
+                <input
+                  class="w-25 m-1"
+                  cFormControl
+                  formControlName="neededFund"
+                  id="dynamicActivity-{{ i }}"
+                  type="number"
+                />
+                <select
+                  class="w-15 m-1"
+                  aria-label="Default select example"
+                  cSelect
+                  cFormControl
+                  formControlName="currency"
+                >
+                  <option
+                    *ngFor="let currency of currencies | keyvalue"
+                    [value]="currency.value"
+                  >
+                    {{ currency.key }} - {{ currency.value }}
+                  </option>
+                </select>
+                <input
+                  class="m-1"
+                  style="width: 100px"
+                  cFormControl
+                  formControlName="progress"
+                  id="dynamicActivity-{{ i }}"
+                  type="text"
+                  disable
+                />
                 <!-- Conditional Buttons for Default/Non-default Activity -->
-      <button cButton color="light" *ngIf="!activity.get('isDefault')?.value && activity.get('_id')?.value">
-        <input class="form-check-input" type="checkbox" [checked]="activity.get('isDefault')?.value"
-               (change)="onCheckedDefaultActivityChange(activity.get('_id')?.value)">
-        <label class="form-check-label">
-          default
-        </label>
-      </button>
+                <button
+                  cButton
+                  color="light"
+                  *ngIf="
+                    !activity.get('isDefault')?.value &&
+                    activity.get('_id')?.value
+                  "
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="activity.get('isDefault')?.value"
+                    (change)="
+                      onCheckedDefaultActivityChange(activity.get('_id')?.value)
+                    "
+                  />
+                  <label class="form-check-label"> default </label>
+                </button>
 
-      <button cButton color="light" *ngIf="activity.get('isDefault')?.value">
-        <label class="form-check-label">
-          <svg cIcon name="cilCheck" color="success"></svg>
-          default
-        </label>
-      </button>
-           <button class="ms-2" cButton color="light" (click)="removeActivity(i)" *ngIf="activities.length > 1">
-              <svg cIcon name="cilTrash"></svg>
-            </button>
-    </div>
-  </div>
-  </div>
-<button cButton color="light" (click)="addActivity()">
-              <svg cIcon name="cilPlus"></svg>
-            </button>
-            <br>
-             <div class="mt-4 mb-3">
+                <button
+                  cButton
+                  color="light"
+                  *ngIf="activity.get('isDefault')?.value"
+                >
+                  <label class="form-check-label">
+                    <svg cIcon name="cilCheck" color="success"></svg>
+                    default
+                  </label>
+                </button>
+                <button
+                  class="ms-2"
+                  cButton
+                  color="light"
+                  (click)="removeActivity(i)"
+                  *ngIf="activities.length > 1"
+                >
+                  <svg cIcon name="cilTrash"></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button cButton color="light" (click)="addActivity()">
+            <svg cIcon name="cilPlus"></svg>
+          </button>
+          <br />
+          <div class="mt-4 mb-3">
             <label cLabel for="name">Icon Of charity</label>
-           <input type="file" (change)="handleFileInput($event)"
-                                 class="form-control mt-2">
-                                  @if (imgSrc){
-        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
-        }
-        </div>
-   <div role="alert" style="color: #ff5722; margin: 10px 0">
-        {{error}}
-        </div>
-        <input cButton color="primary" [disabled]="loadingSubmit || charityForm.invalid" type="submit">
-        <button (click)="displayAddCharity()" cButton color="secondary" variant="outline">Back
-      </button>
-      </form>
+            <input
+              type="file"
+              (change)="handleFileInput($event)"
+              class="form-control mt-2"
+            />
+            @if (imgSrc){
+            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+            }
+          </div>
+          <div role="alert" style="color: #ff5722; margin: 10px 0">
+            {{ error }}
+          </div>
+          <input
+            cButton
+            color="primary"
+            [disabled]="loadingSubmit || charityForm.invalid"
+            type="submit"
+          />
+          <button
+            (click)="displayAddCharity()"
+            cButton
+            color="secondary"
+            variant="outline"
+          >
+            Back
+          </button>
+        </form>
 
-        }
-
-        @for (item of charities; track item.title;let i = $index){
-        @if (item.title && !displayForm && !loading){
+        } @for (item of charities; track item.title;let i = $index){ @if
+        (item.title && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <div class="avatar">
-              <img class="avatar-img" [src]="'https://api.staging.1qma.games/' + item?.icon">
+              <img
+                class="avatar-img"
+                [src]="'https://api.1qma.games/' + item?.icon"
+              />
             </div>
-            <div style="width: 40%; display: inline-block">{{item?.title}}</div>
+            <div style="width: 40%; display: inline-block">
+              {{ item?.title }}
+            </div>
             <button cButton color="light">
               <c-form-check [switch]="true">
-                <input [checked]="item.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
-                       (change)="onCheckedChange(item._id, item, $event)"/>
+                <input
+                  [checked]="item.isActive"
+                  style="cursor: pointer"
+                  cFormCheckInput
+                  type="checkbox"
+                  (change)="onCheckedChange(item._id, item, $event)"
+                />
               </c-form-check>
             </button>
-            <button cButton color="light"
-                    (click)="displayAddCharity(item.title,item.neededFund,item.isDefault, item.currency,  item.activities, item._id, item.isActive, item.icon)">
+            <button
+              cButton
+              color="light"
+              (click)="
+                displayAddCharity(
+                  item.title,
+                  item.neededFund,
+                  item.isDefault,
+                  item.currency,
+                  item.activities,
+                  item._id,
+                  item.isActive,
+                  item.icon
+                )
+              "
+            >
               <svg cIcon name="cilPencil"></svg>
             </button>
             <button cButton color="light" (click)="toggleModal(item._id)">
               <svg cIcon name="cilTrash"></svg>
             </button>
             <button cButton color="light" *ngIf="!item.isDefault">
-              <input class="form-check-input" type="checkbox" [value]="item.isDefault"
-                     [checked]="item.isDefault" (change)="onCheckedDefaultChange(item._id)">
-              <label class="form-check-label">
-                default
-              </label>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="item.isDefault"
+                [checked]="item.isDefault"
+                (change)="onCheckedDefaultChange(item._id)"
+              />
+              <label class="form-check-label"> default </label>
             </button>
             <button cButton color="light" *ngIf="item.isDefault">
               <label class="form-check-label">
@@ -121,7 +227,11 @@
                 default
               </label>
             </button>
-            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+            <c-modal
+              id="liveDemoModal"
+              [visible]="visible"
+              (visibleChange)="handleLiveDemoChange($event)"
+            >
               <c-modal-header>
                 <h5 cModalTitle>Delete Charity</h5>
                 <button (click)="toggleModal()" cButtonClose></button>
@@ -131,13 +241,14 @@
                 <button (click)="deleteCharity()" cButton color="secondary">
                   Yes
                 </button>
-                <button (click)="toggleModal()" cButton color="primary">No</button>
+                <button (click)="toggleModal()" cButton color="primary">
+                  No
+                </button>
               </c-modal-footer>
             </c-modal>
           </div>
         </div>
-        }
-        }
+        } }
       </c-card-body>
     </c-card>
   </c-col>

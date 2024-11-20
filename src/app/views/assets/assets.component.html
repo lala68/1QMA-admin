@@ -7,139 +7,200 @@
       <c-card-body>
         @if (loading){
         <c-spinner style="display: block; margin: 0 auto"></c-spinner>
-        }
-        @if (!loading && !displayForm){
-        <button (click)="displayAddAsset()" class="mb-3" cButton color="primary" variant="outline">Add New Asset
+        } @if (!loading && !displayForm){
+        <button
+          (click)="displayAddAsset()"
+          class="mb-3"
+          cButton
+          color="primary"
+          variant="outline"
+        >
+          Add New Asset
         </button>
-        }
-        @if (!displayForm && !loading){
+        } @if (!displayForm && !loading){
         <table
-     [hover]="true"
-     [responsive]="true"
-     [striped]="true"
-     align="middle"
-     cTable
-     class="mb-0 border"
-   >
-     <thead class="text-nowrap text-truncate">
-     <tr>
-       <th class="bg-body-secondary"></th>
-       <th class="bg-body-secondary">Count</th>
-       <th class="bg-body-secondary">Title</th>
-       <th class="bg-body-secondary">Active</th>
-       <th class="bg-body-secondary">Edit</th>
-       <th class="bg-body-secondary">Delete</th>
-     </tr>
-     </thead>
-     <tbody>
-       @for (asset of assets; track asset.type;let i = $index) {
-        <tr>
-          <td>
-            <div class="avatar">
-              <img class="avatar-img"
-                   [src]="asset?.icon ? 'https://api.staging.1qma.games/' + asset?.icon : '/assets/images/frame.png'">
-            </div>
-          </td>
-          <td>
-            {{asset?.count}}
-          </td>
-          <td>
-            {{asset?.title}}
-          </td>
-          <td>
-            <c-form-check [switch]="true">
-              <input [checked]="asset.isActive" style="cursor: pointer;" cFormCheckInput type="checkbox"
-                     (change)="onCheckedChange(asset._id, $event)"/>
-            </c-form-check>
-          </td>
-          <td>
-            <button cButton color="light" (click)="displayAddAsset(asset)">
-              <svg cIcon name="cilPencil"></svg>
-            </button>
-          </td>
-          <td>
-            <button cButton color="light" (click)="toggleModal(asset._id)">
-              <svg cIcon name="cilTrash"></svg>
-            </button>
-          </td>
-        </tr>
+          [hover]="true"
+          [responsive]="true"
+          [striped]="true"
+          align="middle"
+          cTable
+          class="mb-0 border"
+        >
+          <thead class="text-nowrap text-truncate">
+            <tr>
+              <th class="bg-body-secondary"></th>
+              <th class="bg-body-secondary">Count</th>
+              <th class="bg-body-secondary">Title</th>
+              <th class="bg-body-secondary">Active</th>
+              <th class="bg-body-secondary">Edit</th>
+              <th class="bg-body-secondary">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (asset of assets; track asset.type;let i = $index) {
+            <tr>
+              <td>
+                <div class="avatar">
+                  <img
+                    class="avatar-img"
+                    [src]="
+                      asset?.icon
+                        ? 'https://api.1qma.games/' + asset?.icon
+                        : '/assets/images/frame.png'
+                    "
+                  />
+                </div>
+              </td>
+              <td>
+                {{ asset?.count }}
+              </td>
+              <td>
+                {{ asset?.title }}
+              </td>
+              <td>
+                <c-form-check [switch]="true">
+                  <input
+                    [checked]="asset.isActive"
+                    style="cursor: pointer"
+                    cFormCheckInput
+                    type="checkbox"
+                    (change)="onCheckedChange(asset._id, $event)"
+                  />
+                </c-form-check>
+              </td>
+              <td>
+                <button cButton color="light" (click)="displayAddAsset(asset)">
+                  <svg cIcon name="cilPencil"></svg>
+                </button>
+              </td>
+              <td>
+                <button cButton color="light" (click)="toggleModal(asset._id)">
+                  <svg cIcon name="cilTrash"></svg>
+                </button>
+              </td>
+            </tr>
 
-        }
-        </tbody>
+            }
+          </tbody>
         </table>
-         <c-toaster [placement]="position" class="p-3" position="fixed">
-      <c-toast
-        (timer)="onTimerChange($event)"
-        (visibleChange)="onVisibleChange($event)"
-        [visible]="visibleToast">
-        <c-toast-header>
-          Message
-        </c-toast-header>
-        <c-toast-body>
-          <p>{{message}}</p>
-        </c-toast-body>
-      </c-toast>
-    </c-toaster>
-    <br>
-        }
-        @if (displayForm){
+        <c-toaster [placement]="position" class="p-3" position="fixed">
+          <c-toast
+            (timer)="onTimerChange($event)"
+            (visibleChange)="onVisibleChange($event)"
+            [visible]="visibleToast"
+          >
+            <c-toast-header> Message </c-toast-header>
+            <c-toast-body>
+              <p>{{ message }}</p>
+            </c-toast-body>
+          </c-toast>
+        </c-toaster>
+        <br />
+        } @if (displayForm){
         <form cForm [formGroup]="assetForm" (ngSubmit)="submitNewAsset()">
-            <div class="w-100 d-inline-flex">
-          <div class="w-25 m-3">
-            <label cLabel for="name">Count Of Asset</label>
-            <input cFormControl formControlName="count" id="count" type="number">
+          <div class="w-100 d-inline-flex">
+            <div class="w-25 m-3">
+              <label cLabel for="name">Count Of Asset</label>
+              <input
+                cFormControl
+                formControlName="count"
+                id="count"
+                type="number"
+              />
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Type Of Asset</label>
+              <select
+                aria-label="Default select example"
+                cSelect
+                cFormControl
+                formControlName="title"
+              >
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+              </select>
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Price Of Coin</label>
+              <input
+                cFormControl
+                formControlName="coinPrice"
+                id="coinPrice"
+                type="number"
+              />
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Type Of Coin</label>
+              <select
+                aria-label="Default select example"
+                cSelect
+                cFormControl
+                formControlName="coinType"
+              >
+                <option value="bronze">Bronze</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+              </select>
+            </div>
+            <div class="w-25 m-3">
+              <label cLabel for="name">Price Of Asset</label>
+              <input
+                cFormControl
+                formControlName="price"
+                id="price"
+                type="number"
+              />
+            </div>
           </div>
-          <div class="w-25 m-3">
-           <label cLabel for="name">Type Of Asset</label>
-            <select aria-label="Default select example" cSelect cFormControl formControlName="title">
-            <option value="bronze">Bronze</option>
-            <option value="silver">Silver</option>
-            <option value="gold">Gold</option>
-          </select>
-          </div>
-                <div class="w-25 m-3">
-            <label cLabel for="name">Price Of Coin</label>
-            <input cFormControl formControlName="coinPrice" id="coinPrice" type="number">
-          </div>
-          <div class="w-25 m-3">
-           <label cLabel for="name">Type Of Coin</label>
-            <select aria-label="Default select example" cSelect cFormControl formControlName="coinType">
-             <option value="bronze">Bronze</option>
-             <option value="silver">Silver</option>
-             <option value="gold">Gold</option>
-           </select>
-          </div>
-          <div class="w-25 m-3">
-            <label cLabel for="name">Price Of Asset</label>
-            <input cFormControl formControlName="price" id="price" type="number">
-          </div>
-          </div>
-           <div class="w-75 m-3">
+          <div class="w-75 m-3">
             <label cLabel for="name">Description Of Asset</label>
-            <textarea rows="3" cFormControl formControlName="description" id="description" type="text"></textarea>
+            <textarea
+              rows="3"
+              cFormControl
+              formControlName="description"
+              id="description"
+              type="text"
+            ></textarea>
           </div>
-             <div class="m-3">
+          <div class="m-3">
             <label cLabel for="name">Icon Of Asset</label>
-           <input type="file" (change)="handleFileInput($event)"
-                                 class="form-control mt-2">
-                                  @if (imgSrc){
-        <img [src]="'https://api.staging.1qma.games/' + imgSrc" width="100px"/>
-        }
-        </div>
-   <div role="alert" style="color: #ff5722; margin: 10px 0">
-        {{error}}
-        </div>
-        <input cButton color="primary" [disabled]="loadingSubmit || assetForm.invalid" type="submit">
-        <button (click)="displayAddAsset()" cButton color="secondary" variant="outline">Back
-      </button>
-      </form>
-        }
-
-        @for (item of assets; track item.type;let i = $index){
-        @if (item.type && !displayForm && !loading){
+            <input
+              type="file"
+              (change)="handleFileInput($event)"
+              class="form-control mt-2"
+            />
+            @if (imgSrc){
+            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+            }
+          </div>
+          <div role="alert" style="color: #ff5722; margin: 10px 0">
+            {{ error }}
+          </div>
+          <input
+            cButton
+            color="primary"
+            [disabled]="loadingSubmit || assetForm.invalid"
+            type="submit"
+          />
+          <button
+            (click)="displayAddAsset()"
+            cButton
+            color="secondary"
+            variant="outline"
+          >
+            Back
+          </button>
+        </form>
+        } @for (item of assets; track item.type;let i = $index){ @if (item.type
+        && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
-            <c-modal id="liveDemoModal" [visible]="visible" (visibleChange)="handleLiveDemoChange($event)">
+            <c-modal
+              id="liveDemoModal"
+              [visible]="visible"
+              (visibleChange)="handleLiveDemoChange($event)"
+            >
               <c-modal-header>
                 <h5 cModalTitle>Delete Asset</h5>
                 <button (click)="toggleModal()" cButtonClose></button>
@@ -149,13 +210,14 @@
                 <button (click)="deleteAsset()" cButton color="secondary">
                   Yes
                 </button>
-                <button (click)="toggleModal()" cButton color="primary">No</button>
+                <button (click)="toggleModal()" cButton color="primary">
+                  No
+                </button>
               </c-modal-footer>
             </c-modal>
           </div>
         </div>
-        }
-        }
+        } }
       </c-card-body>
     </c-card>
   </c-col>
