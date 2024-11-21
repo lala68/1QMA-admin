@@ -3,7 +3,7 @@ module.exports = {
     production: {
       user: "root",
       host: "64.226.74.250",
-      ref: "origin/dev",
+      ref: "origin/main",
       repo: "git@github.com:lala68/1QMA-admin.git",
       path: "/root/projects/sources/1qma.admin",
       "pre-deploy": "git reset --hard",
