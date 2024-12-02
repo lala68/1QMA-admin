@@ -93,6 +93,9 @@ export class CharityComponent {
 
   // Remove an activity input at a specific index
   removeActivity(index: number) {
+    this.gameService.deleteCharityActivity(this.id, this.activities.controls[index].value._id).then(data => {
+      this.getCharities();
+    })
     this.activities.removeAt(index);
   }
 

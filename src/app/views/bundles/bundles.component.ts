@@ -1,3 +1,4 @@
+
 import {Component} from '@angular/core';
 import {
   AccordionButtonDirective,
@@ -88,6 +89,7 @@ export class BundlesComponent {
       coinType: ['', [Validators.required]],
       price: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      descriptionFa: ['', [Validators.required]],
     });
   }
 
@@ -144,6 +146,7 @@ export class BundlesComponent {
       this.bundleForm.controls['coinType'].setValue((item.coinPrice)?.coin);
       this.bundleForm.controls['price'].setValue(item.realPrice);
       this.bundleForm.controls['description'].setValue(item.description);
+      this.bundleForm.controls['descriptionFa'].setValue(item.descriptionFa);
     } else {
       this.bundleForm.reset();
     }
@@ -234,3 +237,4 @@ export class BundlesComponent {
 
 
 }
+

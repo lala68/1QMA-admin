@@ -1,3 +1,4 @@
+
 import {Component} from '@angular/core';
 import {
   AccordionButtonDirective,
@@ -85,6 +86,7 @@ export class FeaturesComponent {
       coinPrice: ['', []],
       coinType: ['', []],
       description: ['', []],
+      descriptionFa: ['', []],
     });
   }
 
@@ -136,6 +138,7 @@ export class FeaturesComponent {
       this.featureForm.controls['coinType'].setValue((item.coinPrice)?.coin)
       this.featureForm.controls['price'].setValue(item?.realPrice)
       this.featureForm.controls['description'].setValue(item?.description)
+      this.featureForm.controls['descriptionFa'].setValue(item?.descriptionFa)
     } else {
       this.featureForm.reset();
     }
@@ -221,3 +224,4 @@ export class FeaturesComponent {
     this.percentage = !this.visibleToast ? 0 : this.percentage;
   }
 }
+

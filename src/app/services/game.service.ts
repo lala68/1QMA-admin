@@ -190,6 +190,7 @@ export class GameService {
     formData.append('coinPrice[coin]', data.coinType);
     formData.append('realPrice', data.price);
     formData.append('description', data.description);
+    formData.append('descriptionFa', data.descriptionFa);
     formData.append('icon', icon);
     return this.http.post<any>(this.config.url('admin/shopItems/add'), formData, {
       headers: headers,
@@ -216,6 +217,7 @@ export class GameService {
     formData.append('coinPrice[coin]', data.coinType);
     formData.append('realPrice', data.price);
     formData.append('description', data.description);
+    formData.append('descriptionFa', data.descriptionFa);
     formData.append('icon', icon);
     if (!icon) {
       formData.delete('icon')
@@ -386,6 +388,18 @@ export class GameService {
       .toPromise();
   }
 
+  async deleteCharityActivity(id: any, activityId: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/charityCategories/activity/delete'), {id: id, activityId: activityId}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
 
   getBugReports(): Observable<any> {
     let headers = new HttpHeaders({
@@ -466,7 +480,9 @@ export class GameService {
     let headers = new HttpHeaders({});
     return this.http.post<any>(this.config.url('admin/faqs/add'), {
       question: data.question,
+      questionFa: data.questionFa,
       answer: data.answer,
+      answerFa: data.answerFa,
     }, {
       headers: headers,
       withCredentials: true
@@ -478,7 +494,9 @@ export class GameService {
     let headers = new HttpHeaders({});
     return this.http.post<any>(this.config.url('admin/faqs/update'), {
       question: data.question,
+      questionFa: data.questionFa,
       answer: data.answer,
+      answerFa: data.answerFa,
       id: id,
       isActive: active,
     }, {
@@ -602,6 +620,7 @@ export class GameService {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('title', data.title);
+    formData.append('titleFa', data.titleFa);
     formData.append('startDate', data.startDate);
     formData.append('endDate', data.endDate);
     formData.append('totalScore', data.totalScore);
@@ -621,6 +640,7 @@ export class GameService {
     let headers = new HttpHeaders({});
     const formData = new FormData();
     formData.append('title', data.title);
+    formData.append('titleFa', data.titleFa);
     formData.append('startDate', data.startDate);
     formData.append('endDate', data.endDate);
     formData.append('totalScore', data.totalScore);
