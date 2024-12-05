@@ -83,6 +83,7 @@ export class AssetsComponent {
       coinPrice: ['', []],
       coinType: ['', []],
       description: ['', []],
+      descriptionFa: ['', []],
     });
   }
 
@@ -134,6 +135,7 @@ export class AssetsComponent {
       this.assetForm.controls['coinType'].setValue((item.coinPrice)?.coin);
       this.assetForm.controls['price'].setValue(item.realPrice)
       this.assetForm.controls['description'].setValue(item.description)
+      this.assetForm.controls['descriptionFa'].setValue(item.descriptionFa)
     } else {
       this.assetForm.reset();
     }

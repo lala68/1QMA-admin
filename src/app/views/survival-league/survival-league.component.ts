@@ -55,6 +55,7 @@ export class SurvivalLeagueComponent {
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.leagueForm = this.fb.group({
       title: ['', [Validators.required]],
+      titleFa: ['', [Validators.required]],
       startDate: ['', []],
       endDate: ['', []],
       totalScore: ['', []],
@@ -93,6 +94,7 @@ export class SurvivalLeagueComponent {
     this.displayForm = !this.displayForm;
     if (this.displayForm && data) {
       this.leagueForm.patchValue({title: data.title});
+      this.leagueForm.patchValue({titleFa: data.titleFa});
       this.leagueForm.patchValue({startDate: this.convertIsoToDate(data.startDate)});
       this.leagueForm.patchValue({endDate: this.convertIsoToDate(data.endDate)});
       this.leagueForm.patchValue({totalScore: data.totalScore});

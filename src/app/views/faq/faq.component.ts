@@ -1,3 +1,4 @@
+
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {
@@ -55,7 +56,9 @@ export class FaqComponent {
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.faqForm = this.fb.group({
       question: ['', [Validators.required]],
+      questionFa: ['', [Validators.required]],
       answer: ['', [Validators.required]],
+      answerFa: ['', [Validators.required]],
     });
   }
 
@@ -73,14 +76,16 @@ export class FaqComponent {
     })
   }
 
-  displayAddFaq(question: any = null, answer: any = null, id: any = null, active: any = null) {
+  displayAddFaq(question: any = null, questionFa: any = null, answer: any = null, answerFa: any = null, id: any = null, active: any = null) {
     this.id = id;
     this.active = active;
     this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm && question) {
       this.faqForm.patchValue({question: question});
+      this.faqForm.patchValue({questionFa: questionFa});
       this.faqForm.patchValue({answer: answer});
+      this.faqForm.patchValue({answerFa: answerFa});
     } else {
       this.faqForm.reset();
     }

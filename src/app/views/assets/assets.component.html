@@ -38,60 +38,60 @@
           </thead>
           <tbody>
             @for (asset of assets; track asset.type;let i = $index) {
-            <tr>
-              <td>
-                <div class="avatar">
-                  <img
-                    class="avatar-img"
-                    [src]="
+        <tr>
+          <td>
+            <div class="avatar">
+              <img
+                class="avatar-img"
+                [src]="
                       asset?.icon
                         ? 'https://api.1qma.games/' + asset?.icon
                         : '/assets/images/frame.png'
                     "
-                  />
-                </div>
-              </td>
-              <td>
-                {{ asset?.count }}
-              </td>
-              <td>
-                {{ asset?.title }}
-              </td>
-              <td>
-                <c-form-check [switch]="true">
-                  <input
-                    [checked]="asset.isActive"
-                    style="cursor: pointer"
-                    cFormCheckInput
-                    type="checkbox"
-                    (change)="onCheckedChange(asset._id, $event)"
-                  />
-                </c-form-check>
-              </td>
-              <td>
-                <button cButton color="light" (click)="displayAddAsset(asset)">
-                  <svg cIcon name="cilPencil"></svg>
-                </button>
-              </td>
-              <td>
-                <button cButton color="light" (click)="toggleModal(asset._id)">
-                  <svg cIcon name="cilTrash"></svg>
-                </button>
-              </td>
-            </tr>
+              />
+            </div>
+          </td>
+          <td>
+            {{ asset?.count }}
+          </td>
+          <td>
+            {{ asset?.title }}
+          </td>
+          <td>
+            <c-form-check [switch]="true">
+              <input
+                [checked]="asset.isActive"
+                style="cursor: pointer"
+                cFormCheckInput
+                type="checkbox"
+                (change)="onCheckedChange(asset._id, $event)"
+              />
+            </c-form-check>
+          </td>
+          <td>
+            <button cButton color="light" (click)="displayAddAsset(asset)">
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+          </td>
+          <td>
+            <button cButton color="light" (click)="toggleModal(asset._id)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+          </td>
+        </tr>
 
-            }
-          </tbody>
-        </table>
-        <c-toaster [placement]="position" class="p-3" position="fixed">
-          <c-toast
-            (timer)="onTimerChange($event)"
-            (visibleChange)="onVisibleChange($event)"
-            [visible]="visibleToast"
-          >
-            <c-toast-header> Message </c-toast-header>
-            <c-toast-body>
-              <p>{{ message }}</p>
+        }
+        </tbody>
+      </table>
+      <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast
+          (timer)="onTimerChange($event)"
+          (visibleChange)="onVisibleChange($event)"
+          [visible]="visibleToast"
+        >
+          <c-toast-header> Message </c-toast-header>
+          <c-toast-body>
+            <p>{{ message }}</p>
             </c-toast-body>
           </c-toast>
         </c-toaster>
@@ -163,6 +163,16 @@
               type="text"
             ></textarea>
           </div>
+           <div class="w-75 m-3">
+            <label cLabel for="name">Farsi Description Of Asset</label>
+            <textarea
+              rows="3"
+              cFormControl
+              formControlName="descriptionFa"
+              id="descriptionFa"
+              type="text"
+            ></textarea>
+          </div>
           <div class="m-3">
             <label cLabel for="name">Icon Of Asset</label>
             <input
@@ -171,27 +181,27 @@
               class="form-control mt-2"
             />
             @if (imgSrc){
-            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
-            }
-          </div>
-          <div role="alert" style="color: #ff5722; margin: 10px 0">
-            {{ error }}
-          </div>
-          <input
-            cButton
-            color="primary"
-            [disabled]="loadingSubmit || assetForm.invalid"
-            type="submit"
-          />
-          <button
-            (click)="displayAddAsset()"
-            cButton
-            color="secondary"
-            variant="outline"
-          >
-            Back
-          </button>
-        </form>
+        <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+        }
+        </div>
+        <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{ error }}
+        </div>
+        <input
+          cButton
+          color="primary"
+          [disabled]="loadingSubmit || assetForm.invalid"
+          type="submit"
+        />
+        <button
+          (click)="displayAddAsset()"
+          cButton
+          color="secondary"
+          variant="outline"
+        >
+          Back
+        </button>
+      </form>
         } @for (item of assets; track item.type;let i = $index){ @if (item.type
         && !displayForm && !loading){
         <div cListGroup class="mb-3">

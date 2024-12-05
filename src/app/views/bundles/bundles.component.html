@@ -37,61 +37,61 @@
           </thead>
           <tbody>
             @for (bundle of bundles; track bundle.type;let i = $index) {
-            <tr>
-              <td>
-                <div class="avatar">
-                  <img
-                    class="avatar-img"
-                    [src]="
+        <tr>
+          <td>
+            <div class="avatar">
+              <img
+                class="avatar-img"
+                [src]="
                       bundle?.icon
                         ? 'https://api.1qma.games/' + bundle?.icon
                         : '/assets/images/frame.png'
                     "
-                  />
-                </div>
-              </td>
-              <td>
-                {{ bundle?.realPrice }}
-              </td>
-              <td>
-                <c-form-check [switch]="true">
-                  <input
-                    [checked]="bundle.isActive"
-                    style="cursor: pointer"
-                    cFormCheckInput
-                    type="checkbox"
-                    (change)="onCheckedChange(bundle._id, $event)"
-                  />
-                </c-form-check>
-              </td>
-              <td>
-                <button
-                  cButton
-                  color="light"
-                  (click)="displayAddBundle(bundle)"
-                >
-                  <svg cIcon name="cilPencil"></svg>
-                </button>
-              </td>
-              <td>
-                <button cButton color="light" (click)="toggleModal(bundle._id)">
-                  <svg cIcon name="cilTrash"></svg>
-                </button>
-              </td>
-            </tr>
+              />
+            </div>
+          </td>
+          <td>
+            {{ bundle?.realPrice }}
+          </td>
+          <td>
+            <c-form-check [switch]="true">
+              <input
+                [checked]="bundle.isActive"
+                style="cursor: pointer"
+                cFormCheckInput
+                type="checkbox"
+                (change)="onCheckedChange(bundle._id, $event)"
+              />
+            </c-form-check>
+          </td>
+          <td>
+            <button
+              cButton
+              color="light"
+              (click)="displayAddBundle(bundle)"
+            >
+              <svg cIcon name="cilPencil"></svg>
+            </button>
+          </td>
+          <td>
+            <button cButton color="light" (click)="toggleModal(bundle._id)">
+              <svg cIcon name="cilTrash"></svg>
+            </button>
+          </td>
+        </tr>
 
-            }
-          </tbody>
-        </table>
-        <c-toaster [placement]="position" class="p-3" position="fixed">
-          <c-toast
-            (timer)="onTimerChange($event)"
-            (visibleChange)="onVisibleChange($event)"
-            [visible]="visibleToast"
-          >
-            <c-toast-header> Message </c-toast-header>
-            <c-toast-body>
-              <p>{{ message }}</p>
+        }
+        </tbody>
+      </table>
+      <c-toaster [placement]="position" class="p-3" position="fixed">
+        <c-toast
+          (timer)="onTimerChange($event)"
+          (visibleChange)="onVisibleChange($event)"
+          [visible]="visibleToast"
+        >
+          <c-toast-header> Message </c-toast-header>
+          <c-toast-body>
+            <p>{{ message }}</p>
             </c-toast-body>
           </c-toast>
         </c-toaster>
@@ -185,6 +185,16 @@
               type="text"
             ></textarea>
           </div>
+          <div class="w-75 m-3">
+            <label cLabel for="name">Farsi Description Of Bunndle</label>
+            <textarea
+              rows="3"
+              cFormControl
+              formControlName="descriptionFa"
+              id="descriptionFa"
+              type="text"
+            ></textarea>
+          </div>
           <div class="m-3">
             <label cLabel for="name">Icon Of Bundle</label>
             <input
@@ -193,27 +203,27 @@
               class="form-control mt-2"
             />
             @if (imgSrc){
-            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
-            }
-          </div>
-          <div role="alert" style="color: #ff5722; margin: 10px 0">
-            {{ error }}
-          </div>
-          <input
-            cButton
-            color="primary"
-            [disabled]="loadingSubmit || bundleForm.invalid"
-            type="submit"
-          />
-          <button
-            (click)="displayAddBundle()"
-            cButton
-            color="secondary"
-            variant="outline"
-          >
-            Back
-          </button>
-        </form>
+        <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+        }
+        </div>
+        <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{ error }}
+        </div>
+        <input
+          cButton
+          color="primary"
+          [disabled]="loadingSubmit || bundleForm.invalid"
+          type="submit"
+        />
+        <button
+          (click)="displayAddBundle()"
+          cButton
+          color="secondary"
+          variant="outline"
+        >
+          Back
+        </button>
+      </form>
         } @for (item of bundles; track item.type;let i = $index){ @if (item.type
         && !displayForm && !loading){
         <div cListGroup class="mb-3">

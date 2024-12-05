@@ -1,3 +1,4 @@
+
 import {Component} from '@angular/core';
 import {GameService} from "../../services/game.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -33,7 +34,8 @@ export class TermsComponent {
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.editorForm = this.fb.group({
-      terms: [''] // Initialize editor content
+      terms: [''] ,// Initialize editor content
+      termsFa: [''] // Initialize editor content
     });
   }
 
@@ -46,7 +48,8 @@ export class TermsComponent {
     this.gameService.getTerms().subscribe(data => {
       this.loading = false;
       if (data.status == 1) {
-        this.editorForm.controls['terms'].setValue(data.data.value);
+        this.editorForm.controls['terms'].setValue(data.data.terms.value);
+        this.editorForm.controls['termsFa'].setValue(data.data.termsFa.value);
       }
     })
   }

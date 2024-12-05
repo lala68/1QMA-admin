@@ -24,13 +24,13 @@
             (visibleChange)="onVisibleChange($event)"
             [visible]="visibleToast"
           >
-            <c-toast-header> Message </c-toast-header>
+            <c-toast-header> Message</c-toast-header>
             <c-toast-body>
               <p>{{ message }}</p>
             </c-toast-body>
           </c-toast>
         </c-toaster>
-        <br />
+        <br/>
         @if (displayForm){
         <form cForm [formGroup]="faqForm" (ngSubmit)="submitNewFaq()">
           <div class="mb-3">
@@ -51,25 +51,43 @@
               type="text"
             />
           </div>
+           <div class="mb-3">
+            <label cLabel for="questionFa">Farsi Question</label>
+            <input
+              cFormControl
+              formControlName="questionFa"
+              id="questionFa"
+              type="text"
+            />
+          </div>
+          <div class="mb-3">
+            <label cLabel for="answerFa">Farsi Answer</label>
+            <input
+              cFormControl
+              formControlName="answerFa"
+              id="answerFa"
+              type="text"
+            />
+          </div>
 
           <div role="alert" style="color: #ff5722; margin: 10px 0">
-            {{ error }}
-          </div>
-          <input
-            cButton
-            color="primary"
-            [disabled]="loadingSubmit || faqForm.invalid"
-            type="submit"
-          />
-          <button
-            (click)="displayAddFaq()"
-            cButton
-            color="secondary"
-            variant="outline"
-          >
-            Back
-          </button>
-        </form>
+        {{ error }}
+        </div>
+        <input
+          cButton
+          color="primary"
+          [disabled]="loadingSubmit || faqForm.invalid"
+          type="submit"
+        />
+        <button
+          (click)="displayAddFaq()"
+          cButton
+          color="secondary"
+          variant="outline"
+        >
+          Back
+        </button>
+      </form>
         } @for (item of faqs; track item.question;let i = $index){ @if
         (item.question && !displayForm && !loading){
         <div cListGroup class="mb-3">
@@ -100,7 +118,9 @@
               (click)="
                 displayAddFaq(
                   item.question,
+                  item.questionFa,
                   item.answer,
+                  item.answerFa,
                   item._id,
                   item.isActive
                 )

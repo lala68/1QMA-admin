@@ -33,7 +33,8 @@ export class PrivacyComponent {
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.editorForm = this.fb.group({
-      privacyPolicies: [''] // Initialize editor content
+      privacyPolicies: [''], // Initialize editor content
+      privacyPoliciesFa: [''] // Initialize editor content
     });
   }
 
@@ -46,7 +47,8 @@ export class PrivacyComponent {
     this.gameService.getPrivacy().subscribe(data => {
       this.loading = false;
       if (data.status == 1) {
-        this.editorForm.controls['privacyPolicies'].setValue(data.data.value);
+        this.editorForm.controls['privacyPolicies'].setValue(data.data.privacyPolicies.value);
+        this.editorForm.controls['privacyPoliciesFa'].setValue(data.data.privacyPoliciesFa.value);
       }
     })
   }
