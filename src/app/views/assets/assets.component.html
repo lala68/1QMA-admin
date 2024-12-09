@@ -45,7 +45,7 @@
                 class="avatar-img"
                 [src]="
                       asset?.icon
-                        ? 'https://api.1qma.games/' + asset?.icon
+                        ? environment.baseUrl + asset?.icon
                         : '/assets/images/frame.png'
                     "
               />
@@ -181,7 +181,7 @@
               class="form-control mt-2"
             />
             @if (imgSrc){
-        <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
+        <img [src]="environment.baseUrl + imgSrc" width="100px" />
         }
         </div>
         <div role="alert" style="color: #ff5722; margin: 10px 0">

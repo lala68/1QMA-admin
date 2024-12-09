@@ -28,6 +28,7 @@ import {
 } from "@coreui/angular";
 import {IconDirective} from "@coreui/icons-angular";
 import {DocsExampleComponent} from "@docs-components/public-api";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-sponsores',
@@ -60,6 +61,7 @@ export class SponsoresComponent {
   message: any;
   position = 'top-end';
   percentage = 0;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.sponsorForm = this.fb.group({

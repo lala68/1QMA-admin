@@ -41,7 +41,7 @@
       <tr>
           <td>
           <div class="avatar">
-  <img class="avatar-img" [src]="user?.profilePicture ? 'https://api.staging.1qma.games/' + user?.profilePicture : '/assets/images/frame.png'" alt="user@email.com">
+  <img class="avatar-img" [src]="user?.profilePicture ? environment.baseUrl + user?.profilePicture : '/assets/images/frame.png'" alt="user@email.com">
 </div>
                 </td>
         <td>

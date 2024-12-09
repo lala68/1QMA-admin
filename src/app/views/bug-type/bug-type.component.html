@@ -74,7 +74,7 @@
                    class="form-control mt-2">
             <!-- Display uploaded icon -->
             <img *ngIf="imgSrc"
-                 [src]="'https://api.staging.1qma.games/' + imgSrc"
+                 [src]="environment.baseUrl + imgSrc"
                  width="100px"/>
           </div>
 
@@ -111,7 +111,7 @@
                class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
               <img class="avatar-img me-2"
-                   [src]="'https://api.staging.1qma.games/' + item?.icon"
+                   [src]="environment.baseUrl + item?.icon"
                    width="40px">
               <div>{{ item?.category }}</div>
             </div>

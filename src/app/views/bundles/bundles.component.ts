@@ -30,6 +30,7 @@ import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.c
 import {GameService} from "../../services/game.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IconDirective} from "@coreui/icons-angular";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-bundles',
@@ -78,6 +79,7 @@ export class BundlesComponent {
   error: any = '';
   message: any;
   selectedId : any;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.bundleForm = this.fb.group({

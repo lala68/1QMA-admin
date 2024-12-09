@@ -30,6 +30,7 @@ import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.c
 import {GameService} from "../../services/game.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IconDirective} from "@coreui/icons-angular";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-features',
@@ -77,6 +78,7 @@ export class FeaturesComponent {
   selectedId: any;
   position = 'top-end';
   percentage = 0;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.featureForm = this.fb.group({

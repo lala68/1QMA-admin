@@ -44,6 +44,11 @@ export const navItems: INavData[] = [
     ]
   },
   {
+    name: 'Gifts',
+    url: '/gifts',
+    iconComponent: {name: 'cilList'},
+  },
+  {
     name: 'Wizard questions',
     url: '/wizard-questions',
     iconComponent: {name: 'cilList'},
