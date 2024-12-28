@@ -26,6 +26,7 @@ import {
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
 import {GameService} from "../../services/game.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-account-types',
@@ -55,6 +56,7 @@ export class AccountTypesComponent {
   message: any;
   position = 'top-end';
   percentage = 0;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.accountTypeForm = this.fb.group({

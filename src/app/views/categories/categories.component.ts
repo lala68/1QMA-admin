@@ -25,6 +25,8 @@ import {GameService} from "../../services/game.service";
 import {IconDirective} from "@coreui/icons-angular";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import {Environment} from "@angular/cli/lib/config/workspace-schema";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-categories',
@@ -56,6 +58,7 @@ export class CategoriesComponent implements OnInit {
   message: any;
   position = 'top-end';
   percentage = 0;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.categoryForm = this.fb.group({

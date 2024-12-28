@@ -22,6 +22,7 @@ import {IconDirective} from "@coreui/icons-angular";
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
 import {GameService} from "../../services/game.service";
 import {CommonModule} from "@angular/common";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-survival-league',
@@ -51,6 +52,7 @@ export class SurvivalLeagueComponent {
   message: any;
   position = 'top-end';
   percentage = 0;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.leagueForm = this.fb.group({

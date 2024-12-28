@@ -138,46 +138,26 @@
           <br />
           <div class="mt-4 mb-3">
             <label cLabel for="name">Icon Of charity</label>
-            <input
-              type="file"
-              (change)="handleFileInput($event)"
-              class="form-control mt-2"
-            />
-            @if (imgSrc){
-            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
-            }
-          </div>
-          <div role="alert" style="color: #ff5722; margin: 10px 0">
-            {{ error }}
-          </div>
-          <input
-            cButton
-            color="primary"
-            [disabled]="loadingSubmit || charityForm.invalid"
-            type="submit"
-          />
-          <button
-            (click)="displayAddCharity()"
-            cButton
-            color="secondary"
-            variant="outline"
-          >
-            Back
-          </button>
-        </form>
+           <input type="file" (change)="handleFileInput($event)"
+                                 class="form-control mt-2">
+                                  @if (imgSrc){
+        <img [src]="environment.baseUrl + imgSrc" width="100px"/>
+        }
+        </div>
+   <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <input cButton color="primary" [disabled]="loadingSubmit || charityForm.invalid" type="submit">
+        <button (click)="displayAddCharity()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
 
         } @for (item of charities; track item.title;let i = $index){ @if
         (item.title && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <div class="avatar">
-              <img
-                class="avatar-img"
-                [src]="'https://api.1qma.games/' + item?.icon"
-              />
-            </div>
-            <div style="width: 40%; display: inline-block">
-              {{ item?.title }}
+              <img class="avatar-img" [src]="environment.baseUrl + item?.icon">
             </div>
             <button cButton color="light">
               <c-form-check [switch]="true">

@@ -92,11 +92,9 @@
               class="form-control mt-2"
             />
             <!-- Display uploaded icon -->
-            <img
-              *ngIf="imgSrc"
-              [src]="'https://api.1qma.games/' + imgSrc"
-              width="100px"
-            />
+            <img *ngIf="imgSrc"
+                 [src]="environment.baseUrl + imgSrc"
+                 width="100px"/>
           </div>
 
           <!-- Error Display -->
@@ -133,11 +131,9 @@
             class="d-flex justify-content-between align-items-center"
           >
             <div class="d-flex align-items-center">
-              <img
-                class="avatar-img me-2"
-                [src]="'https://api.1qma.games/' + item?.icon"
-                width="40px"
-              />
+              <img class="avatar-img me-2"
+                   [src]="environment.baseUrl + item?.icon"
+                   width="40px">
               <div>{{ item?.category }}</div>
             </div>
             <div>

@@ -30,6 +30,7 @@ import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.compon
 import {DocsExampleComponent} from "@docs-components/public-api";
 import {Preferences} from "@capacitor/preferences";
 import {GeneralService} from "../../services/general.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-users',
@@ -63,6 +64,7 @@ export class UsersComponent implements OnInit {
   activePane = 0;
   searchQuery: string = '';
   message: any;
+  environment = environment;
 
   constructor(private userService: UserService, private router: Router, private generalService: GeneralService) {
   }
@@ -94,7 +96,6 @@ export class UsersComponent implements OnInit {
   }
 
   goToPage(page: number) {
-    console.log(this.usersArray)
     this.currentPage = page;
     this.paginateUsers();
   }

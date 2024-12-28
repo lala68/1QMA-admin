@@ -109,7 +109,6 @@ export class UserService {
       // this.isLoggedIn = true;
       try {
         var testIfJson = JSON.parse(user.value);
-        console.log(testIfJson)
         if (typeof testIfJson == "object") {
           //Json
           this.generalService.user = JSON.parse(user.value);

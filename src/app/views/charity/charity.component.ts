@@ -22,6 +22,7 @@ import {
 import {IconDirective} from "@coreui/icons-angular";
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
 import {CommonModule} from "@angular/common";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-charity',
@@ -55,6 +56,7 @@ export class CharityComponent {
   position = 'top-end';
   percentage = 0;
   currencies: any;
+  environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
     this.charityForm = this.fb.group({

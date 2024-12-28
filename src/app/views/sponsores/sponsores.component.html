@@ -43,45 +43,27 @@
           </div>
           <div class="mb-3">
             <label cLabel for="name">Icon</label>
-            <input
-              type="file"
-              (change)="handleFileInput($event)"
-              class="form-control mt-2"
-            />
-            @if (imgSrc){
-            <img [src]="'https://api.1qma.games/' + imgSrc" width="100px" />
-            }
-          </div>
-          <div role="alert" style="color: #ff5722; margin: 10px 0">
-            {{ error }}
-          </div>
-          <input
-            cButton
-            color="primary"
-            [disabled]="loadingSubmit || sponsorForm.invalid"
-            type="submit"
-          />
-          <button
-            (click)="displayAddSponsor()"
-            cButton
-            color="secondary"
-            variant="outline"
-          >
-            Back
-          </button>
-        </form>
-        } @for (item of sponsors; track item.name;let i = $index){ @if
-        (item.name && !displayForm && !loading){
+           <input type="file" (change)="handleFileInput($event)"
+                                 class="form-control mt-2">
+                                  @if (imgSrc){
+        <img [src]="environment.baseUrl + imgSrc" width="100px"/>
+        }
+        </div>
+   <div role="alert" style="color: #ff5722; margin: 10px 0">
+        {{error}}
+        </div>
+        <input cButton color="primary" [disabled]="loadingSubmit || sponsorForm.invalid" type="submit">
+        <button (click)="displayAddSponsor()" cButton color="secondary" variant="outline">Back
+      </button>
+      </form>
+        }
+
+        @for (item of sponsors; track item.name;let i = $index){
+        @if (item.name && !displayForm && !loading){
         <div cListGroup class="mb-3">
           <div cListGroupItem>
             <div class="avatar">
-              <img
-                class="avatar-img"
-                [src]="'https://api.1qma.games/' + item?.icon"
-              />
-            </div>
-            <div style="width: 40%; display: inline-block">
-              {{ item?.name }}
+              <img class="avatar-img" [src]="environment.baseUrl + item?.icon">
             </div>
             <button cButton color="light">
               <c-form-check [switch]="true">

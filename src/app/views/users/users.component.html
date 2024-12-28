@@ -42,61 +42,38 @@
         @for (user of paginatedUsers; track user.firstName;let i = $index) {
         <tr>
           <td>
-            <div class="avatar">
-              <img
-                class="avatar-img"
-                [src]="
-                  user?.profilePicture
-                    ? 'https://api.1qma.games/' + user?.profilePicture
-                    : '/assets/images/frame.png'
-                "
-                alt="user@email.com"
-              />
-            </div>
-          </td>
-          <td>
-            <div class="fw-semibold">
-              {{ user.firstName }} {{ user.lastName }}
-            </div>
-            <div class="small text-body-secondary text-nowrap"></div>
-          </td>
-          <td>
-            <div class="d-flex justify-content-between">
-              <div class="float-start fw-semibold">
-                {{ user.email }}
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="fw-semibold text-nowrap">{{ user.created_at }}</div>
-          </td>
-          <td>
-            <div class="fw-semibold text-nowrap">
-              {{ user.referer?.firstName }} {{ user.referer?.lastName }}
-            </div>
-          </td>
-          <td>
-            <c-form-check [switch]="true">
-              <input
-                [checked]="user.isActive"
-                style="cursor: pointer"
-                cFormCheckInput
-                type="checkbox"
-                (change)="onCheckedChange(user._id, $event)"
-              />
-            </c-form-check>
-          </td>
-          <td>
-            <div
-              class="fw-semibold text-nowrap"
-              style="cursor: pointer"
-              (click)="gotoDetail(user)"
-            >
-              <svg cIcon name="cilArrowRight" size="lg"></svg>
-            </div>
-          </td>
-        </tr>
-        }
+          <div class="avatar">
+  <img class="avatar-img" [src]="user?.profilePicture ? environment.baseUrl + user?.profilePicture : '/assets/images/frame.png'" alt="user@email.com">
+</div>
+                </td>
+        <td>
+          <div class="fw-semibold">{{ user.firstName }} {{user.lastName}}</div>
+                  <div class="small text-body-secondary text-nowrap">
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-between">
+                    <div class="float-start fw-semibold">
+      {{ user.email }}
+      </div>
+    </div>
+  </td>
+  <td>
+    <div class="fw-semibold text-nowrap">{{ user.created_at }}</div>
+                </td>
+                  <td>
+                  <div class="fw-semibold text-nowrap">{{ user.referer?.firstName }} {{user.referer?.lastName}}</div>
+                </td>
+                  <td>
+<c-form-check [switch]="true">
+  <input [checked]="user.isActive" style="cursor: pointer;"  cFormCheckInput type="checkbox" (change)="onCheckedChange(user._id, $event)" />
+</c-form-check>
+                </td>
+                 <td>
+                  <div class="fw-semibold text-nowrap" style="cursor: pointer;" (click)="gotoDetail(user)"><svg cIcon name="cilArrowRight" size="lg"></svg></div>
+                </td>
+              </tr>
+      }
       </tbody>
     </table>
     <c-toaster [placement]="position" class="p-3" position="fixed">

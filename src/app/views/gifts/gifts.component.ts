@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {GameService} from "../../services/game.service";
 import {
   AccordionButtonDirective,
   AccordionComponent,
@@ -19,22 +21,20 @@ import {
   RowComponent,
   SpinnerComponent,
   TableDirective,
-  TemplateIdDirective,
-  TextColorDirective, ToastBodyComponent,
+  TemplateIdDirective, TextColorDirective,
+  ToastBodyComponent,
   ToastComponent,
   ToasterComponent,
   ToastHeaderComponent
 } from "@coreui/angular";
-import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
-import {GameService} from "../../services/game.service";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IconDirective} from "@coreui/icons-angular";
+import {CommonModule} from "@angular/common";
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-assets',
+  selector: 'app-gifts',
   standalone: true,
-  imports: [AccordionButtonDirective,
+  imports: [CommonModule, AccordionButtonDirective,
     AccordionComponent,
     AccordionItemComponent,
     BgColorDirective,
@@ -57,15 +57,15 @@ import {environment} from "../../../environments/environment";
     SpinnerComponent,
     TemplateIdDirective,
     TableDirective,
-    TextColorDirective],
-  templateUrl: './assets.component.html',
-  styleUrl: './assets.component.scss'
+    TextColorDirective, FormModule,],
+  templateUrl: './gifts.component.html',
+  styleUrl: './gifts.component.scss'
 })
-export class AssetsComponent {
-  assets: any = [];
+export class GiftsComponent {
+  gifts: any = [];
   displayForm: any = false;
   id: any;
-  assetForm: FormGroup;
+  giftForm: FormGroup;
   loading: boolean = true;
   loadingSubmit: boolean = false;
   public visible = false;
@@ -75,93 +75,78 @@ export class AssetsComponent {
   error: any = '';
   message: any;
   selectedId: any;
+  achievementRewards: any;
+  achievementConditions: any;
   environment = environment;
 
   constructor(private gameService: GameService, private fb: FormBuilder) {
-    this.assetForm = this.fb.group({
-      count: ['', [Validators.required]],
-      title: ['', [Validators.required]],
-      price: ['', []],
-      coinPrice: ['', []],
-      coinType: ['', []],
+    this.giftForm = this.fb.group({
+      condition: ['', [Validators.required]],
+      conditionQuantity: ['', [Validators.required]],
+      reward: ['', [Validators.required]],
+      rewardQuantity: ['', [Validators.required]],
+      showModal: [false],
+      link: [''],
       description: ['', []],
       descriptionFa: ['', []],
     });
   }
 
   ngOnInit() {
-    this.getAssets();
+    this.getGifts();
   }
 
-  async getAssets() {
+  async getGifts() {
     this.loading = true;
-    this.gameService.getAllShopItems().subscribe(data => {
+    this.gameService.getAllGifts().subscribe(data => {
       this.loading = false;
       if (data.status === 1) {
-        this.assets = data.data.shopItems
-          .filter((assets: any) => assets.type === 'asset')  // Filter only 'feature' types
-          .map((assets: any) => {
-            if (assets.details && assets.details.length > 0) {
-              try {
-                // Parse the first item in the details array
-                const parsedDetails = (assets.details[0]);
-
-                // Return the feature with additional properties
-                return {
-                  ...assets,
-                  title: parsedDetails.title || '', // Extract the title if available
-                  count: parsedDetails.count || 0   // Extract the count if available
-                };
-              } catch (e) {
-                console.error('Error parsing feature details:', e);
-                // Return the original feature object in case of error
-                return assets;
-              }
-            }
-            return assets;
-          });
+        this.gifts = data.data.achievements
+        this.achievementConditions = data.data.achievementConditions
+        this.achievementRewards = data.data.achievementRewards
       }
     })
   }
 
-  displayAddAsset(item: any = null) {
+  displayAddGift(item: any = null) {
     this.id = item?._id;
     this.imgSrc = '';
     this.error = '';
     this.displayForm = !this.displayForm;
     if (this.displayForm) {
-      this.imgSrc = item.icon;
-      this.assetForm.controls['count'].setValue((item.details[0])?.count);
-      this.assetForm.controls['title'].setValue((item.details[0])?.title);
-      this.assetForm.controls['coinPrice'].setValue((item.coinPrice)?.price);
-      this.assetForm.controls['coinType'].setValue((item.coinPrice)?.coin);
-      this.assetForm.controls['price'].setValue(item.realPrice)
-      this.assetForm.controls['description'].setValue(item.description)
-      this.assetForm.controls['descriptionFa'].setValue(item.descriptionFa)
+      this.imgSrc = item?.icon;
+      this.giftForm.controls['condition'].setValue(item?.condition?.type)
+      this.giftForm.controls['conditionQuantity'].setValue(item?.condition?.quantity)
+      this.giftForm.controls['reward'].setValue(item?.reward?.type)
+      this.giftForm.controls['rewardQuantity'].setValue(item?.reward?.quantity)
+      this.giftForm.controls['showModal'].setValue(item?.showModal)
+      this.giftForm.controls['link'].setValue(item?.link)
+      this.giftForm.controls['description'].setValue(item?.description)
+      this.giftForm.controls['descriptionFa'].setValue(item?.descriptionFa)
     } else {
-      this.assetForm.reset();
+      this.giftForm.reset();
     }
   }
 
-  submitNewAsset() {
+  submitNewGift() {
     this.loadingSubmit = true;
     this.error = '';
     if (this.id) {
-      this.gameService.updateShopItem(this.assetForm.value, this.id, 'asset', this.fileToUpload).then(data => {
+      this.gameService.updateGift(this.giftForm.value, this.id, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
-          this.getAssets();
+          this.getGifts();
         } else {
           this.error = data?.message;
         }
       })
     } else {
-      this.gameService.postNewShopItem(this.assetForm.value, 'asset', this.fileToUpload).then(data => {
+      this.gameService.postNewGift(this.giftForm.value, this.fileToUpload).then(data => {
         this.loadingSubmit = false;
         if (data.status == 1) {
           this.displayForm = false;
-          this.getAssets();
+          this.getGifts();
         } else {
           this.error = data?.message;
         }
@@ -173,11 +158,11 @@ export class AssetsComponent {
     this.fileToUpload = event.target.files[0];
   }
 
-  deleteAsset() {
-    this.gameService.deleteShopItem(this.selectedId).then(data => {
+  deleteGift() {
+    this.gameService.deleteGift(this.selectedId).then(data => {
       if (data.status == 1) {
         this.visible = !this.visible;
-        this.getAssets();
+        this.getGifts();
       }
     })
   }
@@ -197,13 +182,13 @@ export class AssetsComponent {
     this.loading = true
     const inputElement = event.target as HTMLInputElement;
 
-    this.gameService.toggleShopItemActivation(id, inputElement.checked).then(data => {
+    this.gameService.toggleGiftActivation(id, inputElement.checked).then(data => {
       if (data?.status == 1) {
         this.message = data?.message;
       } else {
         this.message = data?.message;
       }
-      this.getAssets();
+      this.getGifts();
       this.toggleToast();
     })
     console.log('Checkbox checked state:', inputElement.checked);

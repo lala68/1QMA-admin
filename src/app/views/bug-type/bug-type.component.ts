@@ -38,6 +38,7 @@ import {Router, RouterLink} from "@angular/router";
 import {ChecksRadiosComponent} from "../forms/checks-radios/checks-radios.component";
 import {DocsExampleComponent} from "@docs-components/docs-example/docs-example.component";
 import {GameService} from "../../services/game.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-bug-type',
@@ -63,6 +64,7 @@ export class BugTypeComponent implements OnInit {
   message: any;
   position = 'top-end';
   percentage = 0;
+  environment = environment;
 
   constructor(private router: Router, private gameService: GameService, private fb: FormBuilder) {
     this.bugForm = this.fb.group({

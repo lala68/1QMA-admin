@@ -393,7 +393,10 @@ export class GameService {
       'Content-Type': 'application/json',
 
     })
-    return this.http.post<any>(this.config.url('admin/charityCategories/activity/delete'), {id: id, activityId: activityId}, {
+    return this.http.post<any>(this.config.url('admin/charityCategories/activity/delete'), {
+      id: id,
+      activityId: activityId
+    }, {
       headers: headers,
       withCredentials: true
     })
@@ -670,5 +673,78 @@ export class GameService {
       .toPromise();
   }
 
+  getAllGifts(): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.get<any>(this.config.url('admin/achievements'), {headers: headers, withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError.bind(this.processHTTPMsgService)));
+  }
+
+  async postNewGift(data: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('condition', data.condition);
+    formData.append('conditionQuantity', data.conditionQuantity);
+    formData.append('reward', data.reward);
+    formData.append('rewardQuantity', data.rewardQuantity);
+    formData.append('showModal', data.showModal ? data.showModal : false);
+    formData.append('description', data.description ? data.description : '');
+    formData.append('descriptionFa', data.descriptionFa ? data.descriptionFa : '');
+    formData.append('link', data.link ? data.link : '');
+    formData.append('icon', icon);
+    return this.http.post<any>(this.config.url('admin/achievements/add'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async updateGift(data: any, id: any, icon: any = null): Promise<any> {
+    let headers = new HttpHeaders({});
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('condition', data.condition);
+    formData.append('conditionQuantity', data.conditionQuantity);
+    formData.append('reward', data.reward);
+    formData.append('rewardQuantity', data.rewardQuantity);
+    formData.append('showModal', data.showModal);
+    formData.append('description', data.description);
+    formData.append('descriptionFa', data.descriptionFa);
+    formData.append('link', data.link);
+    formData.append('icon', icon);
+    if (!icon) {
+      formData.delete('icon')
+    }
+    return this.http.post<any>(this.config.url('admin/achievements/update'), formData, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async deleteGift(id: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/achievements/delete'), {id: id}, {
+      headers: headers,
+      withCredentials: true
+    })
+      .toPromise();
+  }
+
+  async toggleGiftActivation(id: any, active: any): Promise<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+    return this.http.post<any>(this.config.url('admin/achievements/toggleActive'), {
+      id: id,
+      isActive: active
+    }, {headers: headers, withCredentials: true})
+      .toPromise();
+  }
 
 }

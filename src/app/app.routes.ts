@@ -57,6 +57,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
       },
       {
+        path: 'gifts',
+        loadChildren: () => import('./views/gifts/routes').then((m) => m.routes),
+        canActivate: [authGuard]
+      },
+      {
         path: 'wizard-questions',
         loadChildren: () => import('./views/wizard-questions/routes').then((m) => m.routes),
         canActivate: [authGuard]
